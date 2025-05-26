@@ -1,0 +1,31 @@
+﻿# game_script.yaml
+chapter:
+  title: 第一章
+  scenes:
+    - scene_id: 1
+      background: res/school_gate.jpg
+      characters:
+        - name: 女主角
+          base_position: left # 预定义位置(left/right/center)
+          offset: [50, 0] # 相对基准位置的偏移
+        - name: 主角
+          sprite: res/protagonist.png
+          base_position: right
+          offset: [-50, 0]
+
+      dialogues:
+        - character: 主角
+          text: 今天天气真好，适合去学校。
+          effect: fadein # 入场效果
+
+        - character: 女主角
+          text: 是啊，你也来这么早？
+          effect: slidein
+
+        - character: 主角
+          text: 今天天气真好，适合去学校。
+          effect: fadein # 入场效果
+
+        - character: 女主角
+          text: 是啊，你也来这么早？
+          effect: slidein

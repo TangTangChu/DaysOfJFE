@@ -1,0 +1,299 @@
+# 第二章：军训与意外事件
+# 角色定义
+characters:
+  我:
+    id: "A2"
+    base_pos: "right"
+    offset: [-50, 0]
+  教官:
+    id: "B6"
+    base_pos: "left"
+    offset: [30, -10]
+  白百璃:
+    id: "G1"
+    base_pos: "left"
+    offset: [50, 0]
+    sprites:
+      normal: "src/image/character/寄り道しちゃう？_84040068.png"
+  室友RRR:
+    id: "A3"
+    base_pos: "right"
+    offset: [-30, -20]
+
+# 章节数据
+chapter:
+  - title: "第二章：迷彩色的青春"
+    scenes:
+      - scene_id: 2
+        background: "src/image/background/宿舍-内-1.jpg"
+        characters:
+          - name: "我"
+          - name: "教官"
+        dialogues:
+          - type: "narration"
+            text: "清晨六点的闹钟刺破梦境，窗外还笼罩在朦胧的晨光中。今天是军训第一天..."
+
+          - type: "dialogue"
+            speaker: "A2"
+            text: "呜...这么早..."
+
+          - type: "narration"
+            text: "迷迷糊糊摸到手机，发现百璃五分钟前已经发来了消息——"
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "记得涂防晒霜！我在女生宿舍楼下等你～(｀・ω・´)"
+
+          - type: "narration"
+            text: "附带一张对着镜子涂防晒霜的自拍，她穿着迷彩服的样子意外地帅气..."
+
+          - type: "dialogue"
+            speaker: "A3"
+            text: "哇哦～这是青梅竹马？关系真好呢～"
+
+          - type: "narration"
+            text: "不知何时醒来的室友趴在床边，一脸坏笑地看着我的手机屏幕..."
+
+          - type: "dialogue"
+            speaker: "A2"
+            text: "只、只是普通朋友！"
+
+          - type: "command"
+            cmd: "bg"
+            action: "change"
+            param: "src/image/background/宿舍-外-4.jpg"
+
+          - type: "narration"
+            text: "匆匆赶到楼下时，百璃正蹲在花坛边喂流浪猫。阳光透过树叶在她身上投下斑驳的光影..."
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "太慢了啦～诶？你该不会忘记涂防晒了吧？"
+
+          - type: "narration"
+            text: "她突然凑近盯着我的脸看，近到能数清睫毛的程度..."
+
+          - type: "dialogue"
+            speaker: "A2"
+            text: "涂、涂了！"
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "骗人～耳朵后面都没涂到！真是的...闭上眼睛！"
+
+          - type: "narration"
+            text: "还没反应过来，清凉的防晒霜就抹上了耳后。她指尖的温度让那个部位瞬间发烫..."
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "好啦～这样就不会晒伤了！"
+
+          - type: "command"
+            cmd: "bg"
+            action: "change"
+            param: "src/image/background/操场-内-2.jpg"
+
+          - type: "narration"
+            text: "操场上已经列好方阵，穿着统一迷彩服的新生们像真正的士兵般整齐排列..."
+
+          - type: "dialogue"
+            speaker: "B6"
+            text: "立——正！"
+
+          - type: "narration"
+            text: "教官洪亮的声音瞬间让全场肃静。那是个皮肤黝黑的年轻军人，眼神锐利得像鹰..."
+
+          - type: "dialogue"
+            speaker: "B6"
+            text: "从今天开始，你们就是我的兵！军姿训练，现在开始！"
+
+          - type: "narration"
+            text: "九月的太阳毫不留情地炙烤着操场。汗水顺着额头滑进眼睛，火辣辣的疼..."
+
+          - type: "narration"
+            text: "余光瞥见女生方阵里的百璃，她挺直腰板的样子格外认真，发梢都闪着汗水的光芒..."
+
+          - type: "dialogue"
+            speaker: "B6"
+            text: "那个男生！手臂贴紧裤缝！"
+
+          - type: "narration"
+            text: "教官的呵斥声让我浑身一颤..."
+
+          - type: "command"
+            cmd: "bg"
+            action: "change"
+            param: "src/image/background/操场-内-1.jpg"
+
+          - type: "narration"
+            text: "正午休息时分，我和室友们瘫倒在树荫下。迷彩服后背已经结出盐霜..."
+
+          - type: "dialogue"
+            speaker: "A3"
+            text: "要死了...这比高中军训严格十倍啊..."
+
+          - type: "dialogue"
+            speaker: "KKK"
+            text: "下午还有战术训练...杀了我吧..."
+
+          - type: "narration"
+            text: "突然一瓶冰镇矿泉水贴到我脸上——"
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "补给送达～"
+
+          - type: "narration"
+            text: "百璃抱着几瓶水站在面前，她的迷彩服袖口卷到手肘，露出晒得微微发红的手臂..."
+
+          - type: "dialogue"
+            speaker: "A3"
+            text: "哦哦！天使降临！"
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "大家都有份哦～教官说下午要练习匍匐前进，记得在膝盖上垫这个..."
+
+          - type: "narration"
+            text: "她从口袋里掏出几片护膝，连我的室友们都感动得快要流泪..."
+
+          - type: "command"
+            cmd: "bg"
+            action: "change"
+            param: "src/image/background/操场-内-3.jpg"
+
+          - type: "narration"
+            text: "下午的训练场尘土飞扬。低姿匍匐时，手肘磨得生疼..."
+
+          - type: "dialogue"
+            speaker: "B6"
+            text: "动作太慢了！敌人早就把你打成筛子了！"
+
+          - type: "narration"
+            text: "教官的怒吼声中，突然传来女生的惊呼——"
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "呀！"
+
+          - type: "narration"
+            text: "百璃摔倒在了训练场上，膝盖处渗出一片刺目的红色..."
+
+          - type: "command"
+            cmd: "sprite"
+            action: "change"
+            character: "G1"
+            param: "worried"
+
+          - type: "dialogue"
+            speaker: "A2"
+            text: "教官！我送她去医务室！"
+
+          - type: "narration"
+            text: "没等批准就冲了过去。百璃疼得眼眶发红，却还强撑着微笑..."
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "对不起...给大家添麻烦了..."
+
+          - type: "command"
+            cmd: "bg"
+            action: "change"
+            param: "src/image/background/风景-2.jpg"
+
+          - type: "narration"
+            text: "医务室里弥漫着消毒水的气味。校医清理伤口时，百璃死死攥着我的衣袖..."
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "唔...TTQ的手...借我一下..."
+
+          - type: "narration"
+            text: "她冰凉的手指与我十指相扣，掌心的薄茧是常年练习小提琴留下的痕迹..."
+
+          - type: "dialogue"
+            speaker: "校医"
+            text: "只是皮外伤，但这两天不能碰水。同学你扶她回去休息吧..."
+
+          - type: "command"
+            cmd: "bg"
+            action: "change"
+            param: "src/image/background/风景-4.jpg"
+
+          - type: "narration"
+            text: "黄昏的校园小径上，百璃拄着临时拐杖一瘸一拐地走着..."
+
+          - type: "dialogue"
+            speaker: "A2"
+            text: "我背你吧..."
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "不、不用！这样就好..."
+
+          - type: "narration"
+            text: "她耳尖通红的样子比夕阳还要鲜艳..."
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "那个...谢谢你今天冲过来...明明教官都还没同意..."
+
+          - type: "dialogue"
+            speaker: "A2"
+            text: "那种时候谁还等批准啊..."
+
+          - type: "narration"
+            text: "沉默片刻后，她突然轻声哼起小时候经常一起唱的歌谣。晚风把旋律吹散在暮色里..."
+
+          - type: "command"
+            cmd: "bg"
+            action: "change"
+            param: "src/image/background/宿舍-外-3-NIGHT.jpg"
+
+          - type: "narration"
+            text: "送她到宿舍楼下时，星空已经铺满天幕..."
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "明天...还能来看我吗？医生说换药会很疼..."
+
+          - type: "dialogue"
+            speaker: "A2"
+            text: "嗯...明天训练结束我就来..."
+
+          - type: "narration"
+            text: "她突然把什么东西塞进我手里——是那对书签中的月亮图案..."
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "这是护身符～明天训练要加油哦！"
+
+          - type: "narration"
+            text: "看着她单脚跳进宿舍楼的背影，胸口涌起一种奇妙的感觉..."
+
+          - type: "narration"
+            text: "回到宿舍时，室友们立刻围了上来..."
+
+          - type: "dialogue"
+            speaker: "A3"
+            text: "怎么样怎么样？进展如何？"
+
+          - type: "dialogue"
+            speaker: "KKK"
+            text: "教官后来还夸你有担当呢！"
+
+          - type: "narration"
+            text: "躺在床上翻看手机，发现百璃更新了动态——"
+
+          - type: "dialogue"
+            speaker: "G1"
+            text: "虽然受伤了...但今天特别开心(◍•ᴗ•◍)❤"
+
+          - type: "narration"
+            text: "配图是透过医务室窗户拍的夕阳，角落里隐约能看见我的迷彩服衣袖..."
+
+          - type: "narration"
+            text: "（明天...一定要第一个去医务室看她...）"
+
+          - type: "narration"
+            text: "握紧月亮书签，我在军训第一天的疲惫中沉入梦乡..."

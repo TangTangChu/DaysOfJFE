@@ -1,0 +1,595 @@
+﻿# 角色定义
+characters:
+  我:
+    id: "A2" # 添加编号
+    base_pos: "right"
+    offset: [-50, 0]
+  宇欣吴:
+    id: "A3" # 添加编号
+    base_pos: "right"
+    offset: [-30, -20]
+  白百璃:
+    id: "G1"
+    base_pos: "left"
+    offset: [50, 0]
+    sprites:
+      normal: "src/image/character/寄り道しちゃう？_84040068.png"
+# 章节数据
+chapter:
+  title: "Re: 从0开始的JFE生活"
+  scenes:
+    - scene_id: 1
+      background: "src/image/background/64284662_p1.png"
+
+      # 角色实例
+      characters:
+        - name: "我"
+        - name: "白百璃"
+          sprite: "normal"
+          offset: [50, 0]
+      # 对话和命令
+      dialogues:
+        - type: "dialogue"
+          speaker: "A2"
+          text: "这里就是JFE了吧……"
+
+        - type: "narration"
+          text: "地图上显示这里是JFE麦庐校区南门，还挺漂亮的，就是感觉有点荒凉啊……"
+
+        - type: "narration"
+          text: "以后4年的大部分时间，就要在这度过了"
+
+        - type: "narration"
+          text: "…………"
+
+        - type: "narration"
+          text: "虽说整个高中都是摆过来的，最终高考我也取得了中规中矩的成绩"
+
+        - type: "narration"
+          text: "这个成绩可以算是高中以来的最好成绩了"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "毕竟5月份还在追高达SEED系列番剧，然后看「学生会的一己之见」，甚至高考前一天的23点还在重温「路人女主的养成方法」……"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "先去报道吧"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: ""
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "学校比想象中的要小嘛"
+
+        - type: "narration"
+          text: "沿着指示一路前行，我看到了挂着'计算机与人工智能学院'横幅的帐篷，这正是我所就读的学院的报到点"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: ""
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "你好，请问网络空间安全专业是在这报道吗？"
+
+        - type: "dialogue"
+          speaker: "B1"
+          text: "是的，请在这份表上找到你的名字，先签个字"
+
+        - type: "narration"
+          text: "我快速浏览这份签到表，找到了我的名字，还有一位熟人的名字……"
+
+        - type: "narration"
+          text: "（签字）"
+
+        - type: "dialogue"
+          speaker: "B1"
+          text: "这是给你的一份小礼品，祝你在JFE生活愉快！"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "谢谢！"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "顺着地图的指引，我找到了宿舍楼"
+
+        - type: "narration"
+          text: "宿舍楼门口站着数位志愿者学长，他们看到我，立刻走上前"
+
+        - type: "dialogue"
+          speaker: "B2"
+          text: "同学，我来帮你提吧"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "啊，谢谢你"
+
+        - type: "narration"
+          text: "志愿者小哥不费吹灰之力就把我自认为超级重的行李箱提起来"
+
+        - type: "dialogue"
+          speaker: "B2"
+          text: "对了，你的宿舍在几楼？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "5 楼 XXX"
+
+        - type: "dialogue"
+          speaker: "B2"
+          text: "那还蛮高的嘛"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "我也觉得，高中天天爬4楼，到了大学还得天天爬5楼了"
+
+        - type: "dialogue"
+          speaker: "B2"
+          text: "哈哈，不过这栋宿舍楼高层阳光才好，你的宿舍刚好朝太阳，干衣服挺快的。而且受南风天的影响也小"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "嘶，听起来还不错嘛，凡事都有利有弊"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "dialogue"
+          speaker: "B1"
+          text: "到了，那我先下去了，在JFE生活愉快！"
+
+        - type: "narration"
+          text: "志愿者学长挥了挥手，离开了5楼"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "那么，先整理下物品吧，不知道其他的舍友到了没！"
+
+        - type: "narration"
+          text: "我推开宿舍门，一股异味扑面而来"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "这……"
+
+        - type: "narration"
+          text: "宿舍环境算是中规中矩。不过嘛，这两铺床共用一个梯子实属逆天，还有这异味，真叫人不适"
+
+        - type: "narration"
+          text: "这异味似乎是从厕所散发的"
+
+        - type: "narration"
+          text: "可能得要冲洗一下厕所了"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "就在我正在收拾行装时，一位男生拍了拍我的后背"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "你好！请问你就是TTT同学吧？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "是的，请问你是？"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "我是RRR，今后我们就是室友了！还请多关照！"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "还请多关照！"
+
+        - type: "narration"
+          text: "看起来是一位很不错的舍友"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "我们继续收拾各自的行李，顺便打扫一下寝室"
+
+        - type: "narration"
+          text: "另外两位室友也很快到来"
+
+        - type: "dialogue"
+          speaker: "A3"
+          text: "我是UUU，请多关照！"
+
+        - type: "dialogue"
+          speaker: "KSL"
+          text: "我是KSL，也请多关照！"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "我们进行了初次的交流会，从自己的家乡、高中，不知不觉就聊到了各种奇闻轶事"
+
+        - type: "narration"
+          text: "就这样，大家很快就混熟了"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "接下来该去购置些物品了！"
+
+        - type: "narration"
+          text: "我最先整理好了物品，跟室友打了个招呼，下楼去看看学校的商业街，顺便看看有没有什么要买的"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "这商业街，说大也不大，说小也不小"
+
+        - type: "narration"
+          text: "金拱门大食堂、雪王の茶摊、黑猫杂货铺、古得白、不正不新鸡排等店铺一应俱全都有"
+
+        - type: "narration"
+          text: "(不过老爷爷的黄金脆皮咋没有啊)"
+
+        - type: "narration"
+          text: "还有据说这集中在二楼的快递站，直接完爆主校区"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "总而言之就是很方便的感觉！（自我说服）"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "在黑猫杂货铺简单的挑了洗漱用品、纸巾之类的"
+
+        - type: "narration"
+          text: "……"
+        - type: "narration"
+          text: "正当我准备回去的时候，我看到了熟悉的身影……"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "啊，TTQ，你也在这买东西吗？"
+
+        - type: "narration"
+          text: "眼前这位女孩，正是我的青梅竹马——白百璃"
+
+        - type: "narration"
+          text: "说巧不巧，自打小学起我们就一直同班"
+
+        - type: "narration"
+          text: "直到……这次一起考上了JFE，甚至……同一个专业"
+
+        # - type: "narration"
+        #   text: "眼前这位女孩，正是我的青梅竹马——白百璃"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "是的，好巧呀"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "怎么样，你的宿舍还不错吧"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "えん～大家都是很不错的人"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "……"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "怎么了吗"
+        - type: "dialogue"
+          speaker: "A1"
+          text: "那个……明天就要军训了，记得把防晒的都用上"
+
+        - type: "narration"
+          text: "百白璃忍不住笑出了声"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "你把我当了啦？我肯~定会把防晒霜涂得满满的"
+
+        - type: "narration"
+          text: "百白璃特意把“肯”字拖了老长音"
+
+        - type: "narration"
+          text: "超可爱的好吧"
+
+        - type: "narration"
+          text: "虽然直接说出去我会羞死的"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "你也是！虽然是男生，但是晒伤可不会区分你是谁，我给你挑的防晒霜你可别不用，没了就告诉我"
+
+        - type: "narration"
+          text: "说起来我都忘了是百璃选的防晒霜，wow那我刚才说了什么啊……"
+
+        - type: "narration"
+          text: "我羞愧的挠了挠头，不知如何应答"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "我还有事要先走了，晚上视频见！"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "嗯，路上小心！"
+
+        - type: "narration"
+          text: "我和百璃的宿舍在不同方向，做了个bye的手势，我们便离开了"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "放好购买的东西后，我决定去食堂吃顿晚餐"
+
+        - type: "narration"
+          text: "虽然在商业街就有很多选择，不过初来乍到，还是食堂保险些"
+
+        - type: "narration"
+          text: "而且二食堂就在宿舍隔壁，图个方便"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "好像有两层，今天先去1楼吧"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "好像有两层，今天先去1楼吧"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "嗯，确实是很不错的装修，灯光挺充足的"
+
+        - type: "narration"
+          text: "里面似乎还有一些加盟店，**粥，**火锅，看起来是个挺不错的食堂嘛"
+
+        - type: "narration"
+          text: "不过我还是先吃饭吧，以后再每家店吃一下"
+
+        - type: "narration"
+          text: "……"
+        - type: "narration"
+          text: "我找了个菜品看起来还不错的窗口"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "阿姨，我要蒸蛋和火腿肠炒玉米"
+
+        - type: "dialogue"
+          speaker: "阿姨"
+          text: "好嘞，还要其他的吗？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "不用了"
+
+        - type: "narration"
+          text: "一共7块，饭在右边"
+
+        - type: "narration"
+          text: "我打开手机付款，去旁边拿了一碗饭，找了个位置坐了下来"
+
+        - type: "narration"
+          text: "不太懂食品价格，不过看起来不是黑心价"
+
+        - type: "narration"
+          text: "先开吃吧"
+
+        - type: "narration"
+          text: "うむうむ"
+
+        - type: "narration"
+          text: "中规中矩吧"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "嘟嘟嘟~~~~"
+
+        - type: "narration"
+          text: "嘟嘟嘟~~~~~~~~~"
+
+        - type: "narration"
+          text: "群聊 相亲相爱一家人 发起了视频通话"
+
+        - type: "narration"
+          text: "按下"
+
+        - type: "dialogue"
+          speaker: "妈"
+          text: "喂，儿子诶，在吃饭吗？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "是滴，我现在在二食堂吃饭呢"
+
+        - type: "dialogue"
+          speaker: "妈"
+          text: "欸儿子诶，妈怎么看不见你呀，一片模糊的"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "嗯？"
+
+        - type: "narration"
+          text: "看起来是MeChat通病又发力了，人像背景模糊直接把整个画面糊了"
+
+        - type: "narration"
+          text: "重新打开摄像头，ok"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "怎么样，可以看见了吧"
+
+        - type: "dialogue"
+          speaker: "妈"
+          text: "可以了可以了"
+
+        - type: "dialogue"
+          speaker: "妈"
+          text: "怎么样，这大学还适应吧"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "我才来了不到1天，这可不好说"
+
+        - type: "dialogue"
+          speaker: "妈"
+          text: "那这大学环境还不错吧？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "嗯，怎么说呢，比预想的差了一些，宿舍里的床公用一个梯子，床还是连在一起的，有点逆天"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "但仔细看吧，也没这么坏，目前来说，我觉得设施挺全的"
+
+        - type: "dialogue"
+          speaker: "妈"
+          text: "那就好，妈跟你说啊，大学是人生重要的时期，千万不能松懈了学习。那四六级啊，要明天多背背单词。你们学计算机的一定要学好数学，要多刷题……"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "好了妈，我知道了"
+
+        - type: "narration"
+          text: "服了，把“大学”这个词一换，修改一下后面的，可以从六年级用到大学"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "表姐 加入了视频聊天"
+
+        - type: "dialogue"
+          speaker: "表姐"
+          text: "喂小老弟，大学咋样"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "你怎么也来问呀，才1天没啥好说的呀"
+
+        - type: "dialogue"
+          speaker: "表姐"
+          text: "umu，也对"
+
+        - type: "dialogue"
+          speaker: "表姐"
+          text: "欸你是在食堂吗"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "是滴"
+
+        - type: "dialogue"
+          speaker: "表姐"
+          text: "给我拍拍这食堂长啥样了，毕业了几年好久没看自己的母校了"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "行"
+
+        - type: "narration"
+          text: "我切换到后置摄像头"
+
+        - type: "narration"
+          text: "顺带一提，我的表姐也是JFE毕业的，而且也是在这个校区读书"
+
+        - type: "narration"
+          text: "好像读的是什么信管专业吧"
+
+        - type: "narration"
+          text: "我另外一个表姐的爱人也是JFE毕业的"
+
+        - type: "narration"
+          text: "怎么说，捅了JFE的窝了"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "dialogue"
+          speaker: "表姐"
+          text: "诶诶诶，这食堂是装修了，我怎么记得我没在这光线这么好的地方吃过饭"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "好像是装修过"
+
+        - type: "dialogue"
+          speaker: "表姐"
+          text: "欸，该死的毕业定律又发力了，想当初学校四处施工，就是没见它修了什么东西"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "其实现在门口好像也在施工，在换瓷板砖"
+
+        - type: "dialogue"
+          speaker: "表姐"
+          text: "呦，这JFE大兴土木成传统啦"
+
+        - type: "dialogue"
+          speaker: "表姐"
+          text: "不过我看你拍的宿舍图片和我当年的一个样"
+
+        - type: "dialogue"
+          speaker: "表姐"
+          text: "一语评价：逆天床铺设计"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "确实，感觉起个床的话，对铺室友也会感受到大动静"
+
+        - type: "dialogue"
+          speaker: "表姐"
+          text: "哈哈，我亲身体验了"
+
+        - type: "dialogue"
+          speaker: "表姐"
+          text: "是真的"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "…………"
+
+        - type: "narration"
+          text: "在这之后，我们又聊了一堆的话题"
+
+        - type: "dialogue"
+          speaker: "妈"
+          text: "话说，怎么没看见百璃妹妹呀？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "百璃她说有事，说晚上视频再见"
+
+        - type: "dialogue"
+          speaker: "妈"
+          text: "这样啊，"

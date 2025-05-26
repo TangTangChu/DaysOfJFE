@@ -1,0 +1,34 @@
+#pragma once
+#include <string>
+#include <algorithm>
+#include "bass/bass.h"
+//#pragma comment(lib, "bass.lib")
+
+class MusicPlayer {
+private:
+	HSTREAM musicStream = 0;
+	bool isInitialized = false;
+
+public:
+	MusicPlayer();
+
+	~MusicPlayer();
+
+	// 加载音乐文件
+	bool Load(const std::string& filename);
+
+	// 播放音乐
+	bool Play(bool loop = false);
+
+	// 暂停
+	void Pause();
+
+	// 停止
+	void Stop();
+
+	// 设置音量（0.0 - 1.0）
+	void SetVolume(float volume);
+
+	// 获取是否正在播放
+	bool IsPlaying();
+};

@@ -1,0 +1,78 @@
+#include "GameScript.h"
+
+GameScript::GameScript() = default;
+GameScript::~GameScript() = default;
+
+std::wstring GameScript::utf8ToWide(const std::string& str) {
+    if (str.empty()) return L"";
+
+    int size_needed = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), (int)str.size(), nullptr, 0);
+    std::wstring wstr(size_needed, 0);
+    MultiByteToWideChar(CP_UTF8, 0, str.c_str(), (int)str.size(), &wstr[0], size_needed);
+    return wstr;
+}
+
+std::string GameScript::wideToUtf8(const std::wstring& wstr) {
+    if (wstr.empty()) return "";
+
+    int size_needed = WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), (int)wstr.size(), nullptr, 0, nullptr, nullptr);
+    std::string str(size_needed, 0);
+    WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), (int)wstr.size(), &str[0], size_needed, nullptr, nullptr);
+    return str;
+}
+
+bool GameScript::loadFromFile(const std::wstring& filename) {
+    try {
+        // 转换宽字符文件名
+        std::string narrowFilename = wideToUtf8(filename);
+        YAML::Node config = YAML::LoadFile(narrowFilename);
+
+        // 解析章节标题
+        chapter_.title = utf8ToWide(config["chapter"]["title"].as<std::string>());
+
+        // 解析场景
+        const YAML::Node& scenesNode = config["chapter"]["scenes"];
+        for (const auto& sceneNode : scenesNode) {
+            Scene scene;
+            scene.scene_id = sceneNode["scene_id"].as<int>();
+            scene.background = utf8ToWide(sceneNode["background"].as<std::string>());
+
+            // 解析角色
+            const YAML::Node& charactersNode = sceneNode["characters"];
+            for (const auto& characterNode : charactersNode) {
+                Character character;
+                character.name = utf8ToWide(characterNode["name"].as<std::string>());
+
+                if (characterNode["sprite"]) {
+                    character.sprite = utf8ToWide(characterNode["sprite"].as<std::string>());
+                }
+
+                character.base_position = utf8ToWide(characterNode["base_position"].as<std::string>());
+                character.offset = characterNode["offset"].as<std::vector<int>>();
+                scene.characters.push_back(character);
+            }
+
+            // 解析对话
+            const YAML::Node& dialoguesNode = sceneNode["dialogues"];
+            for (const auto& dialogueNode : dialoguesNode) {
+                Dialogue dialogue;
+                dialogue.character = utf8ToWide(dialogueNode["character"].as<std::string>());
+                dialogue.text = utf8ToWide(dialogueNode["text"].as<std::string>());
+
+                if (dialogueNode["effect"]) {
+                    dialogue.effect = utf8ToWide(dialogueNode["effect"].as<std::string>());
+                }
+
+                scene.dialogues.push_back(dialogue);
+            }
+
+            chapter_.scenes.push_back(scene);
+        }
+
+        return true;
+    }
+    catch (const YAML::Exception& e) {
+        std::cerr << "YAML解析错误: " << e.what() << std::endl;
+        return false;
+    }
+}

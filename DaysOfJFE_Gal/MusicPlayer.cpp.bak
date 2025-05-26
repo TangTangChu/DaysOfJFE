@@ -1,0 +1,87 @@
+#include "stdafx.h"
+#include "MusicPlayer.h"
+#include <iostream>
+
+MusicPlayer::MusicPlayer() {
+	// 初始化 Bass 库，并检查是否成功
+	isInitialized = BASS_Init(-1, 44100, 0, NULL, NULL);
+	if (!isInitialized) {
+		std::cerr << "Failed to initialize BASS" << std::endl;
+	}
+}
+
+MusicPlayer::~MusicPlayer() {
+	Stop();
+	if (isInitialized) {
+		BASS_Free();
+	}
+}
+
+// 加载音乐文件
+bool MusicPlayer::Load(const std::string& filename) {
+	// 如果已有音乐流，先释放
+	if (musicStream) {
+		BASS_StreamFree(musicStream);
+		musicStream = 0;
+	}
+
+	// 创建音频流并检查是否成功
+	musicStream = BASS_StreamCreateFile(FALSE, filename.c_str(), 0, 0, 0);
+	if (musicStream) {
+		SetVolume(0.3f);
+	}
+	else {
+		std::cerr << "Failed to load audio file: " << filename << std::endl;
+		return false;
+	}
+	return true;
+}
+
+// 播放音乐
+bool MusicPlayer::Play(bool loop) {
+	if (!musicStream) {
+		std::cerr << "No audio stream loaded" << std::endl;
+		return false;
+	}
+
+	// 设置是否循环
+	BASS_ChannelFlags(musicStream, loop ? BASS_SAMPLE_LOOP : 0, BASS_SAMPLE_LOOP);
+
+	// 播放音频并检查是否成功
+	if (!BASS_ChannelPlay(musicStream, FALSE)) {
+		std::cerr << "Failed to play audio" << std::endl;
+		return false;
+	}
+	return true;
+}
+
+// 暂停
+void MusicPlayer::Pause() {
+	if (musicStream) {
+		BASS_ChannelPause(musicStream);
+	}
+}
+
+// 停止
+void MusicPlayer::Stop() {
+	if (musicStream) {
+		BASS_ChannelStop(musicStream);
+	}
+}
+
+// 设置音量（0.0 - 1.0）
+void MusicPlayer::SetVolume(float volume) {
+	if (musicStream) {
+		// 确保音量在合法范围
+		volume = std::clamp(volume, 0.0f, 1.0f);
+		BASS_ChannelSetAttribute(musicStream, BASS_ATTRIB_VOL, volume);
+	}
+}
+
+// 获取是否正在播放
+bool MusicPlayer::IsPlaying() {
+	if (musicStream) {
+		return BASS_ChannelIsActive(musicStream) == BASS_ACTIVE_PLAYING;
+	}
+	return false;
+}

@@ -1,0 +1,150 @@
+﻿# 角色定义
+characters:
+  博丽灵梦:
+    id: "A1" # 添加编号
+    base_pos: "left"
+    offset: [50, 0]
+    sprites:
+      normal: "src/image/character/霊夢立ち絵 表情差分_39486261_p1.png"
+      happy: "src/image/character/霊夢立ち絵 表情差分_39486261_p11.png"
+      shy: "src/image/character/霊夢立ち絵 表情差分_39486261_p25.png"
+      angry: "src/image/character/霊夢立ち絵 表情差分_39486261_p4.png"
+  我:
+    id: "A2" # 添加编号
+    base_pos: "right"
+    offset: [-50, 0]
+  教授:
+    id: "A3" # 添加编号
+    base_pos: "right"
+    offset: [-30, -20]
+
+# 章节数据
+chapter:
+  title: "第一章 入学rux"
+  scenes:
+    - scene_id: 1
+      background: "src/image/background/91312170_p0 (2).jpg"
+
+      # 角色实例
+      characters:
+        - name: "博丽灵梦"
+          sprite: "normal"
+          offset: [50, 0]
+        - name: "我"
+          offset: [-50, 0]
+
+      # 对话和命令
+      dialogues:
+        - type: "dialogue"
+          speaker: "A2"
+          text: "（抬头看天）这个时间果然没什么人呢..."
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "（抱着专业课教材走近）你也来这么早？"
+          sprite: "happy"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "昨天不是说好要一起晨读吗？我带了你要的《西方经济学导论》。"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "（突然停下脚步）啊...你还记得这件事啊。"
+          sprite: "normal"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/动画2期初期宣传绘.png"
+
+        - type: "command"
+          cmd: "sound"
+          soundtype: "bgm"
+          action: "play"
+          param: "D:\\CloudMusic\\花江夏樹\\青春は残酷じゃない\\花江夏樹 - 青春は残酷じゃない.mp3"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "当然记得。（从包里取出书）我特意去图书馆借的最新版。"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "（接过书，手指不经意相触）谢...谢谢。（快速缩回手）"
+          sprite: "shy"
+
+        - type: "command"
+          cmd: "bg"
+          action: "title"
+          param: "Re:从零开始的JFE生活"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "（假装没注意到）对了，下周的期中考试，要不要一起复习？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "（眼睛一亮）真的可以吗？我正愁有些章节看不懂..."
+          sprite: "happy"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "（微笑）那就这么说定了。每天这个时间，樱花树下。"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "（点头）嗯！（突然想起什么）啊，第一节是田中教授的课..."
+          sprite: "normal"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "（看表）糟糕，快迟到了！我们跑过去吧！"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "（突然拉住女主的手腕）等一下！你书包拉链没拉好。"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "（慌乱地转身）呀！课本差点掉出来..."
+          sprite: "shy"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "（帮忙整理书包）这么马虎可不像平时的你。"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "（低头）因为昨晚复习到很晚...（突然惊醒）现在几点？！"
+          sprite: "normal"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "（看着手机）还有7分钟上课，从这里跑到教学楼..."
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "绝对来不及了！田中教授最讨厌迟到的学生！"
+          sprite: "angry"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "我知道近路！跟我来！（指向樱花林小道）"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "那条路不是禁止通行吗？（犹豫地抓着裙角）"
+          sprite: "normal"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "放心，只是施工告示还没撤掉。（眨眼）我每天晨跑都走这里。"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "（跟着跑进小道）要是被学生会抓到就完蛋了..."
+          sprite: "shy"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "（突然停下）嘘...前面有人！"

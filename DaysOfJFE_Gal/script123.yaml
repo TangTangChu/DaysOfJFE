@@ -1,0 +1,249 @@
+# 第三章：医务室的秘密时光
+# 角色定义
+characters:
+  我:
+    id: "A2"
+    base_pos: "right"
+    offset: [-50, 0]
+  白百璃:
+    id: "G1"
+    base_pos: "left"
+    offset: [50, 0]
+    sprites:
+      normal: "src/image/character/寄り道しちゃう？_84040068.png"
+  校医:
+    id: "B7"
+    base_pos: "left"
+    offset: [30, -10]
+  陈学姐:
+    id: "B8"
+    base_pos: "right"
+    offset: [-30, -20]
+
+# 章节数据
+chapter:
+  title: "第三章：白色房间的心跳加速"
+  scenes:
+    - scene_id: 3
+      background: "src/image/background/操场-内-3.jpg"
+      characters:
+        - name: "我"
+        - name: "白百璃"
+          sprite: "normal"
+      dialogues:
+        - type: "narration"
+          text: "军训第二天的烈日比昨天更加毒辣。整个上午的队列训练中，我的视线不断飘向医务室的方向..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "全体都有！原地休息十分钟！"
+
+        - type: "narration"
+          text: "教官口令刚落，我就抓起早就准备好的保温杯冲向医务室..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/风景-2.jpg"
+
+        - type: "narration"
+          text: "推开医务室的门，消毒水的气味中混着一丝若有若无的柑橘香。百璃正靠在床头看书，膝盖上缠着雪白的绷带..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "啊...TTQ..."
+
+        - type: "narration"
+          text: "她慌忙把书塞到枕头下，但眼尖的我还是看到了封面——《星空观测指南》..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "给...我让食堂阿姨特制的冰镇酸梅汤..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "えへへ...其实不用特地..."
+
+        - type: "narration"
+          text: "她捧着保温杯的样子像只小动物，阳光透过窗帘在她睫毛下投出细碎的阴影..."
+
+        - type: "dialogue"
+          speaker: "B7"
+          text: "来得正好，帮我把这个不安分的病人按住"
+
+        - type: "narration"
+          text: "校医拿着消毒棉走近，百璃立刻缩了缩脖子..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "那个...能不能轻一点..."
+
+        - type: "narration"
+          text: "她下意识抓住我的手腕，指尖微微发抖..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "别看伤口...看着我..."
+
+        - type: "narration"
+          text: "四目相对的瞬间，她突然安静下来。校医利落地换完药，留下我们两个红着脸沉默不语..."
+
+        - type: "narration"
+          text: "窗外传来训练的口号声，而医务室里只有电风扇转动的嗡嗡响..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "其实...我昨天看到流星了哦"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "诶？什么时候？"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "就是你背对着我整理书包的时候...我偷偷许愿了..."
+
+        - type: "narration"
+          text: "她的声音越来越小，最后几乎听不见。正当我想追问时，门突然被推开——"
+
+        - type: "dialogue"
+          speaker: "B8"
+          text: "打扰啦～我是学生会文艺部的陈学姐！"
+
+        - type: "narration"
+          text: "扎着双马尾的学姐抱着慰问品风风火火地闯进来，目光在我们之间来回扫视..."
+
+        - type: "dialogue"
+          speaker: "B8"
+          text: "哎呀呀～看来来得不是时候？"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "不、不是你想的那样！"
+
+        - type: "narration"
+          text: "百璃慌乱摆手的样子让学姐笑得更灿烂了..."
+
+        - type: "dialogue"
+          speaker: "B8"
+          text: "新生军训晚会需要伤员代表发言哦～白同学愿意吗？"
+
+        - type: "narration"
+          text: "趁着百璃和学姐讨论演讲稿，我注意到床头柜上放着一个精致的星空投影灯..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "这是...？"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "啊！那个是...昨晚睡不着向校医借的..."
+
+        - type: "narration"
+          text: "她按下开关，整个房间顿时布满星辰。特别的是，北斗七星的方位和昨晚观测到的一模一样..."
+
+        - type: "dialogue"
+          speaker: "B8"
+          text: "哇～好浪漫！要不要在晚会上用这个做背景？"
+
+        - type: "narration"
+          text: "学姐突然凑近观察投影灯，吓得百璃差点从床上跳起来..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "那边的男生！休息时间结束了！"
+
+        - type: "narration"
+          text: "窗外传来教官的怒吼，我只好匆匆起身..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "晚上...还能来吗？医生说最后一次换药最疼..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "嗯...我会带宵夜来"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/操场-内-3 - 副本.jpg"
+
+        - type: "narration"
+          text: "下午的战术训练格外艰苦。在低姿匍匐穿过铁丝网时，藏在口袋里的月亮书签突然掉了出来..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "这是什么？！战场上带这种东西会害死全队！"
+
+        - type: "narration"
+          text: "教官捡起书签的瞬间，女生方阵传来小小的骚动..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "...不过念在初犯，晚上交三千字检讨来换"
+
+        - type: "narration"
+          text: "没想到严厉的教官会网开一面。后来才知道是百璃托学姐去求的情..."
+
+        - type: "narration"
+          text: "晚饭时间，室友们围着我不停起哄..."
+
+        - type: "dialogue"
+          speaker: "A3"
+          text: "听说某人今天在医务室待了整整四十分钟～"
+
+        - type: "dialogue"
+          speaker: "KKK"
+          text: "陈学姐说你们超配的！"
+
+        - type: "narration"
+          text: "正不知如何反驳，手机突然震动——是百璃发来的照片：她举着写好的演讲稿，背景是星空投影..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/风景-2.jpg"
+
+        - type: "narration"
+          text: "晚上带着章鱼小丸子赶到医务室时，发现百璃已经睡着了。月光透过窗户洒在她的睡颜上..."
+
+        - type: "narration"
+          text: "床头放着写满修改痕迹的演讲稿，标题是《迷彩青春中最亮的星》..."
+
+        - type: "dialogue"
+          speaker: "B7"
+          text: "这丫头坚持要等你来才肯换药...结果等着等着就睡着了"
+
+        - type: "narration"
+          text: "校医无奈地摇摇头，递给我一个冰袋..."
+
+        - type: "dialogue"
+          speaker: "B7"
+          text: "帮她敷一下膝盖，我去查房"
+
+        - type: "narration"
+          text: "独自留在医务室里，我轻轻把冰袋贴在百璃发红的膝盖上..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "嗯...TTQ..."
+
+        - type: "narration"
+          text: "她在梦中呢喃着我的名字，手指无意识地抓住了我的衣角..."
+
+        - type: "narration"
+          text: "（这样下去...会变得不像自己了啊...）"
+
+        - type: "narration"
+          text: "轻轻把月亮书签放进她枕边的小书里，正准备离开时——"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "...不要走..."
+
+        - type: "narration"
+          text: "睡梦中的轻语让我僵在原地。最终还是在床边坐下，任由她攥着衣角..."
+
+        - type: "narration"
+          text: "窗外，夏夜的蝉鸣与远处的军歌声交织在一起。而在这个被月光浸透的白色房间里，只有两颗心跳的声音格外清晰..."

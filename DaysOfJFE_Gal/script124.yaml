@@ -1,0 +1,202 @@
+# 角色定义
+characters:
+  我:
+    id: "A2"
+    base_pos: "right"
+    offset: [-50, 0]
+  白百璃:
+    id: "G1"
+    base_pos: "left"
+    offset: [50, 0]
+    sprites:
+      normal: "src/image/character/寄り道しちゃう？_84040068.png"
+  教官:
+    id: "B6"
+    base_pos: "left"
+    offset: [30, -10]
+  领导:
+    id: "B9"
+    base_pos: "center"
+    offset: [0, -30]
+
+# 章节数据
+chapter:
+  title: "第四章：我们仍未知道那天开学典礼最后讲了什么"
+  scenes:
+    - scene_id: 4
+      background: "src/image/background/操场-内-3.jpg"
+      characters:
+        - name: "领导"
+        - name: "我"
+      dialogues:
+        - type: "narration"
+          text: "军训汇报表演结束的瞬间，操场上爆发出震耳欲聋的掌声——不是给主席台的领导，而是给正在列队退场的教官们。"
+
+        - type: "dialogue"
+          speaker: "B9"
+          text: "同学们请保持安静！下面进行开学典礼第一项，由我为大家讲解我校百年校史..."
+
+        - type: "narration"
+          text: "主席台上戴着厚镜片的领导翻开足足三十页的演讲稿，九月的烈日把塑胶跑道烤出刺鼻的气味..."
+
+        - type: "narration"
+          text: "汗水顺着迷彩服后背汇成小溪。前排已经有几个身影猫着腰溜向操场边缘的树荫..."
+
+        - type: "dialogue"
+          speaker: "A3"
+          text: "(小声)TTQ...顶不住了...我要run了..."
+
+        - type: "narration"
+          text: "室友比了个抹脖子的手势，指了指自己已经湿透的衣领。我偷偷瞄向女生方阵——"
+
+        - type: "command"
+          cmd: "character"
+          action: "show"
+          param: "G1"
+
+        - type: "narration"
+          text: "百璃正用帽子给自己扇风，注意到我的视线后突然眨眨右眼，做了个'溜了溜了'的手势..."
+
+        - type: "dialogue"
+          speaker: "B9"
+          text: "...我校始建于1923年，历经抗战时期的西迁..."
+
+        - type: "narration"
+          text: "领导的声音像催眠曲般回荡。越来越多的学生开始以各种奇葩姿势撤退——有假装系鞋带的，系着系着，人就不见踪影了"
+
+        - type: "narration"
+          text: "还有说着去厕所，一看直蹦田径场出口"
+
+        - type: "narration"
+          text: "这是上到真大学了"
+
+        - type: "narration"
+          text: "不过似乎有老师前往田径场出口准备堵人了，这可不妙"
+
+        - type: "narration"
+          text: "我看向百璃，她比了个手势，在说包在我身上"
+
+        - type: "narration"
+          text: "我回应了一个OK手势"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/操场-内-1.jpg"
+
+        - type: "narration"
+          text: "趁着领导低头翻页的瞬间，我和百璃同时猫腰冲向操场边缘的铁丝网..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "这边！我发现有个缺口！"
+
+        - type: "narration"
+          text: "她掀起铁丝网底部的破洞，迷彩服沾满草屑也毫不在意。我们像战地突击队般匍匐前进，身后还跟着七八个逃难同学..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/操场-外-1.jpg"
+
+        - type: "narration"
+          text: "成功突围后的小分队集体瘫倒在便利店前的树荫下。百璃从冰柜里抱出一堆冰镇汽水..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "我请客！庆祝我们重获自由～"
+
+        - type: "narration"
+          text: "她拉开易拉罐的瞬间，汽水泡沫喷了前排同学一脸，引发一阵爆笑..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/商业街-1.jpg"
+
+        - type: "narration"
+          text: "回宿舍的路上，树荫斑驳的柏油路蒸腾着热气。百璃突然扯了扯我的袖子..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "其实...教官们正在西门那边集合..."
+
+        - type: "narration"
+          text: "她指着手机里的匿名论坛，有人拍到了教官们默默收拾行李的照片..."
+
+        - type: "narration"
+          text: "等我们赶到西门时，大巴车旁已经围满了偷偷溜来的学生。教官们板着脸维持秩序，嘴角却控制不住地上扬..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "你们这群逃兵！开学典礼都敢翘！"
+
+        - type: "narration"
+          text: "我们教官的吼声比平时温柔十倍，最后一个上车前突然转身——"
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "书签小子！记得把老子的三千字检讨烧了！"
+
+        - type: "narration"
+          text: "在全场哄笑中，他突然朝我们敬了个标准的军礼。不知是谁先带的头，人群里响起参差不齐的《送战友》..."
+
+        - type: "narration"
+          text: "大巴启动时，百璃的眼泪终于掉下来。她手忙脚乱地擦着眼睛，迷彩服袖口沾满了深色的水痕..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "才、才不是哭呢！是汗水进眼睛了..."
+
+        - type: "narration"
+          text: "我默默递上那枚月亮书签，她愣了下，突然把创可贴拍在我手心——是从她膝盖伤口上最后拆下来的那片..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/宿舍-外-3.jpg"
+
+        - type: "narration"
+          text: "夕阳西下时，我们沿着染成金色的校园围墙慢慢走。百璃突然跳上路边凸起的路缘石，张开双臂保持平衡..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "喂～TTQ！明天开始就不用穿迷彩服了哦？"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "嗯...终于可以穿自己的衣服了..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "那...后天文学社招新，要不要一起？"
+
+        - type: "narration"
+          text: "她问得随意，脚步却突然乱了，差点从路缘石上栽下来。我连忙伸手扶住——"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "小心！...好啊，反正..."
+
+        - type: "narration"
+          text: "话没说完，百璃已经轻盈地跳下路缘石，逆着夕阳向前跑去..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "来追我啊！最后一个到食堂的请客！"
+
+        - type: "narration"
+          text: "她的马尾辫在晚风中飞扬，迷彩服衣摆像翅膀般展开。不知何时，夏末的蝉鸣已经变成了心跳的节奏..."
+
+        - type: "narration"
+          text: "食堂里挤满了同样逃掉典礼的新生。百璃在窗口前踮着脚尖张望，迷彩服背后透出汗水的痕迹..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "我要吃红烧肉！庆祝解放！"
+
+        - type: "narration"
+          text: "她转身时，夕阳正好透过窗户落在她脸上。那个瞬间我突然明白——"
+
+        - type: "narration"
+          text: "这个充满汗水和逃跑的夏天，将会成为最特别的记忆..."

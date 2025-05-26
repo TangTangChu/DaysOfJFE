@@ -1,0 +1,322 @@
+# 第五章
+# 角色定义
+characters:
+  我:
+    id: "A1"
+    base_pos: "right"
+    offset: [-50, 0]
+  白百璃:
+    id: "G1"
+    base_pos: "left"
+    offset: [50, 0]
+    sprites:
+      normal: "src/image/character/寄り道しちゃう？_84040068.png"
+  秋雨样大人:
+    id: "B10"
+    base_pos: "right"
+    sprites:
+      normal: "src/image/character/秋雨样.png"
+  社团招新员:
+    id: "B11"
+  凉宫春日:
+    id: "S1"
+    sprites:
+      normal: "src/image/character/涼宮ハルヒ_110906004.png"
+  唐可可:
+    id: "S2"
+    sprites:
+      normal: "src/image/character/クゥクゥちゃん_91289326.png"
+
+#会长是女仆大人
+chapter:
+  title: "第五章：这个网安协会大有问题（一）"
+  scenes:
+    - scene_id: 5
+      background: "src/image/background/风景-4.jpg"
+      characters:
+        - name: "我"
+        - name: "白百璃"
+          sprite: "normal"
+        - name: "秋雨样大人"
+          sprite: "normal"
+        - name: "凉宫春日"
+          sprite: "normal"
+        - name: "唐可可"
+          sprite: "normal"
+      dialogues:
+        - type: "narration"
+          text: "十月，社团招新季。‘百团大战’——这名字听着夸张，但实际场面更夸张。"
+
+        - type: "narration"
+          text: "广场上挤满了摊位，音乐社的吉他声、舞蹈团的音乐、闲着没事干开始叫卖式的招新……吵得像是要把新生们直接瓜分干净。"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "原来我们学校有这么多社团的啊"
+
+        - type: "narration"
+          text: "百璃拽着我的手腕在人群中穿梭，她的发梢扫过我的脸颊，带着淡淡的柑橘洗发水香气..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "title"
+          param: "第五章：这个网安协会大有问题（一）"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/教学楼-外-1.jpg"
+
+        - type: "narration"
+          text: "文学社摊位前，身着汉服的学姐正挥毫泼墨，墨香混着桂花香在秋风中飘散..."
+
+        - type: "dialogue"
+          speaker: "B11"
+          text: "同学对轻小说创作感兴趣吗？我们每周都有..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "快听！吉他协会的学姐在唱……！"
+
+        - type: "narration"
+          text: "没等文学社学姐说完，百璃就拉着我奔向声源。她总是这样，像永远充不满电的太阳能兔子，活力四射..."
+
+        - type: "command"
+          cmd: "character"
+          action: "hide"
+          param: "白百璃"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/教学楼-外-2.jpg"
+
+        - type: "dialogue"
+          speaker: "S1"
+          text: "你们之中若是有外星人、未来人、异世界人、超能力者的话，就尽管来找我吧。"
+
+        - type: "dialogue"
+          speaker: "S1"
+          text: "？你问要做什么？问这种问题可是要罚金啊！罚金！"
+
+        - type: "dialogue"
+          speaker: "S1"
+          text: "当然是成立SOS团了"
+
+        - type: "command"
+          cmd: "character"
+          action: "hide"
+          param: "凉宫春日"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "dialogue"
+          speaker: "S2"
+          text: "各位同学 学院偶像了解一下 学院偶像了解一下"
+
+        - type: "dialogue"
+          speaker: "S2"
+          text: "可可想和大家一起成为学院偶像"
+
+        - type: "dialogue"
+          speaker: "S2"
+          text: "一起来大展拳脚吧！！"
+
+        - type: "dialogue"
+          speaker: "S2"
+          text: "一起来做学院偶像吧！！！！！！！"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "command"
+          cmd: "character"
+          action: "hide"
+          param: "唐可可"
+
+        - type: "narration"
+          text: "在这片喧嚣中，我的目光被一个奇特的摊位吸引——"
+
+        - type: "narration"
+          text: "一位蓝发少女正在白板上写满复杂的数学公式，标题赫然是《论⑨在数论中的特殊地位》"
+
+        - type: "narration"
+          text: "听围观同学议论，这是一位叫琪露诺（Cirno）的教授，一位日本数学家。毕业于克莱登大学，美国科学院外籍院士，欧洲数学科学院院士、日本政府数学勋章获得者。"
+
+        - type: "narration"
+          text: "曾任东京大学数学系教授，北京大学数院访问学者，2099年获诺贝尔数学奖，因其对一位正整数极大值的数论性质的研究被授予菲尔兹奖。"
+
+        - type: "narration"
+          text: "正当我犹豫要不要凑热闹时，百璃已经拽着我转向计算机类社团区域"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "程序设计竞赛协会前人头攒动，而隔壁'网络安全协会'的摊位却冷清得诡异——"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "啊嘞？这里的工作人员集体失踪了吗？"
+
+        - type: "narration"
+          text: "正当我们疑惑时，背后突然传来空间扭曲般的波动..."
+
+        - type: "narration"
+          text: "突然，一阵旋风掠过，一个黑影以忍者般的姿态从天而降！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          displayname: "???"
+          text: "へんへん～！迷途的羔羊们啊，可愿与吾辈共赴CTF的修罗场？"
+
+        - type: "narration"
+          text: "我和百璃被这突如其来的登场吓得后退半步，只见来人单膝跪地，披风（其实是实验室白大褂）在风中猎猎作响"
+
+        - type: "dialogue"
+          speaker: "B10"
+          displayname: "???"
+          text: "Kukuku...被在下的瞬身之术震撼到了吗？"
+
+        - type: "narration"
+          text: "面前这位戴着反光眼镜的学长摆出中二的pose，镜片闪过一道白光"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "啊，那个..."
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "失礼了！在下乃网络安全协会至高统帅，代号'秋雨样大人'！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "作为你们的直系前辈，特此邀请二位加入吾等的'暗夜黑客团'！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "CTF的世界正在召唤新的勇者！保证不会让你们像在红魔馆修电脑时那样坐牢！"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "坐...坐牢？"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "啊哈哈，那是后日谈的内容了～"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "所以CTF到底是什么啊？"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "纳尼？！竟然不知道CTF？！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "听好了！这是吾等黑客的圣战！在网络空间的战场上夺取Flag的荣耀之战！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "Web、Pwn、Re、Misc...每道关卡都是对智慧的试炼！"
+
+        - type: "narration"
+          text: "显然，我和百璃都还是一头雾水"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "哼...看来需要实战教学呢！"
+
+        - type: "narration"
+          text: "会长突然摆出结印手势，大喝一声'通灵之术！'，从背包里召唤出一台贴满动漫贴纸的笔记本电脑"
+
+        - type: "narration"
+          text: "开机画面是某个举着机枪的蓝发少女...算了这不重要"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "看好了！这是新手试炼之门！"
+
+        - type: "narration"
+          text: "屏幕上赫然显示着一个登录框，上方用血色字体写着「SQL ME!」"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "让吾看看你的器量吧，少年！"
+
+        - type: "narration"
+          text: "我试着输入了 admin'or 1=1# ，密码随便填了个1"
+
+        - type: "narration"
+          text: "页面突然炸开烟花特效，跳出一行炫彩文字：flag{Ciallo～(∠・ω< )⌒☆}"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "哦哦哦！这就是觉醒的时刻！"
+
+        - type: "narration"
+          text: "会长突然抓住我的双手，眼镜反射出诡异的光芒"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "少年！你体内沉睡着黑客之魂！加入吾等吧！这是命运石之门的选择！"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "等等我还没..."
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "无需多言！能破解此术式说明你已具备资质！学号速速报来！(๑•̀ㅂ•́)و✧"
+
+        - type: "narration"
+          text: "就在我不知所措时，百璃的眼睛突然开始闪闪发光"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "教练！我也要成为黑客！o(*≧▽≦)ツ┏━┓"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "很好！新的战力加入了！"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "？？？百璃你怎么也？"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "虽然完全不懂，但是超——级酷啊！我们一起当CTFer吧！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "哼...CTF之路布满荆棘，但正因如此才显得荣耀！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "不过放心，在下的黑客道场会让你们脱胎换骨！"
+
+        - type: "narration"
+          text: "会长45度角仰望天空，白大褂无风自动"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "若不尽快招到新人，协会就要面临『废部危机』了...这一定是Dark Flame Master的阴谋！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "さあ、与吾等缔结契约吧！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "Waku waku～☆"
+
+        - type: "narration"
+          text: "就这样，我们莫名其妙地成为了网络安全协会的新成员"
+
+        - type: "command"
+          cmd: "bg"
+          action: "title"
+          param: "未完待续"

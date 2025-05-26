@@ -1,0 +1,200 @@
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include <yaml.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <windows.h>
+#include <wchar.h>
+#include <locale.h>
+#include <graphics.h>		// 引用图形库头文件
+#include <conio.h>
+
+
+// 设置控制台输出编码为 UTF-8
+void static setConsoleToUTF8() {
+    SetConsoleOutputCP(CP_UTF8);
+    setlocale(LC_ALL, "en_US.UTF-8");
+}
+
+// 角色结构体
+typedef struct {
+    wchar_t name[50];
+    wchar_t sprite[100];
+    wchar_t base_position[10]; // left/right/center
+    int offset[2];             // [x, y] 偏移量
+} Character;
+
+// 对话结构体
+typedef struct {
+    wchar_t character[50];
+    wchar_t text[200];
+    wchar_t effect[20];        // 入场效果，如 fadein/slidein
+} Dialogue;
+
+// 场景结构体
+typedef struct {
+    int scene_id;
+    wchar_t background[100];
+    Character characters[10]; // 场景角色
+    int character_count;
+    Dialogue dialogues[20];   // 场景对话
+    int dialogue_count;
+} Scene;
+
+// 章节结构体
+typedef struct {
+    wchar_t title[50];
+    Scene scenes[10];         // 章节场景
+    int scene_count;
+} Chapter;
+
+
+int parseYAML(const char* filename, Chapter* chapter) {
+    FILE* file = fopen(filename, "r");
+    if (!file) {
+        fwprintf(stderr, L"无法打开文件: %hs\n", filename);
+        return 0;
+    }
+
+    yaml_parser_t parser;
+    yaml_event_t event;
+    int done = 0;
+
+    if (!yaml_parser_initialize(&parser)) {
+        fwprintf(stderr, L"无法初始化 YAML 解析器\n");
+        fclose(file);
+        return 0;
+    }
+
+    yaml_parser_set_input_file(&parser, file);
+
+    Scene* current_scene = NULL;
+    Character* current_character = NULL;
+    Dialogue* current_dialogue = NULL;
+
+    while (!done) {
+        if (!yaml_parser_parse(&parser, &event)) {
+            fwprintf(stderr, L"解析错误\n");
+            break;
+        }
+
+        switch (event.type) {
+        case YAML_SCALAR_EVENT: {
+            char* value = (char*)event.data.scalar.value;
+            if (strcmp(value, "title") == 0) {
+                yaml_parser_parse(&parser, &event); // 读取标题
+                mbstowcs(chapter->title, (char*)event.data.scalar.value, sizeof(chapter->title) / sizeof(wchar_t));
+            }
+            else if (strcmp(value, "scene_id") == 0) {
+                yaml_parser_parse(&parser, &event); // 读取场景 ID
+                chapter->scenes[chapter->scene_count].scene_id = atoi((char*)event.data.scalar.value);
+                current_scene = &chapter->scenes[chapter->scene_count++];
+            }
+            else if (strcmp(value, "background") == 0) {
+                yaml_parser_parse(&parser, &event); // 读取背景
+                mbstowcs(current_scene->background, (char*)event.data.scalar.value, sizeof(current_scene->background) / sizeof(wchar_t));
+            }
+            else if (strcmp(value, "name") == 0) {
+                yaml_parser_parse(&parser, &event); // 读取角色名称
+                mbstowcs(current_scene->characters[current_scene->character_count].name, (char*)event.data.scalar.value, sizeof(current_scene->characters[0].name) / sizeof(wchar_t));
+                current_character = &current_scene->characters[current_scene->character_count++];
+            }
+            else if (strcmp(value, "base_position") == 0) {
+                yaml_parser_parse(&parser, &event); // 读取角色位置
+                mbstowcs(current_character->base_position, (char*)event.data.scalar.value, sizeof(current_character->base_position) / sizeof(wchar_t));
+            }
+            else if (strcmp(value, "offset") == 0) {
+                // 读取序列开始事件
+                yaml_parser_parse(&parser, &event);
+                if (event.type != YAML_SEQUENCE_START_EVENT) {
+                    fwprintf(stderr, L"错误: 预期是一个序列\n");
+                    break;
+                }
+
+                // 读取第一个偏移量值
+                yaml_parser_parse(&parser, &event);
+                if (event.type != YAML_SCALAR_EVENT) {
+                    fwprintf(stderr, L"错误: 预期是一个标量值\n");
+                    break;
+                }
+                current_character->offset[0] = atoi((char*)event.data.scalar.value);
+
+                // 读取第二个偏移量值
+                yaml_parser_parse(&parser, &event);
+                if (event.type != YAML_SCALAR_EVENT) {
+                    fwprintf(stderr, L"错误: 预期是一个标量值\n");
+                    break;
+                }
+                current_character->offset[1] = atoi((char*)event.data.scalar.value);
+
+                // 读取序列结束事件
+                yaml_parser_parse(&parser, &event);
+                if (event.type != YAML_SEQUENCE_END_EVENT) {
+                    fwprintf(stderr, L"错误: 预期是序列结束\n");
+                    break;
+                }
+            }
+            else if (strcmp(value, "character") == 0) {
+                yaml_parser_parse(&parser, &event); // 读取对话角色
+                mbstowcs(current_scene->dialogues[current_scene->dialogue_count].character, (char*)event.data.scalar.value, sizeof(current_scene->dialogues[0].character) / sizeof(wchar_t));
+                current_dialogue = &current_scene->dialogues[current_scene->dialogue_count++];
+            }
+            else if (strcmp(value, "text") == 0) {
+                yaml_parser_parse(&parser, &event); // 读取对话文本
+                mbstowcs(current_dialogue->text, (char*)event.data.scalar.value, sizeof(current_dialogue->text) / sizeof(wchar_t));
+            }
+            else if (strcmp(value, "effect") == 0) {
+                yaml_parser_parse(&parser, &event); // 读取对话效果
+                mbstowcs(current_dialogue->effect, (char*)event.data.scalar.value, sizeof(current_dialogue->effect) / sizeof(wchar_t));
+            }
+            break;
+        }
+        case YAML_SEQUENCE_START_EVENT:
+        case YAML_MAPPING_START_EVENT:
+            break;
+        case YAML_SEQUENCE_END_EVENT:
+        case YAML_MAPPING_END_EVENT:
+            break;
+        case YAML_STREAM_END_EVENT:
+            done = 1;
+            break;
+        default:
+            break;
+        }
+
+        yaml_event_delete(&event);
+    }
+
+    yaml_parser_delete(&parser);
+    fclose(file);
+    return 1;
+}
+void initWindow() {
+    initgraph(1280, 720);
+}
+int main() {
+    setConsoleToUTF8(); // 设置控制台编码为 UTF-8
+    initWindow();
+    /*
+    Chapter chapter;
+    memset(&chapter, 0, sizeof(chapter));
+
+    if (parseYAML("script1.yaml", &chapter)) {
+        wprintf(L"章节标题: %s\n", chapter.title);
+        for (int i = 0; i < chapter.scene_count; i++) {
+            Scene* scene = &chapter.scenes[i];
+            wprintf(L"场景 ID: %d\n", scene->scene_id);
+            wprintf(L"背景: %s\n", scene->background);
+            for (int j = 0; j < scene->character_count; j++) {
+                Character* character = &scene->characters[j];
+                wprintf(L"角色: %s, 位置: %s, 偏移: [%d, %d]\n", character->name, character->base_position, character->offset[0], character->offset[1]);
+            }
+            for (int j = 0; j < scene->dialogue_count; j++) {
+                Dialogue* dialogue = &scene->dialogues[j];
+                wprintf(L"对话: %s: %s (效果: %s)\n", dialogue->character, dialogue->text, dialogue->effect);
+            }
+        }
+    }
+    */
+    return 0;
+}
