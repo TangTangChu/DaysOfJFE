@@ -1,0 +1,30 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/.vs
+/DaysOfJFE_Gal/script122.yaml
+/DaysOfJFE_Gal/script123.yaml
+/DaysOfJFE_Gal/script124.yaml
+/DaysOfJFE_Gal/script125.yaml
+*.tlog
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+# User-specific files (MonoDevelop/Xamarin Studio)
+*.userprefs
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+**/x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/

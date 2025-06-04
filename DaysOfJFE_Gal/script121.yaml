@@ -1,0 +1,1548 @@
+# 角色定义
+characters:
+  我:
+    id: "A1"
+    base_pos: "right"
+    offset: [-50, 0]
+  ABC:
+    id: "A3"
+    base_pos: "right"
+    offset: [-30, -20]
+  白百璃:
+    id: "G1"
+    base_pos: "left"
+    offset: [50, 0]
+    sprites:
+      normal: "src/image/character/寄り道しちゃう？_84040068.png"
+  教官:
+    id: "B6"
+    base_pos: "left"
+    offset: [30, -10]
+  室友RRR:
+    id: "A3"
+    base_pos: "right"
+    offset: [-30, -20]
+  校医:
+    id: "B7"
+    base_pos: "left"
+    offset: [30, -10]
+  陈学姐:
+    id: "B8"
+    base_pos: "right"
+    offset: [-30, -20]
+  领导:
+    id: "B9"
+    base_pos: "center"
+    offset: [0, -30]
+  秋雨样大人:
+    id: "B10"
+    base_pos: "right"
+    sprites:
+      normal: "src/image/character/秋雨样.png"
+  社团招新员:
+    id: "B11"
+  凉宫春日:
+    id: "S1"
+    sprites:
+      normal: "src/image/character/涼宮ハルヒ_110906004.png"
+  唐可可:
+    id: "S2"
+    sprites:
+      normal: "src/image/character/クゥクゥちゃん_91289326.png"
+
+# 章节数据
+chapter:
+  title: "Re:从零开始的JFE生活"
+  scenes:
+    - scene_id: 1
+      background: "src/image/background/风景-3.jpg"
+      characters:
+        - name: "我"
+        - name: "白百璃"
+          sprite: "normal"
+          offset: [50, 0]
+      dialogues:
+        - type: "dialogue"
+          speaker: "A1"
+          text: "这里就是...JFE吗..."
+
+        - type: "narration"
+          text: "阳光透过树叶的缝隙洒在校门上，地图显示这里是麦庐校区南门。虽然位置有点偏僻，但意外地有种与世隔绝的学园感呢～"
+
+        - type: "narration"
+          text: "从今天开始的四年时光，就要在这个地方度过了..."
+
+        - type: "narration"
+          text: "（明明高考前还在补番的说...现在却真的站在大学门口了）"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "先去报到吧...希望不要迷路才好..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "title"
+          param: "Re:从零开始的JFE生活"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/教学楼-外-1.jpg"
+
+        - type: "narration"
+          text: "跟着指示牌走着走着，突然看到写着『计算机与人工智能学院』的帐篷。啊啦，这不就是我的归属地吗？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "那个...请问网安专业是在这里报到吗？"
+
+        - type: "dialogue"
+          speaker: "B1"
+          text: "是的哦～请在这份名单上找到你的名字签字～"
+
+        - type: "narration"
+          text: "目光扫过名单时，突然发现一个熟悉的名字...啊，果然她也在这里呢..."
+
+        - type: "dialogue"
+          speaker: "B"
+          text: "这是新生小礼物～祝你在JFE生活愉快！"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "非常感谢！"
+
+        - type: "narration"
+          text: "......"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/宿舍-外-2.jpg"
+
+        - type: "narration"
+          text: "宿舍楼前站着几位看起来很亲切的学长，其中一位看到我拖着行李箱，立刻小跑过来"
+
+        - type: "dialogue"
+          speaker: "B2"
+          text: "新生～需要帮忙吗？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "啊...那就麻烦学长了..."
+
+        - type: "narration"
+          text: "学长轻松提起我觉得超重的行李箱...这就是大学生和高中生的体力差距吗？"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/宿舍-内-1.jpg"
+
+        - type: "dialogue"
+          speaker: "B2"
+          text: "宿舍在几楼呢？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "5楼...XXX室..."
+
+        - type: "dialogue"
+          speaker: "B2"
+          text: "虽然楼层高了些，但采光超～级好哦！而且不容易受潮呢～"
+
+        - type: "narration"
+          text: "......"
+
+        - type: "dialogue"
+          speaker: "B2"
+          text: "到啦～祝你在JFE有个美好的开始！"
+
+        - type: "narration"
+          text: "推开宿舍门的瞬间...唔...这是什么神秘气味..."
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "这设计...两铺床共用一个梯子也太..."
+
+        - type: "narration"
+          text: "正当我对着谜之厕所气味发愁时，后背突然被轻轻拍了一下"
+
+        - type: "dialogue"
+          speaker: "A3"
+          text: "呀吼～你就是TTT同学吧？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "是、是的！请问你是...？"
+
+        - type: "dialogue"
+          speaker: "A3"
+          text: "我是RRR～从今天开始就是室友啦！请多指教～"
+
+        - type: "narration"
+          text: "看起来是个性格开朗的人呢...稍微放心了一点..."
+
+        - type: "narration"
+          text: "......"
+
+        - type: "dialogue"
+          speaker: "A4"
+          text: "我是UUU～请多关照desu！"
+
+        - type: "dialogue"
+          speaker: "KKK"
+          text: "我是KKK～よろしく！"
+
+        - type: "narration"
+          text: "大家很快就聊开了...从家乡特产聊到动漫游戏...意外的合拍呢～"
+
+        - type: "narration"
+          text: "......"
+
+        - type: "narration"
+          text: "稍微收拾后，我前往商业街去购买些生活用品"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/商业街-1.jpg"
+
+        - type: "narration"
+          text: "商业街比想象中要热闹呢～雪王奶茶、黑猫杂货...啊咧？居然没有老爷爷炸鸡吗..."
+
+        - type: "narration"
+          text: "正在挑选洗漱用品时，突然听到一个熟悉的声音——"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "啊啦～这不是TTQ吗？"
+
+        - type: "narration"
+          text: "转身看到的是...从小学开始就同班的青梅竹马——白百璃"
+
+        - type: "narration"
+          text: "（居然连大学都...同一个专业什么的...这也太巧了吧...）"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "好、好巧啊...百璃"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "えへへ～宿舍怎么样？我的室友们都超～可爱的说～"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "那个...明天开始军训...记得做好防晒..."
+
+        - type: "narration"
+          text: "百璃突然噗嗤一声笑了出来"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "ふふん～你以为我是谁呀？防晒霜当然会涂得满满的啦～"
+
+        - type: "narration"
+          text: "她把'满'字拖得长长的...可恶...这样太犯规了吧..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "TTQ也要好好用防晒霜哦～那可是我精心挑选的！用完了随时告诉我～"
+
+        - type: "narration"
+          text: "（糟糕...完全忘记防晒霜是她选的了...我在说什么啊...）"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "我还有事要先走啦～晚上视频见！"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "嗯...路上小心..."
+
+        - type: "command"
+          cmd: "character"
+          action: "hide"
+          param: "G1"
+
+        - type: "narration"
+          text: "看着她离去的背影...我不自觉地叹了口气..."
+
+        - type: "narration"
+          text: "......"
+
+        - type: "narration"
+          text: "晚餐时间决定去食堂看看...虽然商业街选择很多，但果然还是想先尝尝食堂的味道呢～"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/食堂-外-1.jpg"
+
+        - type: "narration"
+          text: "二食堂的灯光暖暖的...意外的很有氛围呢..."
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "阿姨...请给我蒸蛋和火腿肠炒玉米..."
+
+        - type: "narration"
+          text: "找了个靠窗的位置坐下...饭菜的味道...嗯...普通的好吃程度..."
+
+        - type: "narration"
+          text: "突然手机震动起来...是家庭群聊的视频通话..."
+
+        - type: "dialogue"
+          speaker: "妈"
+          text: "儿子～大学生活怎么样呀？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "才第一天啦...不过宿舍床铺设计有点微妙就是了..."
+
+        - type: "dialogue"
+          speaker: "妈"
+          text: "大学可是人生重要阶段！四六级要早点准备..."
+
+        - type: "narration"
+          text: "（这套说辞从小学听到现在都没变过呢...）"
+
+        - type: "narration"
+          text: "表姐突然加入了聊天..."
+
+        - type: "dialogue"
+          speaker: "表姐"
+          text: "哇～食堂变这么亮了？我们那时候可没这么豪华～"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "不过宿舍好像还是老样子..."
+
+        - type: "dialogue"
+          speaker: "表姐"
+          text: "啊～那个逆天床铺！我懂我懂！上铺一动下铺就地震对吧～"
+
+        - type: "narration"
+          text: "聊着聊着...妈妈突然问道..."
+
+        - type: "dialogue"
+          speaker: "妈"
+          text: "对了...怎么没看到百璃呀？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "她说...晚上再视频..."
+
+        - type: "narration"
+          text: "视频通话结束后，食堂的灯光已经渐渐暗了下来。窗外的天空染上了橘红色，校园里的路灯一盏接一盏亮起，像是为夜归人点亮的指引。"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "哈啊...第一天就这么结束了呢..."
+
+        - type: "narration"
+          text: "收拾好餐盘准备离开时，手机突然震动起来。屏幕上显示着『百璃』两个字，还配着她上次强行设置的可爱猫咪来电图片。"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "莫西莫西～TTQ现在在哪里呀？"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "刚、刚吃完晚饭，还在二食堂..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "太好了！我正好在商业街买奶茶，你要不要也来一杯？作为今天提醒我防晒的回礼～"
+
+        - type: "narration"
+          text: "电话那头传来吸管插入奶茶杯的清脆声响，还有百璃满足的叹息声。光是听着就让人想象出她眯着眼睛的幸福表情。"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "那...我要珍珠奶茶，少糖..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "はいはい～知道了啦！老样子嘛。对了对了，商业街这边超～热闹的，好像有什么新生欢迎活动！"
+
+        - type: "narration"
+          text: "背景音里突然传来一阵欢呼声，还有吉他弹唱的声音。这么晚了还有活动...大学生活果然和高中不一样呢。"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/商业街-1.jpg"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "这边这边～"
+
+        - type: "narration"
+          text: "循着声音望去，百璃正站在奶茶店门口朝我挥手。她今天扎了高马尾，在夜风中轻轻摇晃，手里还提着两杯奶茶。"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "给～你的少糖珍珠奶茶。我尝试了新品樱花奶盖，超好喝的！要尝尝看吗？"
+
+        - type: "narration"
+          text: "她突然把吸管凑到我面前，粉色的奶盖上还点缀着几片樱花形状的糖片。这个距离...间接kiss什么的..."
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "不、不用了！我喝自己的就好..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "诶～好可惜。那我们去逛逛摊位吧！动漫社在放《葬送的芙莉莲》最新话哦！"
+
+        - type: "narration"
+          text: "被她拉着袖子穿梭在人群中，各种声音混杂在一起——"
+
+        - type: "narration"
+          text: "『同学对摄影感兴趣吗？』、『电竞社招新中！』、『来尝尝手工社做的饼干吧～』"
+
+        - type: "narration"
+          text: "我记得学长说是要在10月份正式招新吧，这些社团这么积极的吗"
+
+        - type: "dialogue"
+          speaker: "B3"
+          text: "两位是新生吧？要不要参加我们的寻宝活动？找到藏在五个摊位的神秘印章就能获得限定礼品哦！"
+
+        - type: "narration"
+          text: "一位戴着猫耳发箍的学姐突然拦在我们面前，递来两张地图。"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "听起来很有趣呢！TTQ，我们一起来玩吧？"
+
+        - type: "narration"
+          text: "她眼睛闪闪发亮的样子让我根本无法拒绝..."
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "好、好啊..."
+
+        - type: "narration"
+          text: "第一个印章藏在文学社的摊位。需要回答一个关于轻小说的问题..."
+
+        - type: "dialogue"
+          speaker: "B4"
+          text: "请问《凉宫春日》系列中，阿虚的本名是？"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "我知道！是...唔..."
+
+        - type: "narration"
+          text: "百璃突然卡壳的样子有点可爱。我悄悄在她耳边提示..."
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "是约翰·史密斯..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "啊！是约翰·史密斯！"
+
+        - type: "narration"
+          text: "成功获得第一个印章后，百璃兴奋地拉着我奔向第二个地点——"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/风景-2.jpg"
+
+        - type: "narration"
+          text: "途中经过一片小树林，夜风吹拂树叶发出沙沙声响。路灯的光晕在地上画出一个个光圈，百璃的马尾辫在光影间跳跃。"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "快看！那边有萤火虫！"
+
+        - type: "narration"
+          text: "她突然停下脚步，指着树丛间闪烁的微光。在都市里很少能见到这样自然的景象..."
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "真的...好漂亮..."
+
+        - type: "narration"
+          text: "转头看向百璃时，发现她正用手机对着我。咔嚓一声——"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "抓到啦！TTQ难得的感动表情～"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "喂！删掉啊！"
+
+        - type: "narration"
+          text: "追逐打闹间，我们来到了第二个印章点——天文社的观星台。"
+
+        - type: "dialogue"
+          speaker: "B5"
+          text: "两位能找到北斗七星吗？找到就算通关哦～"
+
+        - type: "narration"
+          text: "百璃踮起脚尖凑近望远镜，发丝间传来淡淡的洗发水香气。"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "啊！找到了！那个像勺子的就是对吧？TTQ也来看看～"
+
+        - type: "narration"
+          text: "透过望远镜看到的星空比想象中还要璀璨。百璃在旁边小声哼着《星之歌》的旋律，让人心跳不由自主地加速..."
+
+        - type: "narration"
+          text: "就这样，我们陆续找到了剩下的三个印章——"
+
+        - type: "narration"
+          text: "在美食社尝到了学长特制的可丽饼、在手工社一起做了迷你黏土玩偶、最后在电竞社玩了局合作游戏..."
+
+        - type: "dialogue"
+          speaker: "B3"
+          text: "恭喜完成所有任务！这是给二位的限定礼品～"
+
+        - type: "narration"
+          text: "猫耳学姐递来一对星空主题的金属书签，在灯光下闪烁着细碎的光芒。"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "好漂亮！我要把星星图案的给你，月亮图案的留给我～"
+
+        - type: "narration"
+          text: "她不由分说地把书签塞进我手里，指尖传来的温度让人莫名安心。"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "谢、谢谢...今天很开心..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "ふふん～明天军训也要加油哦！我会在女生方阵看着你的！"
+
+        - type: "narration"
+          text: "回宿舍的路上，百璃突然停下脚步，指着天空——"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "快看！流星！"
+
+        - type: "narration"
+          text: "抬头望去，一道银线划过夜空。还没来得及许愿，就听见百璃小声说道..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "希望这四年...也能一直和TTQ在一起..."
+
+        - type: "narration"
+          text: "这句话轻得几乎要被夜风吹散，但我确实听到了。心脏像是被什么温暖的东西填满，手中的星空书签似乎也变得滚烫起来..."
+
+        - type: "narration"
+          text: "（这就是...大学生活的开始啊...）"
+
+        - type: "command"
+          cmd: "bg"
+          action: "title"
+          param: "本章终"
+
+        - type: "command"
+          cmd: "chapter"
+          action: "drop"
+          param: "2"
+
+    - scene_id: 2
+      background: "src/image/background/宿舍-内-1.jpg"
+      characters:
+        - name: "我"
+        - name: "教官"
+      dialogues:
+        - type: "command"
+          cmd: "bg"
+          action: "title"
+          param: "第二章：迷彩色的青春"
+
+        - type: "narration"
+          text: "清晨六点的闹钟刺破梦境，窗外还笼罩在朦胧的晨光中。今天是军训第一天..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "呜...这么早..."
+
+        - type: "narration"
+          text: "迷迷糊糊摸到手机，发现百璃五分钟前已经发来了消息——"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "记得涂防晒霜！我在女生宿舍楼下等你～(｀・ω・´)"
+
+        - type: "narration"
+          text: "附带一张对着镜子涂防晒霜的自拍，她穿着迷彩服的样子意外地帅气..."
+
+        - type: "dialogue"
+          speaker: "A3"
+          text: "哇哦～这是青梅竹马？关系真好呢～"
+
+        - type: "narration"
+          text: "不知何时醒来的室友趴在床边，一脸坏笑地看着我的手机屏幕..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "只、只是普通朋友！"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/宿舍-外-4.jpg"
+
+        - type: "narration"
+          text: "匆匆赶到楼下时，百璃正蹲在花坛边喂流浪猫。阳光透过树叶在她身上投下斑驳的光影..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "太慢了啦～诶？你该不会忘记涂防晒了吧？"
+
+        - type: "narration"
+          text: "她突然凑近盯着我的脸看，近到能数清睫毛的程度..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "涂、涂了！"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "骗人～耳朵后面都没涂到！真是的...闭上眼睛！"
+
+        - type: "narration"
+          text: "还没反应过来，清凉的防晒霜就抹上了耳后。她指尖的温度让那个部位瞬间发烫..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "好啦～这样就不会晒伤了！"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/操场-内-2.jpg"
+
+        - type: "narration"
+          text: "操场上已经列好方阵，穿着统一迷彩服的新生们像真正的士兵般整齐排列..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "立——正！"
+
+        - type: "narration"
+          text: "教官洪亮的声音瞬间让全场肃静。那是个皮肤黝黑的年轻军人，眼神锐利得像鹰..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "从今天开始，你们就是我的兵！军姿训练，现在开始！"
+
+        - type: "narration"
+          text: "九月的太阳毫不留情地炙烤着操场。汗水顺着额头滑进眼睛，火辣辣的疼..."
+
+        - type: "narration"
+          text: "余光瞥见女生方阵里的百璃，她挺直腰板的样子格外认真，发梢都闪着汗水的光芒..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "那个男生！手臂贴紧裤缝！"
+
+        - type: "narration"
+          text: "教官的呵斥声让我浑身一颤..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/操场-内-1.jpg"
+
+        - type: "narration"
+          text: "正午休息时分，我和室友们瘫倒在树荫下。迷彩服后背已经结出盐霜..."
+
+        - type: "dialogue"
+          speaker: "A3"
+          text: "要死了...这比高中军训严格十倍啊..."
+
+        - type: "dialogue"
+          speaker: "KKK"
+          text: "下午还有战术训练...杀了我吧..."
+
+        - type: "narration"
+          text: "突然一瓶冰镇矿泉水贴到我脸上——"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "补给送达～"
+
+        - type: "narration"
+          text: "百璃抱着几瓶水站在面前，她的迷彩服袖口卷到手肘，露出晒得微微发红的手臂..."
+
+        - type: "dialogue"
+          speaker: "A3"
+          text: "哦哦！天使降临！"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "大家都有份哦～教官说下午要练习匍匐前进，记得在膝盖上垫这个..."
+
+        - type: "narration"
+          text: "她从口袋里掏出几片护膝，连我的室友们都感动得快要流泪..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/操场-内-3.jpg"
+
+        - type: "narration"
+          text: "下午的训练场尘土飞扬。低姿匍匐时，手肘磨得生疼..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "动作太慢了！敌人早就把你打成筛子了！"
+
+        - type: "narration"
+          text: "教官的怒吼声中，突然传来女生的惊呼——"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "呀！"
+
+        - type: "narration"
+          text: "百璃摔倒在了训练场上，膝盖处渗出一片刺目的红色..."
+
+        - type: "command"
+          cmd: "sprite"
+          action: "change"
+          character: "G1"
+          param: "worried"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "教官！我送她去医务室！"
+
+        - type: "narration"
+          text: "没等批准就冲了过去。百璃疼得眼眶发红，却还强撑着微笑..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "对不起...给大家添麻烦了..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/风景-2.jpg"
+
+        - type: "narration"
+          text: "医务室里弥漫着消毒水的气味。校医清理伤口时，百璃死死攥着我的衣袖..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "唔...TTQ的手...借我一下..."
+
+        - type: "narration"
+          text: "她冰凉的手指与我十指相扣，掌心的薄茧是常年练习小提琴留下的痕迹..."
+
+        - type: "dialogue"
+          speaker: "校医"
+          text: "只是皮外伤，但这两天不能碰水。同学你扶她回去休息吧..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/风景-4.jpg"
+
+        - type: "narration"
+          text: "黄昏的校园小径上，百璃拄着临时拐杖一瘸一拐地走着..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "我背你吧..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "不、不用！这样就好..."
+
+        - type: "narration"
+          text: "她耳尖通红的样子比夕阳还要鲜艳..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "那个...谢谢你今天冲过来...明明教官都还没同意..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "那种时候谁还等批准啊..."
+
+        - type: "narration"
+          text: "沉默片刻后，她突然轻声哼起小时候经常一起唱的歌谣。晚风把旋律吹散在暮色里..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/宿舍-外-3-NIGHT.jpg"
+
+        - type: "narration"
+          text: "送她到宿舍楼下时，星空已经铺满天幕..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "明天...还能来看我吗？医生说换药会很疼..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "嗯...明天训练结束我就来..."
+
+        - type: "narration"
+          text: "她突然把什么东西塞进我手里——是那对书签中的月亮图案..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "这是护身符～明天训练要加油哦！"
+
+        - type: "narration"
+          text: "看着她单脚跳进宿舍楼的背影，胸口涌起一种奇妙的感觉..."
+
+        - type: "narration"
+          text: "回到宿舍时，室友们立刻围了上来..."
+
+        - type: "dialogue"
+          speaker: "A3"
+          text: "怎么样怎么样？进展如何？"
+
+        - type: "dialogue"
+          speaker: "KKK"
+          text: "教官后来还夸你有担当呢！"
+
+        - type: "narration"
+          text: "躺在床上翻看手机，发现百璃更新了动态——"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "虽然受伤了...但今天特别开心(◍•ᴗ•◍)❤"
+
+        - type: "narration"
+          text: "配图是透过医务室窗户拍的夕阳，角落里隐约能看见我的迷彩服衣袖..."
+
+        - type: "narration"
+          text: "（明天...一定要第一个去医务室看她...）"
+
+        - type: "narration"
+          text: "握紧月亮书签，我在军训第一天的疲惫中沉入梦乡..."
+
+        - type: "command"
+          cmd: "chapter"
+          action: "drop"
+          param: "3"
+    - scene_id: 3
+      background: "src/image/background/操场-内-3.jpg"
+      characters:
+        - name: "我"
+        - name: "白百璃"
+          sprite: "bandaged"
+      dialogues:
+        - type: "command"
+          cmd: "bg"
+          action: "title"
+          param: "第三章：WAKU WAKU!"
+
+        - type: "narration"
+          text: "军训第二天的烈日比昨天更加毒辣。整个上午的队列训练中，我的视线不断飘向医务室的方向..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "全体都有！原地休息十分钟！"
+
+        - type: "narration"
+          text: "教官口令刚落，我就抓起早就准备好的保温杯冲向医务室..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/风景-2.jpg"
+
+        - type: "narration"
+          text: "推开医务室的门，消毒水的气味中混着一丝若有若无的柑橘香。百璃正靠在床头看书，膝盖上缠着雪白的绷带..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "啊...TTQ..."
+
+        - type: "narration"
+          text: "她慌忙把书塞到枕头下，但眼尖的我还是看到了封面——《星空观测指南》..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "给...我让食堂阿姨特制的冰镇酸梅汤..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "えへへ...其实不用特地..."
+
+        - type: "narration"
+          text: "她捧着保温杯的样子像只小动物，阳光透过窗帘在她睫毛下投出细碎的阴影..."
+
+        - type: "dialogue"
+          speaker: "B7"
+          text: "来得正好，帮我把这个不安分的病人按住"
+
+        - type: "narration"
+          text: "校医拿着消毒棉走近，百璃立刻缩了缩脖子..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "那个...能不能轻一点..."
+
+        - type: "narration"
+          text: "她下意识抓住我的手腕，指尖微微发抖..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "别看伤口...看着我..."
+
+        - type: "narration"
+          text: "四目相对的瞬间，她突然安静下来。校医利落地换完药，留下我们两个红着脸沉默不语..."
+
+        - type: "narration"
+          text: "窗外传来训练的口号声，而医务室里只有电风扇转动的嗡嗡响..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "其实...我昨天看到流星了哦"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "诶？什么时候？"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "就是你背对着我整理书包的时候...我偷偷许愿了..."
+
+        - type: "narration"
+          text: "她的声音越来越小，最后几乎听不见。正当我想追问时，门突然被推开——"
+
+        - type: "dialogue"
+          speaker: "B8"
+          text: "打扰啦～我是学生会文艺部的陈学姐！"
+
+        - type: "narration"
+          text: "扎着双马尾的学姐抱着慰问品风风火火地闯进来，目光在我们之间来回扫视..."
+
+        - type: "dialogue"
+          speaker: "B8"
+          text: "哎呀呀～看来来得不是时候？"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "不、不是你想的那样！"
+
+        - type: "narration"
+          text: "百璃慌乱摆手的样子让学姐笑得更灿烂了..."
+
+        - type: "dialogue"
+          speaker: "B8"
+          text: "新生军训晚会需要伤员代表发言哦～白同学愿意吗？"
+
+        - type: "narration"
+          text: "趁着百璃和学姐讨论演讲稿，我注意到床头柜上放着一个精致的星空投影灯..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "这是...？"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "啊！那个是...昨晚睡不着向校医借的..."
+
+        - type: "narration"
+          text: "她按下开关，整个房间顿时布满星辰。特别的是，北斗七星的方位和昨晚观测到的一模一样..."
+
+        - type: "dialogue"
+          speaker: "B8"
+          text: "哇～好浪漫！要不要在晚会上用这个做背景？"
+
+        - type: "narration"
+          text: "学姐突然凑近观察投影灯，吓得百璃差点从床上跳起来..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "那边的男生！休息时间结束了！"
+
+        - type: "narration"
+          text: "窗外传来教官的怒吼，我只好匆匆起身..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "晚上...还能来吗？医生说最后一次换药最疼..."
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "嗯...我会带宵夜来"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/操场-内-3 - 副本.jpg"
+
+        - type: "narration"
+          text: "下午的战术训练格外艰苦。在低姿匍匐穿过铁丝网时，藏在口袋里的月亮书签突然掉了出来..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "这是什么？！战场上带这种东西会害死全队！"
+
+        - type: "narration"
+          text: "教官捡起书签的瞬间，女生方阵传来小小的骚动..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "...不过念在初犯，晚上交三千字检讨来换"
+
+        - type: "narration"
+          text: "没想到严厉的教官会网开一面。后来才知道是百璃托学姐去求的情..."
+
+        - type: "narration"
+          text: "晚饭时间，室友们围着我不停起哄..."
+
+        - type: "dialogue"
+          speaker: "A3"
+          text: "听说某人今天在医务室待了整整四十分钟～"
+
+        - type: "dialogue"
+          speaker: "KKK"
+          text: "陈学姐说你们超配的！"
+
+        - type: "narration"
+          text: "正不知如何反驳，手机突然震动——是百璃发来的照片：她举着写好的演讲稿，背景是星空投影..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/风景-2.jpg"
+
+        - type: "narration"
+          text: "晚上带着章鱼小丸子赶到医务室时，发现百璃已经睡着了。月光透过窗户洒在她的睡颜上..."
+
+        - type: "narration"
+          text: "床头放着写满修改痕迹的演讲稿，标题是《迷彩青春中最亮的星》..."
+
+        - type: "dialogue"
+          speaker: "B7"
+          text: "这丫头坚持要等你来才肯换药...结果等着等着就睡着了"
+
+        - type: "narration"
+          text: "校医无奈地摇摇头，递给我一个冰袋..."
+
+        - type: "dialogue"
+          speaker: "B7"
+          text: "帮她敷一下膝盖，我去查房"
+
+        - type: "narration"
+          text: "独自留在医务室里，我轻轻把冰袋贴在百璃发红的膝盖上..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "嗯...TTQ..."
+
+        - type: "narration"
+          text: "她在梦中呢喃着我的名字，手指无意识地抓住了我的衣角..."
+
+        - type: "narration"
+          text: "（这样下去...会变得不像自己了啊...）"
+
+        - type: "narration"
+          text: "轻轻把月亮书签放进她枕边的小书里，正准备离开时——"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "...不要走..."
+
+        - type: "narration"
+          text: "睡梦中的轻语让我僵在原地。最终还是在床边坐下，任由她攥着衣角..."
+
+        - type: "narration"
+          text: "窗外，夏夜的蝉鸣与远处的军歌声交织在一起。而在这个被月光浸透的白色房间里，只有两颗心跳的声音格外清晰..."
+
+        - type: "command"
+          cmd: "chapter"
+          action: "drop"
+          param: "4"
+    - scene_id: 4
+
+      background: "src/image/background/操场-内-3.jpg"
+      characters:
+        - name: "领导"
+        - name: "我"
+      dialogues:
+        - type: "command"
+          cmd: "bg"
+          action: "title"
+          param: "第四章：我们仍未知道那天开学典礼最后讲了什么"
+
+        - type: "narration"
+          text: "军训汇报表演结束的瞬间，操场上爆发出震耳欲聋的掌声——不是给主席台的领导，而是给正在列队退场的教官们。"
+
+        - type: "dialogue"
+          speaker: "B9"
+          text: "同学们请保持安静！下面进行开学典礼第一项，由我为大家讲解我校百年校史..."
+
+        - type: "narration"
+          text: "主席台上戴着厚镜片的领导翻开足足三十页的演讲稿，九月的烈日把塑胶跑道烤出刺鼻的气味..."
+
+        - type: "narration"
+          text: "汗水顺着迷彩服后背汇成小溪。前排已经有几个身影猫着腰溜向操场边缘的树荫..."
+
+        - type: "dialogue"
+          speaker: "A3"
+          text: "(小声)TTQ...顶不住了...我要run了..."
+
+        - type: "narration"
+          text: "室友比了个抹脖子的手势，指了指自己已经湿透的衣领。我偷偷瞄向女生方阵——"
+
+        - type: "command"
+          cmd: "character"
+          action: "show"
+          param: "G1"
+
+        - type: "narration"
+          text: "百璃正用帽子给自己扇风，注意到我的视线后突然眨眨右眼，做了个'溜了溜了'的手势..."
+
+        - type: "dialogue"
+          speaker: "B9"
+          text: "...我校始建于1923年，历经抗战时期的西迁..."
+
+        - type: "narration"
+          text: "领导的声音像催眠曲般回荡。越来越多的学生开始以各种奇葩姿势撤退——有假装系鞋带的，系着系着，人就不见踪影了"
+
+        - type: "narration"
+          text: "还有说着去厕所，一看直蹦田径场出口"
+
+        - type: "narration"
+          text: "这是上到真大学了"
+
+        - type: "narration"
+          text: "不过似乎有老师前往田径场出口准备堵人了，这可不妙"
+
+        - type: "narration"
+          text: "我看向百璃，她比了个手势，在说包在我身上"
+
+        - type: "narration"
+          text: "我回应了一个OK手势"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/操场-内-1.jpg"
+
+        - type: "narration"
+          text: "趁着领导低头翻页的瞬间，我和百璃同时猫腰冲向操场边缘的铁丝网..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "这边！我发现有个缺口！"
+
+        - type: "narration"
+          text: "她掀起铁丝网底部的破洞，迷彩服沾满草屑也毫不在意。我们像战地突击队般匍匐前进，身后还跟着七八个逃难同学..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/操场-外-1.jpg"
+
+        - type: "narration"
+          text: "成功突围后的小分队集体瘫倒在便利店前的树荫下。百璃从冰柜里抱出一堆冰镇汽水..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "我请客！庆祝我们重获自由～"
+
+        - type: "narration"
+          text: "她拉开易拉罐的瞬间，汽水泡沫喷了前排同学一脸，引发一阵爆笑..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/商业街-1.jpg"
+
+        - type: "narration"
+          text: "回宿舍的路上，树荫斑驳的柏油路蒸腾着热气。百璃突然扯了扯我的袖子..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "其实...教官们正在西门那边集合..."
+
+        - type: "narration"
+          text: "她指着手机里的匿名论坛，有人拍到了教官们默默收拾行李的照片..."
+
+        - type: "narration"
+          text: "等我们赶到西门时，大巴车旁已经围满了偷偷溜来的学生。教官们板着脸维持秩序，嘴角却控制不住地上扬..."
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "你们这群逃兵！开学典礼都敢翘！"
+
+        - type: "narration"
+          text: "我们教官的吼声比平时温柔十倍，最后一个上车前突然转身——"
+
+        - type: "dialogue"
+          speaker: "B6"
+          text: "书签小子！记得把老子的三千字检讨烧了！"
+
+        - type: "narration"
+          text: "在全场哄笑中，他突然朝我们敬了个标准的军礼。不知是谁先带的头，人群里响起参差不齐的《送战友》..."
+
+        - type: "narration"
+          text: "大巴启动时，百璃的眼泪终于掉下来。她手忙脚乱地擦着眼睛，迷彩服袖口沾满了深色的水痕..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "才、才不是哭呢！是汗水进眼睛了..."
+
+        - type: "narration"
+          text: "我默默递上那枚月亮书签，她愣了下，突然把创可贴拍在我手心——是从她膝盖伤口上最后拆下来的那片..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/宿舍-外-3.jpg"
+
+        - type: "narration"
+          text: "夕阳西下时，我们沿着染成金色的校园围墙慢慢走。百璃突然跳上路边凸起的路缘石，张开双臂保持平衡..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "喂～TTQ！明天开始就不用穿迷彩服了哦？"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "嗯...终于可以穿自己的衣服了..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "那...后天文学社招新，要不要一起？"
+
+        - type: "narration"
+          text: "她问得随意，脚步却突然乱了，差点从路缘石上栽下来。我连忙伸手扶住——"
+
+        - type: "dialogue"
+          speaker: "A2"
+          text: "小心！...好啊，反正..."
+
+        - type: "narration"
+          text: "话没说完，百璃已经轻盈地跳下路缘石，逆着夕阳向前跑去..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "来追我啊！最后一个到食堂的请客！"
+
+        - type: "narration"
+          text: "她的马尾辫在晚风中飞扬，迷彩服衣摆像翅膀般展开。不知何时，夏末的蝉鸣已经变成了心跳的节奏..."
+
+        - type: "narration"
+          text: "食堂里挤满了同样逃掉典礼的新生。百璃在窗口前踮着脚尖张望，迷彩服背后透出汗水的痕迹..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "我要吃红烧肉！庆祝解放！"
+
+        - type: "narration"
+          text: "她转身时，夕阳正好透过窗户落在她脸上。那个瞬间我突然明白——"
+
+        - type: "narration"
+          text: "这个充满汗水和逃跑的夏天，将会成为最特别的记忆..."
+
+        - type: "command"
+          cmd: "chapter"
+          action: "drop"
+          param: "5"
+    - scene_id: 5
+      background: "src/image/background/风景-4.jpg"
+      characters:
+        - name: "我"
+        - name: "白百璃"
+          sprite: "normal"
+        - name: "秋雨样大人"
+          sprite: "normal"
+        - name: "凉宫春日"
+          sprite: "normal"
+        - name: "唐可可"
+          sprite: "normal"
+      dialogues:
+        - type: "narration"
+          text: "十月，社团招新季。‘百团大战’——这名字听着夸张，但实际场面更夸张。"
+
+        - type: "narration"
+          text: "广场上挤满了摊位，音乐社的吉他声、舞蹈团的音乐、闲着没事干开始叫卖式的招新……吵得像是要把新生们直接瓜分干净。"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "原来我们学校有这么多社团的啊"
+
+        - type: "narration"
+          text: "百璃拽着我的手腕在人群中穿梭，她的发梢扫过我的脸颊，带着淡淡的柑橘洗发水香气..."
+
+        - type: "command"
+          cmd: "bg"
+          action: "title"
+          param: "第五章：这个网安协会大有问题（一）"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/教学楼-外-1.jpg"
+
+        - type: "narration"
+          text: "文学社摊位前，身着汉服的学姐正挥毫泼墨，墨香混着桂花香在秋风中飘散..."
+
+        - type: "dialogue"
+          speaker: "B11"
+          text: "同学对轻小说创作感兴趣吗？我们每周都有..."
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "快听！吉他协会的学姐在唱……！"
+
+        - type: "narration"
+          text: "没等文学社学姐说完，百璃就拉着我奔向声源。她总是这样，像永远充不满电的太阳能兔子，活力四射..."
+
+        - type: "command"
+          cmd: "character"
+          action: "hide"
+          param: "白百璃"
+
+        - type: "command"
+          cmd: "bg"
+          action: "change"
+          param: "src/image/background/教学楼-外-2.jpg"
+
+        - type: "dialogue"
+          speaker: "S1"
+          text: "你们之中若是有外星人、未来人、异世界人、超能力者的话，就尽管来找我吧。"
+
+        - type: "dialogue"
+          speaker: "S1"
+          text: "？你问要做什么？问这种问题可是要罚金啊！罚金！"
+
+        - type: "dialogue"
+          speaker: "S1"
+          text: "当然是成立SOS团了"
+
+        - type: "command"
+          cmd: "character"
+          action: "hide"
+          param: "凉宫春日"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "dialogue"
+          speaker: "S2"
+          text: "各位同学 学院偶像了解一下 学院偶像了解一下"
+
+        - type: "dialogue"
+          speaker: "S2"
+          text: "可可想和大家一起成为学院偶像"
+
+        - type: "dialogue"
+          speaker: "S2"
+          text: "一起来大展拳脚吧！！"
+
+        - type: "dialogue"
+          speaker: "S2"
+          text: "一起来做学院偶像吧！！！！！！！"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "command"
+          cmd: "character"
+          action: "hide"
+          param: "唐可可"
+
+        - type: "narration"
+          text: "在这片喧嚣中，我的目光被一个奇特的摊位吸引——"
+
+        - type: "narration"
+          text: "一位蓝发少女正在白板上写满复杂的数学公式，标题赫然是《论⑨在数论中的特殊地位》"
+
+        - type: "narration"
+          text: "听围观同学议论，这是一位叫琪露诺（Cirno）的教授，一位日本数学家。毕业于克莱登大学，美国科学院外籍院士，欧洲数学科学院院士、日本政府数学勋章获得者。"
+
+        - type: "narration"
+          text: "曾任东京大学数学系教授，北京大学数院访问学者，2099年获诺贝尔数学奖，因其对一位正整数极大值的数论性质的研究被授予菲尔兹奖。"
+
+        - type: "narration"
+          text: "正当我犹豫要不要凑热闹时，百璃已经拽着我转向计算机类社团区域"
+
+        - type: "narration"
+          text: "……"
+
+        - type: "narration"
+          text: "程序设计竞赛协会前人头攒动，而隔壁'网络安全协会'的摊位却冷清得诡异——"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "啊嘞？这里的工作人员集体失踪了吗？"
+
+        - type: "narration"
+          text: "正当我们疑惑时，背后突然传来空间扭曲般的波动..."
+
+        - type: "narration"
+          text: "突然，一阵旋风掠过，一个黑影以忍者般的姿态从天而降！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          displayname: "???"
+          text: "へんへん～！迷途的羔羊们啊，可愿与吾辈共赴CTF的修罗场？"
+
+        - type: "narration"
+          text: "我和百璃被这突如其来的登场吓得后退半步，只见来人单膝跪地，披风（其实是实验室白大褂）在风中猎猎作响"
+
+        - type: "dialogue"
+          speaker: "B10"
+          displayname: "???"
+          text: "Kukuku...被在下的瞬身之术震撼到了吗？"
+
+        - type: "narration"
+          text: "面前这位戴着反光眼镜的学长摆出中二的pose，镜片闪过一道白光"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "啊，那个..."
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "失礼了！在下乃网络安全协会至高统帅，代号'秋雨样大人'！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "作为你们的直系前辈，特此邀请二位加入吾等的'暗夜黑客团'！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "CTF的世界正在召唤新的勇者！保证不会让你们像在红魔馆修电脑时那样坐牢！"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "坐...坐牢？"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "啊哈哈，那是后日谈的内容了～"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "所以CTF到底是什么啊？"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "纳尼？！竟然不知道CTF？！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "听好了！这是吾等黑客的圣战！在网络空间的战场上夺取Flag的荣耀之战！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "Web、Pwn、Re、Misc...每道关卡都是对智慧的试炼！"
+
+        - type: "narration"
+          text: "显然，我和百璃都还是一头雾水"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "哼...看来需要实战教学呢！"
+
+        - type: "narration"
+          text: "会长突然摆出结印手势，大喝一声'通灵之术！'，从背包里召唤出一台贴满动漫贴纸的笔记本电脑"
+
+        - type: "narration"
+          text: "开机画面是某个举着机枪的蓝发少女...算了这不重要"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "看好了！这是新手试炼之门！"
+
+        - type: "narration"
+          text: "屏幕上赫然显示着一个登录框，上方用血色字体写着「SQL ME!」"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "让吾看看你的器量吧，少年！"
+
+        - type: "narration"
+          text: "我试着输入了 admin'or 1=1# ，密码随便填了个1"
+
+        - type: "narration"
+          text: "页面突然炸开烟花特效，跳出一行炫彩文字：flag{Ciallo～(∠・ω< )⌒☆}"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "哦哦哦！这就是觉醒的时刻！"
+
+        - type: "narration"
+          text: "会长突然抓住我的双手，眼镜反射出诡异的光芒"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "少年！你体内沉睡着黑客之魂！加入吾等吧！这是命运石之门的选择！"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "等等我还没..."
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "无需多言！能破解此术式说明你已具备资质！学号速速报来！(๑•̀ㅂ•́)و✧"
+
+        - type: "narration"
+          text: "就在我不知所措时，百璃的眼睛突然开始闪闪发光"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "教练！我也要成为黑客！o(*≧▽≦)ツ┏━┓"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "很好！新的战力加入了！"
+
+        - type: "dialogue"
+          speaker: "A1"
+          text: "？？？百璃你怎么也？"
+
+        - type: "dialogue"
+          speaker: "G1"
+          text: "虽然完全不懂，但是超——级酷啊！我们一起当CTFer吧！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "哼...CTF之路布满荆棘，但正因如此才显得荣耀！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "不过放心，在下的黑客道场会让你们脱胎换骨！"
+
+        - type: "narration"
+          text: "会长45度角仰望天空，白大褂无风自动"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "若不尽快招到新人，协会就要面临『废部危机』了...这一定是Dark Flame Master的阴谋！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "さあ、与吾等缔结契约吧！"
+
+        - type: "dialogue"
+          speaker: "B10"
+          text: "Waku waku～☆"
+
+        - type: "narration"
+          text: "就这样，我们莫名其妙地成为了网络安全协会的新成员"
+
+        - type: "command"
+          cmd: "bg"
+          action: "title"
+          param: "未完待续"
