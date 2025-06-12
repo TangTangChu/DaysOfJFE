@@ -6,29 +6,28 @@
 
 class MusicPlayer {
 public:
-    enum AudioType { BGM, VOICE, SFX };
+	enum AudioType { BGM, VOICE, SFX };
 
-    MusicPlayer(AudioType type = BGM);
-    ~MusicPlayer();
+	MusicPlayer(AudioType type = BGM);
+	~MusicPlayer();
 
+	bool Load(const std::wstring& filename);
+	bool Play(bool loop = false);
+	void Pause();
+	void Stop();
+	void SetVolume(float volume);
+	bool IsPlaying();
 
-    bool Load(const std::wstring& filename);
-    bool Play(bool loop = false);
-    void Pause();
-    void Stop();
-    void SetVolume(float volume);
-    bool IsPlaying();
-
-    void SetType(AudioType type);  
-    void FadeIn(float duration);   
-    void FadeOut(float duration);  
+	void SetType(AudioType type);
+	void FadeIn(float duration);
+	void FadeOut(float duration);
 
 private:
-    static bool bassInitialized;
-    static void InitializeBASS();
+	static bool bassInitialized;
+	static void InitializeBASS();
 
-    HSTREAM musicStream = 0;
-    AudioType currentType;
-    float currentVolume = 0.3f;  
-    bool isInitialized = false;
+	HSTREAM musicStream = 0;
+	AudioType currentType;
+	float currentVolume = 0.3f;
+	bool isInitialized = false;
 };

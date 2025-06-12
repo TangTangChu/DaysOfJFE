@@ -8,26 +8,26 @@ using namespace Gdiplus;
 
 class ImageContainer : public Controls {
 private:
-    std::unique_ptr<Image> image;
-    int Mode = 1;
-    RectF rectp;
-    BYTE alpha = 255;
+	std::unique_ptr<Image> image;
+	int Mode = 1;
+	RectF rectp;
+	BYTE alpha = 255;
 
-    mutable REAL cachedImageRatio = 0.0f;
-    mutable bool ratioCached = false;
+	mutable REAL cachedImageRatio = 0.0f;
+	mutable bool ratioCached = false;
 
-    mutable ImageAttributes imgAttr;
-    mutable ColorMatrix matrix;
+	mutable ImageAttributes imgAttr;
+	mutable ColorMatrix matrix;
 
 public:
-    ImageContainer() = default;
+	ImageContainer() = default;
 
-    void SetAlpha(BYTE alphaValue);
-    BYTE GetAlpha();
-    void SetImage(std::unique_ptr<Image> img);
+	void SetAlpha(BYTE alphaValue);
+	BYTE GetAlpha();
+	void SetImage(std::unique_ptr<Image> img);
 
-    void SetMode(int mode);
-    void SetRectF(RectF rectF);
+	void SetMode(int mode);
+	void SetRectF(RectF rectF);
 
-    void Draw(HDC hdc);
+	void Draw(HDC hdc);
 };

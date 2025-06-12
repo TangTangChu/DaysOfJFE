@@ -5,7 +5,7 @@
 Dialogue GameScript::ParseDialogueNode(const YAML::Node& node,
 	const std::map<std::wstring, std::wstring>& id_to_name) {
 	Dialogue dialogue;
-	
+
 	if (node["type"].as<std::string>() == "dialogue") {
 		// ID转换
 		std::wstring speakerId = Utils::utf8ToWide(node["speaker"].as<std::string>());
@@ -37,7 +37,7 @@ Command GameScript::ParseCommandNode(const YAML::Node& node) {
 		cmd.param = Utils::utf8ToWide(node["param"].as<std::string>());
 	}
 	if (node["soundtype"]) {
-		cmd.soundtype= Utils::utf8ToWide(node["soundtype"].as<std::string>());
+		cmd.soundtype = Utils::utf8ToWide(node["soundtype"].as<std::string>());
 	}
 	return cmd;
 }
@@ -54,7 +54,7 @@ bool GameScript::loadFromFile(const std::wstring& filename) {
 			id_to_name_.clear();
 			for (const auto& it : config["characters"]) {
 				std::wstring name = Utils::utf8ToWide(it.first.as<std::string>());
-				auto& def = chapter_.character_defs[name]; // 直接引用
+				auto& def = chapter_.character_defs[name];
 				def = parseCharacterDef(it.second);
 
 				if (!def.id.empty()) {
@@ -89,7 +89,6 @@ bool GameScript::loadFromFile(const std::wstring& filename) {
 				if (sceneNode["dialogues"]) {
 					for (const auto& item : sceneNode["dialogues"]) {
 						if (item["type"].as<std::string>() == "dialogue" || item["type"].as<std::string>() == "narration") {
-
 							scene.scriptSequence.push_back(ParseDialogueNode(item, id_to_name_));
 						}
 						else if (item["type"].as<std::string>() == "command") {

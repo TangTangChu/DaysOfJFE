@@ -10,6 +10,7 @@
 #include <variant>
 #include "TitleTransition.h"
 #include "LoadSceneWindow.h"
+#include "Timer.h"
 class GameWindow : public WindowPanel {
 public:
 	// UI组件
@@ -37,6 +38,9 @@ public:
 	// 角色管理
 	std::map<std::wstring, std::shared_ptr<ImageContainer>> characterContainers;
 
+
+	Timer timer;
+	bool isautoplay = false;
 	GameWindow();
 
 	void InitializeUI();

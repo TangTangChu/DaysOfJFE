@@ -19,5 +19,4 @@ public:
 	LoadSceneWindow(std::function<void()> b1, std::function<void()> b2, std::function<void()> b3,
 		std::function<void()> b4, std::function<void()> b5,
 		std::function<void()> bh);
-
 };

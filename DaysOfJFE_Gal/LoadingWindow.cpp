@@ -17,12 +17,12 @@ void LoadingWindow::SetFinalHook(std::function<void()> fh) {
 
 void LoadingWindow::StartAnimation() {
 	std::thread([this]() {
-		constexpr int frameInterval = 16;      // ~60fps
+		constexpr int frameInterval = 16;
 		if (imgList) {
 			for (auto& img : *imgList) {
 				if (img) {
 					BgAlpha = 0;
-					SetBackground(*img); 
+					SetBackground(*img);
 					auto start = std::chrono::steady_clock::now();
 					while (true) {
 						auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(

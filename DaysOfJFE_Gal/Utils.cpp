@@ -3,7 +3,6 @@
 
 std::wstring Utils::utf8ToWide(const std::string& str) {
 	if (str.empty()) return L"";
-	// 缓存转换所需大小（避免重复计算）
 	const int size_needed = MultiByteToWideChar(
 		CP_UTF8, 0, str.c_str(), (int)str.size(), nullptr, 0);
 	std::wstring wstr(size_needed, 0);

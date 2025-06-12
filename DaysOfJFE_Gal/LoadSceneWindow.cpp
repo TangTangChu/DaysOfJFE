@@ -3,7 +3,7 @@
 
 LoadSceneWindow::LoadSceneWindow(std::function<void()> b1, std::function<void()> b2, std::function<void()> b3,
 	std::function<void()> b4, std::function<void()> b5,
-	std::function<void()> bh):backHook(bh) {
+	std::function<void()> bh) :backHook(bh) {
 	btn_1 = std::make_shared<PrimaryButton>(L"³¡¾°1", b1);
 	btn_2 = std::make_shared<PrimaryButton>(L"³¡¾°2", b2);
 	btn_3 = std::make_shared<PrimaryButton>(L"³¡¾°3", b3);
@@ -47,7 +47,7 @@ LoadSceneWindow::LoadSceneWindow(std::function<void()> b1, std::function<void()>
 	AddControl(btn_4);
 	AddControl(btn_5);
 	AddControl(btn_bk);
-	
+
 	OnMouseRBUPHook = [this]() {if (backHook) backHook(); };
 	OnKeyDownHook = [this](ExMessage ex) {
 		if (ex.vkcode == VK_ESCAPE) {
@@ -55,4 +55,3 @@ LoadSceneWindow::LoadSceneWindow(std::function<void()> b1, std::function<void()>
 		}
 		};
 }
-

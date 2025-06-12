@@ -185,6 +185,7 @@
     <ClInclude Include="SettingWindow.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TextBlock.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="TitleTransition.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WindowManager.h" />

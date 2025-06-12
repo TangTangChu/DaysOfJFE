@@ -4,7 +4,8 @@
 #include "MusicPlayer.h"
 
 IGlobalEvent::IGlobalEvent(WindowManager* manager) : m_manager(manager),
-	bgm(MusicPlayer::BGM),voice(MusicPlayer::VOICE),sfx(MusicPlayer::SFX){}
+bgm(MusicPlayer::BGM), voice(MusicPlayer::VOICE), sfx(MusicPlayer::SFX) {
+}
 void IGlobalEvent::RequestWindowSwitch(int index) {
 	m_manager->SwitchWindow(index);
 }

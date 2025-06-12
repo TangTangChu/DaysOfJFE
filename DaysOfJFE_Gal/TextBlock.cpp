@@ -49,7 +49,7 @@ void TextBlock::TextAnimation()
 		auto now = std::chrono::steady_clock::now();
 		auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
 
-		if (elapsed >= (15 * charIndex)) // 基于时间的动画而非固定步进
+		if (elapsed >= (15 * charIndex))
 		{
 			{
 				std::lock_guard<std::mutex> lock(m_mutex);
@@ -57,7 +57,7 @@ void TextBlock::TextAnimation()
 			}
 			charIndex++;
 		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(1)); // 更短的休眠
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 }
 
@@ -93,6 +93,5 @@ void TextBlock::clearText()
 	ShowText = L"";
 }
 void TextBlock::SetStringFormat(std::unique_ptr<StringFormat> newFormat) {
-	// 使用 std::move 转移所有权
 	format = std::move(newFormat);
 }

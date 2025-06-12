@@ -106,18 +106,15 @@ void WindowManager::Redraw() {
 		Graphics graphics(hdc);
 		graphics.SetSmoothingMode(SmoothingModeAntiAlias);
 
-
 		float alpha = std::clamp(currentWindow->BgAlpha / 255.0f, 0.0f, 1.0f);
-
 
 		ColorMatrix matrix = {
 			1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
 			0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
 			0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, alpha, 0.0f,  
+			0.0f, 0.0f, 0.0f, alpha, 0.0f,
 			0.0f, 0.0f, 0.0f, 0.0f, 1.0f
 		};
-
 
 		static ImageAttributes imgAttr;
 		imgAttr.SetColorMatrix(&matrix);
@@ -139,7 +136,6 @@ void WindowManager::Redraw() {
 			srcRect.Y = (imageHeight - requiredHeight) / 2;
 			srcRect.Height = requiredHeight;
 		}
-
 
 		graphics.DrawImage(
 			currentWindow->background.get(),

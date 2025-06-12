@@ -91,7 +91,6 @@ void GameWindow::InitializeUI()
 		m_globalEvent->RequestWindowSwitch(sw);
 		});
 	btn_load = std::make_shared<PrimaryButton>(L"读取", [this]() {
-		
 		auto sw = std::make_shared<SettingWindow>([this]() {m_globalEvent->RequestWindowSwitch(1); }, L"(ᗜˬᗜ) 很遗憾，我没写这个\n这么短的剧情你就将就着看吧");
 		m_globalEvent->RequestWindowSwitch(sw);
 		});
@@ -102,7 +101,18 @@ void GameWindow::InitializeUI()
 	btn_qload = std::make_shared<PrimaryButton>(L"快速读取场景", [this]() {
 		m_globalEvent->RequestWindowSwitch(lsw);
 		});
-	btn_autoplay = std::make_shared<PrimaryButton>(L"自动播放", []() {});
+	btn_autoplay = std::make_shared<PrimaryButton>(L"自动播放", [this]() {
+		if (isautoplay) {
+			timer.stop();
+			isautoplay = false;
+			btn_autoplay->SetText(L"自动播放");
+		}
+		else {
+			isautoplay = true;
+			btn_autoplay->SetText(L"关闭自动播放");
+			timer.start(2500, [this]() {nextDialog(); });
+		}
+	});
 	btn_setting = std::make_shared<PrimaryButton>(L"设定",
 		[this]() {
 			auto sw = std::make_shared<SettingWindow>([this]() {m_globalEvent->RequestWindowSwitch(1); }, L"(ᗜˬᗜ) 很遗憾，我没写这个\n这游戏要什么设置，又没有奇奇怪怪的设置");
@@ -265,8 +275,7 @@ void GameWindow::LoadScene(int sceneId)
 			for (const auto& item : scene.scriptSequence) {
 				scriptQueue.push(item);
 			}
-
-			ProcessNextItem(); // 改为新的处理方法
+			ProcessNextItem();
 			break;
 		}
 	}
@@ -290,7 +299,7 @@ void GameWindow::ProcessNextItem() {
 	else {
 		const Dialogue& dlg = std::get<Dialogue>(item);
 		if (dlg.tag == DialogueType) {
-			if (dlg.displayname.size()!=0) {
+			if (dlg.displayname.size() != 0) {
 				SetCharacterName(dlg.displayname);
 			}
 			else {
@@ -353,8 +362,6 @@ void GameWindow::ExecuteCommand(const Command& cmd) {
 				m_globalEvent->sfx.SetVolume(std::stof(cmd.param));
 			}
 		}
-		
-		
 	}
 	else if (cmd.type == L"bg") {
 		if (cmd.action == L"change") {
@@ -367,7 +374,6 @@ void GameWindow::ExecuteCommand(const Command& cmd) {
 			titletrs->SetVisible(true);
 			std::thread([this]() {Sleep(4000);
 			titletrs->SetVisible(false); }).detach();
-			
 		}
 	}
 	else if (cmd.type == L"character") {
@@ -391,9 +397,7 @@ void GameWindow::ExecuteCommand(const Command& cmd) {
 			catch (const std::exception& e) {
 				std::cerr << "转换出错: " << e.what() << std::endl;
 			}
-
 		}
-
 	}
 }
 
@@ -442,7 +446,7 @@ RectF GameWindow::CalculateCharacterPosition(const CharacterDef& def, const Char
 	// 优先使用实例的offset，没有则用定义的offset
 	const std::vector<int>& usedOffset = instance.offset.empty() ? def.offset : instance.offset;
 
-	float x = 0, y = 300; 
+	float x = 0, y = 300;
 
 	if (def.base_pos == L"left")
 	{

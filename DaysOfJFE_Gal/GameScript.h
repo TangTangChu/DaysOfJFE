@@ -83,7 +83,6 @@ private:
 
 	std::map<std::wstring, std::wstring> id_to_name_;
 
-	// ½âÎö¸¨Öúº¯Êı
 	CharacterDef parseCharacterDef(const YAML::Node& node);
 	CharacterInstance parseCharacterInstance(const YAML::Node& node);
 };

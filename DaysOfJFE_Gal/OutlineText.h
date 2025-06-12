@@ -26,10 +26,11 @@ public:
 		Color outlineColor = Color(255, 25, 25, 25),
 		Color textColor = Color(255, 255, 255, 255)) :
 		text(text), fontSize(fontsize), outlineWidth(thick),
-		outlineColor(outlineColor), textColor(textColor),showtext(text){}
+		outlineColor(outlineColor), textColor(textColor), showtext(text) {
+	}
 
 	~OutlineText() {
-		stopAnimation(); 
+		stopAnimation();
 	}
 
 	void SetText(const std::wstring& newText);

@@ -31,7 +31,7 @@ int main() {
 	wm.SwitchWindow(lw);
 	lw->StartAnimation();
 	wm.Redraw();
-	gw->LoadScript(L"script121.yaml");                                                                        
+	gw->LoadScript(L"script121.yaml");
 	gw->LoadScene(1);
 	ExMessage ex;
 	while (true) {

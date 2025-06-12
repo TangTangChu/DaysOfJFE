@@ -6,7 +6,7 @@ class TitleTransition :public Controls {
 private:
 	std::wstring Text;
 public:
-	TitleTransition(std::wstring text =L"标题");
+	TitleTransition(std::wstring text = L"标题");
 	void SetText(std::wstring text);
 	void Draw(HDC hdc) override;
 };

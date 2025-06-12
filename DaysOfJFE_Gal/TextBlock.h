@@ -18,7 +18,7 @@ private:
 	std::atomic<bool> m_running{ false };
 	std::thread m_thread;
 	std::mutex m_mutex;
-	bool m_loopAnimation = false; 
+	bool m_loopAnimation = false;
 public:
 	TextBlock(const WCHAR* text, int fontsize = 14,
 		Color textColor = Color(255, 255, 255, 255)) :
