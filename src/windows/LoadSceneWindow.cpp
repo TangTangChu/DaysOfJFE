@@ -1,0 +1,72 @@
+#include "windows/LoadSceneWindow.h"
+#include <GLFW/glfw3.h>
+
+LoadSceneWindow::LoadSceneWindow(std::function<void()> b1,
+                                 std::function<void()> b2,
+                                 std::function<void()> b3,
+                                 std::function<void()> b4,
+                                 std::function<void()> b5,
+                                 std::function<void()> bh)
+    : backHook(std::move(bh)) {
+    btn_1 = std::make_shared<PrimaryButton>("场景1", std::move(b1));
+    btn_2 = std::make_shared<PrimaryButton>("场景2", std::move(b2));
+    btn_3 = std::make_shared<PrimaryButton>("场景3", std::move(b3));
+    btn_4 = std::make_shared<PrimaryButton>("场景4", std::move(b4));
+    btn_5 = std::make_shared<PrimaryButton>("场景5", std::move(b5));
+
+    btn_1->SetPosition(40, 600);
+    btn_1->SetSize(120, 40);
+    btn_1->SetFontSize(24);
+
+    btn_2->SetPosition(180, 600);
+    btn_2->SetSize(120, 40);
+    btn_2->SetFontSize(24);
+
+    btn_3->SetPosition(320, 600);
+    btn_3->SetSize(120, 40);
+    btn_3->SetFontSize(24);
+
+    btn_4->SetPosition(460, 600);
+    btn_4->SetSize(120, 40);
+    btn_4->SetFontSize(24);
+
+    btn_5->SetPosition(600, 600);
+    btn_5->SetSize(120, 40);
+    btn_5->SetFontSize(24);
+
+    auto btn_bk = std::make_shared<PrimaryButton>("返回", [this]() {
+        if (backHook)
+            backHook();
+    });
+
+    btn_bk->SetPosition(40, 800);
+    btn_bk->SetSize(200, 50);
+    btn_bk->SetFontSize(25);
+
+    tbk1 = std::make_shared<TextBlock>(
+        "我一共写了 5 个场景，你可以用下面的按钮调整至对应的场景", 30,
+        Color{0, 191, 255, 255});
+
+    tbk1->SetAlign(TextHAlign::Center, TextVAlign::Middle);
+    tbk1->SetRect(Rect{0, 0, 1600, 900});
+
+    AddMidgroundControl(tbk1);
+    AddMidgroundControl(btn_1);
+    AddMidgroundControl(btn_2);
+    AddMidgroundControl(btn_3);
+    AddMidgroundControl(btn_4);
+    AddMidgroundControl(btn_5);
+    AddMidgroundControl(btn_bk);
+
+    SetOnMouseRBUPHook([this]() {
+        if (backHook)
+            backHook();
+    });
+
+    SetOnKeyDownHook([this](int key, int) {
+        if (key == GLFW_KEY_ESCAPE) {
+            if (backHook)
+                backHook();
+        }
+    });
+}

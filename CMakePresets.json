@@ -1,0 +1,58 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 20,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "Default (vcpkg)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "Release (vcpkg)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+            }
+        },
+        {
+            "name": "clang-cl",
+            "displayName": "Clang-CL (vcpkg x64-windows)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-clangcl",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+                "CMAKE_C_COMPILER": "clang-cl",
+                "CMAKE_CXX_COMPILER": "clang-cl",
+                "VCPKG_TARGET_TRIPLET": "x64-windows"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "build-default",
+            "configurePreset": "default"
+        },
+        {
+            "name": "build-release",
+            "configurePreset": "release"
+        },
+        {
+            "name": "build-clang-cl",
+            "configurePreset": "clang-cl"
+        }
+    ]
+}

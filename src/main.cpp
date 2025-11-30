@@ -1,0 +1,69 @@
+#include "gfx/SkiaRenderer.h"
+#include "platform/GlfwPlatform.h"
+#include "ui/WindowManager.h"
+#include "windows/GameWindow.h"
+#include "windows/HomeWindow.h"
+#include "windows/LoadSceneWindow.h"
+#include "windows/LoadingWindow.h"
+#include "windows/SettingWindow.h"
+#include <GLFW/glfw3.h>
+
+
+int main() {
+    if (!glfwInit())
+        return -1;
+
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
+    GLFWwindow *win =
+        glfwCreateWindow(1600, 900, "DaysOfJFE", nullptr, nullptr);
+    if (!win) {
+        glfwTerminate();
+        return -1;
+    }
+    glfwMakeContextCurrent(win);
+    glfwSwapInterval(1);
+
+    int fbw, fbh;
+    glfwGetFramebufferSize(win, &fbw, &fbh);
+
+    SkiaRenderer renderer;
+    renderer.initGL(fbw, fbh);
+
+    WindowManager wm;
+
+    auto hw = std::make_shared<HomeWindow>();
+    auto gw = std::make_shared<GameWindow>();
+    auto lw = std::make_shared<LoadingWindow>();
+    auto lsw = std::make_shared<LoadSceneWindow>();
+    auto sw = std::make_shared<SettingWindow>();
+
+    wm.AddWindow(hw);
+    wm.AddWindow(gw);
+    wm.AddWindow(lw);
+    wm.AddWindow(lsw);
+    wm.AddWindow(sw);
+    wm.SwitchWindow(1);
+
+    GlfwPlatform platform(win, &wm);
+
+    while (!glfwWindowShouldClose(win)) {
+        glfwPollEvents();
+
+        int w, h;
+        glfwGetFramebufferSize(win, &w, &h);
+        renderer.resizeIfNeeded(w, h);
+
+        renderer.beginFrame();
+        wm.Redraw(renderer);
+        renderer.endFrame();
+
+        glfwSwapBuffers(win);
+    }
+
+    glfwDestroyWindow(win);
+    glfwTerminate();
+    return 0;
+}

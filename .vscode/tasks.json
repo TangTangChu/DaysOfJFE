@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "configure",
+            "type": "cmake",
+            "command": "configure"
+        },
+        {
+            "label": "build",
+            "type": "cmake",
+            "command": "build"
+        }
+    ]
+}
