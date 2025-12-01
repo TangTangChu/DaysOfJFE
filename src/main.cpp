@@ -7,8 +7,7 @@
 #include "windows/LoadingWindow.h"
 #include "windows/SettingWindow.h"
 #include <GLFW/glfw3.h>
-
-
+#include <glad/glad.h>
 int main() {
     if (!glfwInit())
         return -1;
@@ -25,7 +24,11 @@ int main() {
     }
     glfwMakeContextCurrent(win);
     glfwSwapInterval(1);
-
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        glfwDestroyWindow(win);
+        glfwTerminate();
+        return -1;
+    }
     int fbw, fbh;
     glfwGetFramebufferSize(win, &fbw, &fbh);
 
