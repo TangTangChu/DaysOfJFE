@@ -48,7 +48,7 @@ int main() {
     wm.AddWindow(lw);
     wm.AddWindow(lsw);
     wm.AddWindow(sw);
-    wm.SwitchWindow(1);
+    wm.SwitchWindow(0);
 
     GlfwPlatform platform(win, &wm);
 

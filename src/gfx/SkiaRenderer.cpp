@@ -51,11 +51,11 @@ void SkiaRenderer::beginFrame() {
     if (!m_canvas)
         return;
 
-    if (m_flipY) {
-        m_canvas->save();
-        m_canvas->translate(0, (SkScalar)m_height);
-        m_canvas->scale(1, -1);
-    }
+    // if (m_flipY) {
+    //     m_canvas->save();
+    //     m_canvas->translate(0, (SkScalar)m_height);
+    //     m_canvas->scale(1, -1);
+    // }
 }
 
 void SkiaRenderer::endFrame() {

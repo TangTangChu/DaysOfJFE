@@ -24,7 +24,7 @@ class SkiaRenderer final : public IRenderer {
   public:
     SkiaRenderer() = default;
     ~SkiaRenderer() override;
-    void initGL(int fbw, int fbh, bool flipY = true);
+    void initGL(int fbw, int fbh, bool flipY = false);
     void resizeIfNeeded(int fbw, int fbh);
     void beginFrame();
     void endFrame();
@@ -64,7 +64,7 @@ class SkiaRenderer final : public IRenderer {
   private:
     int m_width = 0;
     int m_height = 0;
-    bool m_flipY = true;
+    bool m_flipY = false;
 
     sk_sp<GrDirectContext> m_context;
     sk_sp<SkSurface> m_surface;
