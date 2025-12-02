@@ -1,5 +1,6 @@
 #pragma once
 #include "app/IGlobalEvent.h"
+#include "gfx/Canvas.h"
 #include "gfx/IRenderer.h"
 #include "platform/PlatformEvent.h"
 #include "ui/Controls.h"
@@ -14,7 +15,6 @@ class WindowPanel {
     std::vector<std::shared_ptr<Controls>> backgroundControls;
     std::vector<std::shared_ptr<Controls>> midgroundControls;
     std::vector<std::shared_ptr<Controls>> foregroundControls;
-
     mutable bool controlsDirty = true;
     mutable std::vector<std::shared_ptr<Controls>> allControlsCache;
 
@@ -34,7 +34,8 @@ class WindowPanel {
   public:
     WindowPanel() = default;
     virtual ~WindowPanel() = default;
-
+    virtual bool HasCustomBackground() const { return false; }
+    virtual void DrawCustomBackground(Canvas &c, IRenderer &r) {}
     void SetGlobalEvent(IGlobalEvent *globalEvent);
 
     void AddBackgroundControl(std::shared_ptr<Controls> ctrl);

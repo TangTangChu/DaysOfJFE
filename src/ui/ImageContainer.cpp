@@ -1,4 +1,5 @@
 #include "ui/ImageContainer.h"
+#include "gfx/Canvas.h"
 #include <algorithm>
 
 void ImageContainer::SetAlpha(unsigned char alphaValue) { alpha = alphaValue; }
@@ -17,16 +18,12 @@ void ImageContainer::ClearImage() {
 
 void ImageContainer::SetMode(int mode) { Mode = mode; }
 
-void ImageContainer::SetRectF(RectF rectF) { rectp = rectF; }
-
 void ImageContainer::Draw(IRenderer &r) {
     if (!IsVisible() || !image.has_value() || !(*image))
         return;
 
     const ImageHandle &img = *image;
-
-    if (img.width <= 0 || img.height <= 0 || rectp.Width <= 0 ||
-        rectp.Height <= 0)
+    if (img.width <= 0 || img.height <= 0 || bounds.w <= 0 || bounds.h <= 0)
         return;
 
     if (!ratioCached) {
@@ -34,50 +31,46 @@ void ImageContainer::Draw(IRenderer &r) {
         ratioCached = true;
     }
 
-    float destRatio = rectp.Width / rectp.Height;
+    Canvas c(r);
+    float destRatio = bounds.w / bounds.h;
     float a = std::clamp(alpha / 255.0f, 0.0f, 1.0f);
 
+    gfx::Rect src = gfx::Rect::XYWH(0, 0, (float)img.width, (float)img.height);
+    gfx::Rect dst = bounds;
+
     switch (Mode) {
-    case 1:
-        r.drawImage(img, 0, 0, (float)img.width, (float)img.height, rectp.X,
-                    rectp.Y, rectp.Width, rectp.Height, a);
+    case 1: // Stretch
+        c.image(img, src, dst, a);
         break;
 
-    case 2: {
-        RectF adjusted = rectp;
-
+    case 2: { // Contain（等比完整显示）
+        gfx::Rect adjusted = bounds;
         if (cachedImageRatio > destRatio) {
-            adjusted.Height = rectp.Width / cachedImageRatio;
-            adjusted.Y += (rectp.Height - adjusted.Height) / 2.0f;
+            adjusted.h = bounds.w / cachedImageRatio;
+            adjusted.y += (bounds.h - adjusted.h) * 0.5f;
         } else {
-            adjusted.Width = rectp.Height * cachedImageRatio;
-            adjusted.X += (rectp.Width - adjusted.Width) / 2.0f;
+            adjusted.w = bounds.h * cachedImageRatio;
+            adjusted.x += (bounds.w - adjusted.w) * 0.5f;
         }
-
-        r.drawImage(img, 0, 0, (float)img.width, (float)img.height, adjusted.X,
-                    adjusted.Y, adjusted.Width, adjusted.Height, a);
+        c.image(img, src, adjusted, a);
     } break;
 
-    case 3: {
-        float sx = 0, sy = 0, sw = (float)img.width, sh = (float)img.height;
-
+    case 3: { // Cover（等比裁切铺满）
+        gfx::Rect cropped = src;
         if (cachedImageRatio > destRatio) {
             float requiredHeight = (float)img.width / destRatio;
-            sy = ((float)img.height - requiredHeight) / 2.0f;
-            sh = requiredHeight;
+            cropped.y = ((float)img.height - requiredHeight) * 0.5f;
+            cropped.h = requiredHeight;
         } else {
             float requiredWidth = (float)img.height * destRatio;
-            sx = ((float)img.width - requiredWidth) / 2.0f;
-            sw = requiredWidth;
+            cropped.x = ((float)img.width - requiredWidth) * 0.5f;
+            cropped.w = requiredWidth;
         }
-
-        r.drawImage(img, sx, sy, sw, sh, rectp.X, rectp.Y, rectp.Width,
-                    rectp.Height, a);
+        c.image(img, cropped, bounds, a);
     } break;
 
     default:
-        r.drawImage(img, 0, 0, (float)img.width, (float)img.height, rectp.X,
-                    rectp.Y, rectp.Width, rectp.Height, a);
+        c.image(img, src, dst, a);
         break;
     }
 }

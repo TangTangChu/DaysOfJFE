@@ -1,17 +1,12 @@
 #pragma once
 #include "gfx/IRenderer.h"
+#include "gfx/geom/Geom.h"
 #include <functional>
 
-struct Rect {
-    int X = 0;
-    int Y = 0;
-    int Width = 0;
-    int Height = 0;
-};
 
 class Controls {
   protected:
-    Rect rect;
+    gfx::Rect bounds;
     int fontStyle = 0;
     int fontSize = 12;
     bool visible = true;
@@ -35,9 +30,9 @@ class Controls {
 
     bool Contains(int x, int y) const;
 
-    const Rect &GetRect() const;
-    void SetRect(Rect r);
-
+    void SetBounds(const gfx::Rect &r) { bounds = r; }
+    
+    const gfx::Rect &GetBounds() const { return bounds; }
     int GetX() const;
     int GetY() const;
     int GetWidth() const;

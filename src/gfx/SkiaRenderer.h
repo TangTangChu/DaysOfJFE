@@ -3,7 +3,6 @@
 #include <memory>
 #include <string>
 
-// core (路径仍是 include/core)
 #include "include/core/SkCanvas.h"
 #include "include/core/SkColor.h"
 #include "include/core/SkFont.h"
@@ -31,32 +30,32 @@ class SkiaRenderer final : public IRenderer {
     int width() const override { return m_width; }
     int height() const override { return m_height; }
     void clear(Color c) override;
-    void drawImage(const ImageHandle &img, float sx, float sy, float sw,
-                   float sh, float dx, float dy, float dw, float dh,
-                   float alpha = 1.0f) override;
 
-    void drawRect(float x, float y, float w, float h, Color c,
-                  bool filled = true, float strokeWidth = 1.0f) override;
-
-    void drawRoundRect(float x, float y, float w, float h, float radius,
-                       Color c, bool filled = true,
-                       float strokeWidth = 1.0f) override;
-
-    void drawRRect(float x, float y, float w, float h, CornerRadius rad,
-                   Color c, bool filled = true,
-                   float strokeWidth = 1.0f) override;
-
-    void drawLine(float x1, float y1, float x2, float y2, Color c,
+    void drawRect(const gfx::Rect &rc, Color c, bool filled = true,
                   float strokeWidth = 1.0f) override;
 
-    void drawCircle(float cx, float cy, float r, Color c, bool filled = true,
+    void drawRoundRect(const gfx::Rect &rc, float radius, Color c,
+                       bool filled = true, float strokeWidth = 1.0f) override;
+
+    void drawRRect(const gfx::Rect &rc, const gfx::CornerRadius &rad, Color c,
+                   bool filled = true, float strokeWidth = 1.0f) override;
+
+    void drawLine(gfx::Vec2 a, gfx::Vec2 b, Color c,
+                  float strokeWidth = 1.0f) override;
+
+    void drawCircle(gfx::Vec2 center, float r, Color c, bool filled = true,
                     float strokeWidth = 1.0f) override;
 
-    void drawText(const std::string &utf8, float x, float y, float sizePx,
-                  Color c, TextHAlign hAlign = TextHAlign::Left,
+    void drawImageRect(const ImageHandle &img, const gfx::Rect &src,
+                       const gfx::Rect &dst, float alpha = 1.0f) override;
+
+    TextMetrics measureText(const std::string &utf8, float sizePx) override;
+
+    void drawText(const std::string &utf8, gfx::Vec2 pos, float sizePx, Color c,
+                  TextHAlign hAlign = TextHAlign::Left,
                   TextVAlign vAlign = TextVAlign::Baseline) override;
 
-    void drawTextStroke(const std::string &utf8, float x, float y, float sizePx,
+    void drawTextStroke(const std::string &utf8, gfx::Vec2 pos, float sizePx,
                         Color fill, Color stroke, float strokeWidth,
                         TextHAlign hAlign = TextHAlign::Left,
                         TextVAlign vAlign = TextVAlign::Baseline) override;

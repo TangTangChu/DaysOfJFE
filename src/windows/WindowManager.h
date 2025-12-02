@@ -3,7 +3,7 @@
 #include "gfx/IRenderer.h"
 #include "platform/PlatformEvent.h"
 #include "ui/Controls.h"
-#include "ui/WindowPanel.h"
+#include "windows/WindowPanel.h"
 #include <functional>
 #include <memory>
 #include <string>

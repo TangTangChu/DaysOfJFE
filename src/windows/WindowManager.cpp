@@ -1,4 +1,5 @@
-#include "ui/WindowManager.h"
+#include "windows/WindowManager.h"
+#include "gfx/Canvas.h"
 #include <algorithm>
 
 void WindowManager::SetGlobalEvent(IGlobalEvent *g) { globalEvent = g; }
@@ -70,8 +71,14 @@ void WindowManager::Redraw(IRenderer &r) {
 
     r.clear(Color{255, 255, 255, 255});
 
-    if (auto *bgp = currentWindow->GetBackground()) {
+    Canvas c(r);
+
+    if (currentWindow->HasCustomBackground()) {
+        currentWindow->DrawCustomBackground(c, r);
+    }
+    else if (auto *bgp = currentWindow->GetBackground()) {
         const auto &bg = *bgp;
+
         float scale = std::min((float)r.width() / (float)bg.width,
                                (float)r.height() / (float)bg.height);
         float w = bg.width * scale;
@@ -79,8 +86,11 @@ void WindowManager::Redraw(IRenderer &r) {
         float x = (r.width() - w) * 0.5f;
         float y = (r.height() - h) * 0.5f;
 
-        r.drawImage(bg, 0, 0, (float)bg.width, (float)bg.height, x, y, w, h,
-                    1.0f);
+        gfx::Rect src =
+            gfx::Rect::XYWH(0, 0, (float)bg.width, (float)bg.height);
+        gfx::Rect dst = gfx::Rect::XYWH(x, y, w, h);
+
+        c.image(bg, src, dst, 1.0f);
     }
 
     auto controls = currentWindow->GetAllControls();

@@ -24,38 +24,36 @@ void Controls::OnMouseReset() {
 }
 
 bool Controls::Contains(int x, int y) const {
-    return x >= rect.X && x < rect.X + rect.Width && y >= rect.Y &&
-           y < rect.Y + rect.Height;
+    return x >= bounds.x && x < bounds.x + bounds.w && y >= bounds.y &&
+           y < bounds.y + bounds.h;
 }
 
-const Rect &Controls::GetRect() const { return rect; }
-void Controls::SetRect(Rect r) { rect = r; }
 
-int Controls::GetX() const { return rect.X; }
-int Controls::GetY() const { return rect.Y; }
-int Controls::GetWidth() const { return rect.Width; }
-int Controls::GetHeight() const { return rect.Height; }
+int Controls::GetX() const { return bounds.x; }
+int Controls::GetY() const { return bounds.y; }
+int Controls::GetWidth() const { return bounds.w; }
+int Controls::GetHeight() const { return bounds.h; }
 
-void Controls::SetX(int x) { rect.X = x; }
-void Controls::SetY(int y) { rect.Y = y; }
-void Controls::SetWidth(int w) { rect.Width = w; }
-void Controls::SetHeight(int h) { rect.Height = h; }
+void Controls::SetX(int x) { bounds.x = x; }
+void Controls::SetY(int y) { bounds.y = y; }
+void Controls::SetWidth(int w) { bounds.w = w; }
+void Controls::SetHeight(int h) { bounds.h = h; }
 
 void Controls::SetPosition(int x, int y) {
-    rect.X = x;
-    rect.Y = y;
+    bounds.x = x;
+    bounds.y = y;
 }
 
 void Controls::SetSize(int w, int h) {
-    rect.Width = w;
-    rect.Height = h;
+    bounds.w = w;
+    bounds.h = h;
 }
 
 void Controls::SetBounds(int x, int y, int w, int h) {
-    rect.X = x;
-    rect.Y = y;
-    rect.Width = w;
-    rect.Height = h;
+    bounds.x = x;
+    bounds.y = y;
+    bounds.w = w;
+    bounds.h = h;
 }
 
 int Controls::GetFontSize() const { return fontSize; }

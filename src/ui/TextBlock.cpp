@@ -1,5 +1,7 @@
 #include "ui/TextBlock.h"
+#include "gfx/Canvas.h"
 #include <chrono>
+
 
 void TextBlock::SetText(const std::string &newText) {
     std::lock_guard<std::mutex> lock(m_mutex);
@@ -20,23 +22,22 @@ void TextBlock::Draw(IRenderer &r) {
         current = ShowText;
     }
 
-    float anchorX = (float)GetX();
-    float anchorY = (float)GetY();
-    float w = (float)GetWidth();
-    float h = (float)GetHeight();
+    Canvas c(r);
 
-    if (hAlign == TextHAlign::Center)
-        anchorX = (float)GetX() + w * 0.5f;
-    else if (hAlign == TextHAlign::Right)
-        anchorX = (float)GetX() + w;
+    TextStyle ts;
+    ts.sizePx = (float)fontSize;
+    ts.color = TextColor;
 
-    if (vAlign == TextVAlign::Middle)
-        anchorY = (float)GetY() + h * 0.5f;
-    else if (vAlign == TextVAlign::Bottom)
-        anchorY = (float)GetY() + h;
+    AlignH ah = (hAlign == TextHAlign::Left)     ? AlignH::Left
+                : (hAlign == TextHAlign::Center) ? AlignH::Center
+                                                 : AlignH::Right;
 
-    r.drawText(current, anchorX, anchorY, (float)fontSize, TextColor, hAlign,
-               vAlign);
+    AlignV av = (vAlign == TextVAlign::Top)      ? AlignV::Top
+                : (vAlign == TextVAlign::Middle) ? AlignV::Middle
+                : (vAlign == TextVAlign::Bottom) ? AlignV::Bottom
+                                                 : AlignV::Baseline;
+
+    c.textInRect(current, bounds, ts, ah, av);
 }
 
 void TextBlock::TextAnimation() {

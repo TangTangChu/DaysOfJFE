@@ -1,5 +1,6 @@
 #pragma once
 #include "gfx/IRenderer.h"
+#include "gfx/geom/Geom.h"
 #include "ui/Controls.h"
 #include <functional>
 #include <string>
@@ -8,7 +9,7 @@ class Button : public Controls {
   protected:
     std::string text;
     Color textColor;
-    CornerRadius radius{20.f, 20.f, 20.f, 20.f};
+    gfx::CornerRadius radius{20.f, 20.f, 20.f, 20.f};
 
     Button(const std::string &text, std::function<void()> onClick,
            Color textColor)
@@ -45,8 +46,8 @@ class PrimaryButton : public Button {
         finaBrush = c;
     }
     void setHoverBgColor(Color c) { hoverBgColor = c; }
-    void SetCornerRadius(CornerRadius rad) { radius = rad; }
-    void SetCornerRadius(float r) { radius = CornerRadius{r, r, r, r}; }
+    void SetCornerRadius(gfx::CornerRadius rad) { radius = rad; }
+    void SetCornerRadius(float r) { radius = gfx::CornerRadius{r, r, r, r}; }
     void SetCornerRadius(int r) { SetCornerRadius((float)r); }
 
     void Draw(IRenderer &r) override;

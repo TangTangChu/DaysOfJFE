@@ -1,6 +1,6 @@
 #include "windows/LoadSceneWindow.h"
 #include <GLFW/glfw3.h>
-
+#include "gfx/geom/Geom.h"
 LoadSceneWindow::LoadSceneWindow(std::function<void()> b1,
                                  std::function<void()> b2,
                                  std::function<void()> b3,
@@ -48,7 +48,7 @@ LoadSceneWindow::LoadSceneWindow(std::function<void()> b1,
         Color{0, 191, 255, 255});
 
     tbk1->SetAlign(TextHAlign::Center, TextVAlign::Middle);
-    tbk1->SetRect(Rect{0, 0, 1600, 900});
+    tbk1->SetBounds(gfx::Rect{0, 0, 1600, 900});
 
     AddMidgroundControl(tbk1);
     AddMidgroundControl(btn_1);

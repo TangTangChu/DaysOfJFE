@@ -1,6 +1,6 @@
 #include "gfx/SkiaRenderer.h"
 #include "platform/GlfwPlatform.h"
-#include "ui/WindowManager.h"
+#include "windows/WindowManager.h"
 #include "windows/GameWindow.h"
 #include "windows/HomeWindow.h"
 #include "windows/LoadSceneWindow.h"

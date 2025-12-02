@@ -1,14 +1,39 @@
 ﻿#include "windows/GameWindow.h"
 #include "gfx/Assets.h"
+#include "gfx/geom/Geom.h"
 #include "windows/LoadSceneWindow.h"
 #include "windows/SettingWindow.h"
-
 #include <GLFW/glfw3.h>
 #include <algorithm>
 #include <chrono>
 #include <format>
 #include <iostream>
 #include <thread>
+
+
+auto fadePair = [](std::shared_ptr<ImageContainer> out,
+                   std::shared_ptr<ImageContainer> in, int totalMs) {
+    std::thread([out, in, totalMs]() {
+        constexpr int frameInterval = 16;
+        auto start = std::chrono::steady_clock::now();
+        int frame_count = 0;
+        while (true) {
+            auto elapsed =
+                std::chrono::duration_cast<std::chrono::microseconds>(
+                    std::chrono::steady_clock::now() - start)
+                    .count();
+            float p = std::clamp(elapsed / (totalMs * 1000.f), 0.f, 1.f);
+            float e = p * p;
+            in->SetAlpha((unsigned char)(255 * e));
+            out->SetAlpha((unsigned char)(255 * (1 - e)));
+            if (p >= 1.f)
+                break;
+            auto target = start + std::chrono::milliseconds(frameInterval *
+                                                            ++frame_count);
+            std::this_thread::sleep_until(target);
+        }
+    }).detach();
+};
 
 GameWindow::GameWindow()
     : tbk(std::make_shared<TextBlock>("", 24)),
@@ -44,15 +69,15 @@ void GameWindow::InitializeUI() {
 
     Bg1->SetAlpha(0);
     Bg2->SetAlpha(255);
-    Bg1->SetRectF(RectF{0.f, 0.f, 1600.f, 900.f});
-    Bg2->SetRectF(RectF{0.f, 0.f, 1600.f, 900.f});
+    Bg1->SetBounds(gfx::Rect::XYWH(0, 0, ViewW, ViewH));
+    Bg2->SetBounds(gfx::Rect::XYWH(0, 0, ViewW, ViewH));
     Bg1->SetMode(3);
     Bg2->SetMode(3);
 
     cp1 = std::make_shared<ClickPaper>(nextDialog);
-    cp1->SetRect(Rect{0, 0, 1600, 900});
+    cp1->SetBounds(gfx::Rect{0, 0, ViewW, ViewH});
 
-    ic1->SetRectF(RectF{0.f, 615.f, 1335.f, 285.f});
+    ic1->SetBounds(gfx::Rect::XYWH(0, 615, 1335, 285));
     ic1->SetMode(3);
     ic1->SetImage(Assets::LoadImage("assets/image/misc/footer.png"));
 
@@ -172,7 +197,7 @@ void GameWindow::InitializeUI() {
         b->SetFontSize(16);
         b->SetFontStyle(1);
         b->SetSize(200, 30);
-        b->SetCornerRadius(CornerRadius{35.f, 10.f, 10.f, 35.f});
+        b->SetCornerRadius(gfx::CornerRadius{35.f, 10.f, 10.f, 35.f});
     };
 
     setupBtn(btn_save, 1400, 670);
@@ -259,9 +284,8 @@ void GameWindow::LoadScene(int sceneId) {
                 continue;
 
             auto container = std::make_shared<ImageContainer>();
-            RectF charRect = CalculateCharacterPosition(*def, character);
-
-            container->SetRectF(charRect);
+            gfx::Rect charRect = CalculateCharacterPosition(*def, character);
+            container->SetBounds(charRect);
             container->SetMode(3);
             container->SetImage(charImg);
             container->SetAlpha(0);
@@ -438,8 +462,9 @@ void GameWindow::ClearCharacters() {
     characterContainers.clear();
 }
 
-RectF GameWindow::CalculateCharacterPosition(
-    const CharacterDef &def, const CharacterInstance &instance) {
+gfx::Rect
+GameWindow::CalculateCharacterPosition(const CharacterDef &def,
+                                       const CharacterInstance &instance) {
     const std::vector<int> &usedOffset =
         instance.offset.empty() ? def.offset : instance.offset;
 
@@ -457,7 +482,7 @@ RectF GameWindow::CalculateCharacterPosition(
         y += usedOffset[1];
     }
 
-    return RectF(x, y, 300.f, 500.f);
+    return gfx::Rect::XYWH(x, y, 300.f, 500.f);
 }
 
 void GameWindow::ReverseDialogVisility() {
@@ -480,42 +505,5 @@ void GameWindow::SwitchBackground(const ImageHandle &bg) {
         fadeOutBg = Bg1;
     }
 
-    std::thread([fadeOutBg, fadeInBg]() {
-        constexpr int totalFadeTime = 400;
-        constexpr int frameInterval = 16;
-
-        auto start = std::chrono::steady_clock::now();
-        int frame_count = 0;
-
-        while (true) {
-            auto elapsed =
-                std::chrono::duration_cast<std::chrono::microseconds>(
-                    std::chrono::steady_clock::now() - start)
-                    .count();
-
-            float progress = std::clamp(static_cast<float>(elapsed) /
-                                            (totalFadeTime * 1000.0f),
-                                        0.0f, 1.0f);
-
-            float easeProgress = progress * progress;
-
-            unsigned char alphaIn =
-                static_cast<unsigned char>(255.0f * easeProgress);
-            unsigned char alphaOut =
-                static_cast<unsigned char>(255.0f * (1.0f - easeProgress));
-
-            if (alphaIn != fadeInBg->GetAlpha() ||
-                alphaOut != fadeOutBg->GetAlpha()) {
-                fadeInBg->SetAlpha(alphaIn);
-                fadeOutBg->SetAlpha(alphaOut);
-            }
-
-            if (progress >= 1.0f)
-                break;
-
-            auto target_time = start + std::chrono::milliseconds(frameInterval *
-                                                                 ++frame_count);
-            std::this_thread::sleep_until(target_time);
-        }
-    }).detach();
+    fadePair(fadeOutBg, fadeInBg, 400);
 }

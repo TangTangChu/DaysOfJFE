@@ -1,5 +1,5 @@
 #pragma once
-#include "ui/WindowPanel.h"
+#include "windows/WindowPanel.h"
 #include <functional>
 #include <map>
 #include <memory>
@@ -72,8 +72,10 @@ class GameWindow : public WindowPanel {
                                const std::string &spriteName);
     void ClearCharacters();
     void SwitchBackground(const ImageHandle &bg);
+    static constexpr float ViewW = 1600.f;
+    static constexpr float ViewH = 900.f;
 
     std::vector<std::shared_ptr<Controls>> dialogControls;
-    RectF CalculateCharacterPosition(const CharacterDef &def,
-                                     const CharacterInstance &instance);
+    gfx::Rect CalculateCharacterPosition(const CharacterDef &def,
+                                         const CharacterInstance &instance);
 };

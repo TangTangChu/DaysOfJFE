@@ -1,29 +1,30 @@
 #include "ui/Button.h"
+#include "gfx/Canvas.h"
 
 void PrimaryButton::Draw(IRenderer &r) {
     if (!IsVisible())
         return;
 
-    const float x = (float)GetX();
-    const float y = (float)GetY();
-    const float w = (float)GetWidth();
-    const float h = (float)GetHeight();
+    Canvas c(r);
 
-    r.drawRRect(x, y, w, h, radius, finaBrush, true);
+    c.rrect(bounds, radius, finaBrush, true);
 
-    r.drawText(text, x + w * 0.5f, y + h * 0.5f, (float)fontSize, textColor,
-               TextHAlign::Center, TextVAlign::Middle);
+    TextStyle ts;
+    ts.sizePx = (float)fontSize;
+    ts.color = textColor;
+
+    c.textInRect(text, bounds, ts, AlignH::Center, AlignV::Middle);
 }
 
 void TextButton::Draw(IRenderer &r) {
     if (!IsVisible())
         return;
 
-    const float x = (float)GetX();
-    const float y = (float)GetY();
-    const float w = (float)GetWidth();
-    const float h = (float)GetHeight();
+    Canvas c(r);
 
-    r.drawText(text, x + w * 0.5f, y + h * 0.5f, (float)fontSize, textColor,
-               TextHAlign::Center, TextVAlign::Middle);
+    TextStyle ts;
+    ts.sizePx = (float)fontSize;
+    ts.color = textColor;
+
+    c.textInRect(text, bounds, ts, AlignH::Center, AlignV::Middle);
 }

@@ -48,7 +48,8 @@ HomeWindow::HomeWindow() {
     auto ic = std::make_shared<ImageContainer>();
     ImageHandle logo = Assets::LoadImage("assets/image/misc/DaysOfJxufe.png");
     ic->SetImage(logo);
-    ic->SetRectF({880, 440, 300, 150});
+    ic->SetPosition(880, 440);
+    ic->SetSize(300, 150);
     ic->SetMode(3);
 
     AddMidgroundControl(startBtn);

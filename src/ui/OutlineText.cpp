@@ -1,5 +1,7 @@
 #include "ui/OutlineText.h"
+#include "gfx/Canvas.h"
 #include <chrono>
+
 
 void OutlineText::SetText(const std::string &newText) {
     std::lock_guard<std::mutex> lock(m_mutex);
@@ -20,9 +22,15 @@ void OutlineText::Draw(IRenderer &r) {
         current = showtext;
     }
 
-    r.drawTextStroke(current, (float)GetX(), (float)GetY(), (float)fontSize,
-                     textColor, outlineColor, (float)outlineWidth,
-                     TextHAlign::Left, TextVAlign::Top);
+    Canvas c(r);
+    TextStyle ts;
+    ts.sizePx = (float)fontSize;
+    ts.color = textColor;
+    ts.stroke = true;
+    ts.strokeColor = outlineColor;
+    ts.strokeWidth = (float)outlineWidth;
+    c.text(current, gfx::Vec2{bounds.x, bounds.y}, ts, AlignH::Left,
+           AlignV::Top);
 }
 
 void OutlineText::TextAnimation() {

@@ -16,6 +16,11 @@
 #include "include/gpu/ganesh/gl/GrGLBackendSurface.h"
 #include "include/gpu/ganesh/gl/GrGLDirectContext.h"
 #include "include/gpu/ganesh/gl/GrGLInterface.h"
+static inline SkRect toSkRect(const gfx::Rect &r) {
+    return SkRect::MakeXYWH(r.x, r.y, r.w, r.h);
+}
+
+static inline SkPoint toSkPoint(gfx::Vec2 v) { return SkPoint::Make(v.x, v.y); }
 
 SkiaRenderer::~SkiaRenderer() {
     if (m_context && m_surface) {
@@ -131,14 +136,10 @@ void SkiaRenderer::clear(Color c) {
     m_canvas->clear(toSkColor(c));
 }
 
-void SkiaRenderer::drawImage(const ImageHandle &img, float sx, float sy,
-                             float sw, float sh, float dx, float dy, float dw,
-                             float dh, float alpha) {
+void SkiaRenderer::drawImageRect(const ImageHandle &img, const gfx::Rect &src,
+                                 const gfx::Rect &dst, float alpha) {
     if (!m_canvas || !img.image)
         return;
-
-    SkRect src = SkRect::MakeXYWH(sx, sy, sw, sh);
-    SkRect dst = SkRect::MakeXYWH(dx, dy, dw, dh);
 
     SkPaint p;
     p.setAntiAlias(true);
@@ -146,59 +147,57 @@ void SkiaRenderer::drawImage(const ImageHandle &img, float sx, float sy,
 
     SkSamplingOptions sampling(SkFilterMode::kLinear, SkMipmapMode::kLinear);
 
-    m_canvas->drawImageRect(img.image, src, dst, sampling, &p,
-                            SkCanvas::kFast_SrcRectConstraint);
+    m_canvas->drawImageRect(img.image, toSkRect(src), toSkRect(dst), sampling,
+                            &p, SkCanvas::kFast_SrcRectConstraint);
 }
 
-void SkiaRenderer::drawRect(float x, float y, float w, float h, Color c,
-                            bool filled, float strokeWidth) {
+void SkiaRenderer::drawRect(const gfx::Rect &rc, Color c, bool filled,
+                            float strokeWidth) {
     if (!m_canvas)
         return;
     SkPaint p = makePaint(c, filled, strokeWidth);
-    m_canvas->drawRect(SkRect::MakeXYWH(x, y, w, h), p);
+    m_canvas->drawRect(toSkRect(rc), p);
 }
 
-void SkiaRenderer::drawRoundRect(float x, float y, float w, float h,
-                                 float radius, Color c, bool filled,
-                                 float strokeWidth) {
+void SkiaRenderer::drawRoundRect(const gfx::Rect &rc, float radius, Color c,
+                                 bool filled, float strokeWidth) {
     if (!m_canvas)
         return;
     SkPaint p = makePaint(c, filled, strokeWidth);
-    SkRRect rr =
-        SkRRect::MakeRectXY(SkRect::MakeXYWH(x, y, w, h), radius, radius);
+    SkRRect rr = SkRRect::MakeRectXY(toSkRect(rc), radius, radius);
     m_canvas->drawRRect(rr, p);
 }
 
-void SkiaRenderer::drawRRect(float x, float y, float w, float h,
-                             CornerRadius rad, Color c, bool filled,
-                             float strokeWidth) {
+void SkiaRenderer::drawRRect(const gfx::Rect &rc, const gfx::CornerRadius &rad,
+                             Color c, bool filled, float strokeWidth) {
     if (!m_canvas)
         return;
     SkPaint p = makePaint(c, filled, strokeWidth);
 
-    SkRect rect = SkRect::MakeXYWH(x, y, w, h);
+    SkRect rect = toSkRect(rc);
     SkVector radii[4] = {
-        {rad.A, rad.A}, {rad.B, rad.B}, {rad.C, rad.C}, {rad.D, rad.D}};
+        {rad.tl, rad.tl}, {rad.tr, rad.tr}, {rad.br, rad.br}, {rad.bl, rad.bl}
+    };
 
     SkRRect rr;
     rr.setRectRadii(rect, radii);
     m_canvas->drawRRect(rr, p);
 }
 
-void SkiaRenderer::drawLine(float x1, float y1, float x2, float y2, Color c,
+void SkiaRenderer::drawLine(gfx::Vec2 a, gfx::Vec2 b, Color c,
                             float strokeWidth) {
     if (!m_canvas)
         return;
     SkPaint p = makePaint(c, false, strokeWidth);
-    m_canvas->drawLine(x1, y1, x2, y2, p);
+    m_canvas->drawLine(a.x, a.y, b.x, b.y, p);
 }
 
-void SkiaRenderer::drawCircle(float cx, float cy, float r, Color c, bool filled,
+void SkiaRenderer::drawCircle(gfx::Vec2 center, float r, Color c, bool filled,
                               float strokeWidth) {
     if (!m_canvas)
         return;
     SkPaint p = makePaint(c, filled, strokeWidth);
-    m_canvas->drawCircle(cx, cy, r, p);
+    m_canvas->drawCircle(center.x, center.y, r, p);
 }
 
 void SkiaRenderer::computeTextPos(const std::string &utf8, const SkFont &font,
@@ -241,8 +240,24 @@ void SkiaRenderer::computeTextPos(const std::string &utf8, const SkFont &font,
         break;
     }
 }
+TextMetrics SkiaRenderer::measureText(const std::string &utf8, float sizePx) {
+    TextMetrics tm;
+    SkFont font(nullptr, sizePx);
 
-void SkiaRenderer::drawText(const std::string &utf8, float x, float y,
+    SkRect bounds;
+    font.measureText(utf8.c_str(), utf8.size(), SkTextEncoding::kUTF8, &bounds);
+
+    tm.w = bounds.width();
+
+    SkFontMetrics fm;
+    font.getMetrics(&fm);
+    tm.ascent = -fm.fAscent;
+    tm.descent = fm.fDescent;
+    tm.h = tm.ascent + tm.descent;
+    return tm;
+}
+
+void SkiaRenderer::drawText(const std::string &utf8, gfx::Vec2 pos,
                             float sizePx, Color c, TextHAlign hAlign,
                             TextVAlign vAlign) {
     if (!m_canvas)
@@ -256,12 +271,12 @@ void SkiaRenderer::drawText(const std::string &utf8, float x, float y,
     paint.setStyle(SkPaint::kFill_Style);
 
     float dx, baselineY;
-    computeTextPos(utf8, font, hAlign, vAlign, x, y, dx, baselineY);
+    computeTextPos(utf8, font, hAlign, vAlign, pos.x, pos.y, dx, baselineY);
 
     m_canvas->drawString(utf8.c_str(), dx, baselineY, font, paint);
 }
 
-void SkiaRenderer::drawTextStroke(const std::string &utf8, float x, float y,
+void SkiaRenderer::drawTextStroke(const std::string &utf8, gfx::Vec2 pos,
                                   float sizePx, Color fill, Color stroke,
                                   float strokeWidth, TextHAlign hAlign,
                                   TextVAlign vAlign) {
@@ -271,7 +286,7 @@ void SkiaRenderer::drawTextStroke(const std::string &utf8, float x, float y,
     SkFont font(nullptr, sizePx);
 
     float dx, baselineY;
-    computeTextPos(utf8, font, hAlign, vAlign, x, y, dx, baselineY);
+    computeTextPos(utf8, font, hAlign, vAlign, pos.x, pos.y, dx, baselineY);
 
     SkPaint strokePaint;
     strokePaint.setAntiAlias(true);

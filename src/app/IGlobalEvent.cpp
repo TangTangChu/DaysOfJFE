@@ -1,5 +1,5 @@
 #include "app/IGlobalEvent.h"
-#include "ui/WindowManager.h"
+#include "windows/WindowManager.h"
 
 IGlobalEvent::IGlobalEvent(WindowManager *manager)
     : bgm(MusicPlayer::BGM), voice(MusicPlayer::VOICE), sfx(MusicPlayer::SFX),

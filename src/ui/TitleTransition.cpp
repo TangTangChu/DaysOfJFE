@@ -1,13 +1,19 @@
 #include "ui/TitleTransition.h"
+#include "gfx/Canvas.h"
 
 void TitleTransition::Draw(IRenderer &r) {
     if (!IsVisible())
         return;
 
-    r.drawRect(0.0f, 0.0f, (float)r.width(), (float)r.height(),
-               Color{0, 0, 0, 255}, true);
+    Canvas c(r);
 
-    r.drawText(text, r.width() * 0.5f, r.height() * 0.5f, 68.0f,
-               Color{255, 255, 255, 255}, TextHAlign::Center,
-               TextVAlign::Middle);
+    gfx::Rect full = gfx::Rect::XYWH(0, 0, (float)r.width(), (float)r.height());
+
+    c.rect(full, Color{0, 0, 0, 255}, true);
+
+    TextStyle ts;
+    ts.sizePx = 68.0f;
+    ts.color = Color{255, 255, 255, 255};
+
+    c.textInRect(text, full, ts, AlignH::Center, AlignV::Middle);
 }

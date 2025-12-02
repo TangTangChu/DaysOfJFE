@@ -1,4 +1,4 @@
-#include "ui/WindowPanel.h"
+#include "windows/WindowPanel.h"
 #include <algorithm>
 
 void WindowPanel::markDirty() const { controlsDirty = true; }
