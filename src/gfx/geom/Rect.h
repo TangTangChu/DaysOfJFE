@@ -1,5 +1,7 @@
 #pragma once
 #include "gfx/geom/Vec2.h"
+
+namespace gfx {
 struct Rect {
     float x, y, w, h;
     static Rect XYWH(float x, float y, float w, float h);
@@ -12,3 +14,4 @@ struct Rect {
     Rect inset(float l, float t, float r, float b) const;
     Rect offset(Vec2 d) const;
 };
+} // namespace gfx
