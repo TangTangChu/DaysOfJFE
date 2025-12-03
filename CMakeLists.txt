@@ -25,7 +25,12 @@ file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS
 )
 
 add_executable(DaysOfJFE ${SRC_FILES})
-
+add_custom_command(TARGET DaysOfJFE POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/assets"
+        "$<TARGET_FILE_DIR:DaysOfJFE>/assets"
+    COMMENT "Copying assets to executable directory"
+)
 # ---------- Include dirs ----------
 # Always include src, and also all first-level subfolders under src/
 target_include_directories(DaysOfJFE PRIVATE

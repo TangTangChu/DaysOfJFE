@@ -59,6 +59,10 @@ class SkiaRenderer final : public IRenderer {
                         Color fill, Color stroke, float strokeWidth,
                         TextHAlign hAlign = TextHAlign::Left,
                         TextVAlign vAlign = TextVAlign::Baseline) override;
+    void setDefaultFont(const std::string &fontName, float sizePx) override;
+    void setTextFont(const std::string &fontName, float sizePx) override;
+    void setTextFontStyle(const std::string &fontName, float sizePx,
+                          int weight = 400, bool italic = false) override;
 
   private:
     int m_width = 0;
@@ -69,6 +73,10 @@ class SkiaRenderer final : public IRenderer {
     sk_sp<SkSurface> m_surface;
     SkCanvas *m_canvas = nullptr;
 
+    SkFont m_currentFont;
+    std::string m_currentFontName;
+    float m_currentFontSize = 14.0f;
+
     void recreateSurface();
 
     static SkColor toSkColor(Color c);
@@ -77,4 +85,7 @@ class SkiaRenderer final : public IRenderer {
     void computeTextPos(const std::string &utf8, const SkFont &font,
                         TextHAlign hAlign, TextVAlign vAlign, float x, float y,
                         float &outX, float &outBaselineY) const;
+    SkFont createSkFont(const std::string &utf8, float sizePx,
+                        TextHAlign hAlign, TextVAlign vAlign, float x, float y,
+                        float &outX, float &outBaselineY);
 };

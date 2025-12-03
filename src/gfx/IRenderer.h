@@ -63,4 +63,9 @@ class IRenderer {
                                 float strokeWidth,
                                 TextHAlign hAlign = TextHAlign::Left,
                                 TextVAlign vAlign = TextVAlign::Baseline) = 0;
+    virtual void setDefaultFont(const std::string &fontName, float sizePx) = 0;
+    virtual void setTextFont(const std::string &fontName, float sizePx) = 0;
+    virtual void setTextFontStyle(const std::string &fontName, float sizePx,
+                                  int weight = 400, // normal
+                                  bool italic = false) = 0;
 };

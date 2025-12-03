@@ -1,4 +1,5 @@
 #include "gfx/SkiaRenderer.h"
+#include "gfx/FontManager.h"
 #include <algorithm>
 
 #include "include/core/SkCanvas.h"
@@ -263,7 +264,12 @@ void SkiaRenderer::drawText(const std::string &utf8, gfx::Vec2 pos,
     if (!m_canvas)
         return;
 
-    SkFont font(nullptr, sizePx);
+    SkFont font = m_currentFont;
+    if (!font.getTypeface()) {
+        font = FontManager::Instance().CreateFont("", sizePx);
+    } else if (sizePx != m_currentFontSize) {
+        font.setSize(sizePx);
+    }
 
     SkPaint paint;
     paint.setAntiAlias(true);
@@ -301,4 +307,27 @@ void SkiaRenderer::drawTextStroke(const std::string &utf8, gfx::Vec2 pos,
 
     m_canvas->drawString(utf8.c_str(), dx, baselineY, font, strokePaint);
     m_canvas->drawString(utf8.c_str(), dx, baselineY, font, fillPaint);
+}
+
+void SkiaRenderer::setDefaultFont(const std::string &fontName, float sizePx) {
+    m_currentFont = FontManager::Instance().CreateFont(fontName, sizePx);
+    m_currentFontName = fontName;
+    m_currentFontSize = sizePx;
+}
+
+void SkiaRenderer::setTextFont(const std::string &fontName, float sizePx) {
+    m_currentFont = FontManager::Instance().CreateFont(fontName, sizePx);
+    m_currentFontName = fontName;
+    m_currentFontSize = sizePx;
+}
+
+void SkiaRenderer::setTextFontStyle(const std::string &fontName, float sizePx,
+                                    int weight, bool italic) {
+    FontStyle style;
+    style.weight = static_cast<FontStyle::Weight>(weight);
+    style.slant = italic ? FontStyle::kItalic : FontStyle::kUpright;
+
+    m_currentFont = FontManager::Instance().CreateFont(fontName, sizePx, style);
+    m_currentFontName = fontName;
+    m_currentFontSize = sizePx;
 }
