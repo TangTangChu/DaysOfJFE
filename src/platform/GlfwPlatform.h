@@ -6,20 +6,25 @@
 #include <GLFW/glfw3.h>
 
 class WindowManager;
+class EventManager;
 
 class GlfwPlatform {
   public:
-    GlfwPlatform(GLFWwindow *win, WindowManager *wm);
+    GlfwPlatform(GLFWwindow *win, EventManager *eventMgr);
 
   private:
     GLFWwindow *m_win;
-    WindowManager *m_wm;
+    EventManager *m_eventMgr;
     static GlfwPlatform *s_self;
 
     static void MouseButtonCb(GLFWwindow *, int button, int action, int mods);
     static void CursorPosCb(GLFWwindow *, double x, double y);
     static void KeyCb(GLFWwindow *, int key, int scancode, int action,
                       int mods);
+    static void ScrollCb(GLFWwindow *, double xoffset, double yoffset);
+    static void CharCb(GLFWwindow *, unsigned int codepoint);
+    static void FramebufferSizeCb(GLFWwindow *, int width, int height);
+    static void WindowFocusCb(GLFWwindow *, int focused);
 
     void dispatch(const PlatformEvent &e);
 };

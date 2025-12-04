@@ -1,4 +1,5 @@
 ﻿#include "windows/GameWindow.h"
+#include "app/ApplicationContext.h"
 #include "gfx/Assets.h"
 #include "gfx/geom/Geom.h"
 #include "windows/LoadSceneWindow.h"
@@ -9,7 +10,6 @@
 #include <format>
 #include <iostream>
 #include <thread>
-
 
 auto fadePair = [](std::shared_ptr<ImageContainer> out,
                    std::shared_ptr<ImageContainer> in, int totalMs) {
@@ -96,76 +96,76 @@ void GameWindow::InitializeUI() {
     lsw = std::make_shared<LoadSceneWindow>(
         [this]() {
             LoadScene(1);
-            if (m_globalEvent)
-                m_globalEvent->RequestWindowSwitch(1);
+            if (applicationContext)
+                applicationContext->RequestWindowSwitch(1);
         },
         [this]() {
             LoadScene(2);
-            if (m_globalEvent)
-                m_globalEvent->RequestWindowSwitch(1);
+            if (applicationContext)
+                applicationContext->RequestWindowSwitch(1);
         },
         [this]() {
             LoadScene(3);
-            if (m_globalEvent)
-                m_globalEvent->RequestWindowSwitch(1);
+            if (applicationContext)
+                applicationContext->RequestWindowSwitch(1);
         },
         [this]() {
             LoadScene(4);
-            if (m_globalEvent)
-                m_globalEvent->RequestWindowSwitch(1);
+            if (applicationContext)
+                applicationContext->RequestWindowSwitch(1);
         },
         [this]() {
             LoadScene(5);
-            if (m_globalEvent)
-                m_globalEvent->RequestWindowSwitch(1);
+            if (applicationContext)
+                applicationContext->RequestWindowSwitch(1);
         },
         [this]() {
-            if (m_globalEvent)
-                m_globalEvent->RequestWindowSwitch(1);
+            if (applicationContext)
+                applicationContext->RequestWindowSwitch(1);
         });
 
     btn_save = std::make_shared<PrimaryButton>("保存", [this]() {
-        if (!m_globalEvent)
+        if (!applicationContext)
             return;
         auto sw = std::make_shared<SettingWindow>(
             [this]() {
-                if (m_globalEvent)
-                    m_globalEvent->RequestWindowSwitch(1);
+                if (applicationContext)
+                    applicationContext->RequestWindowSwitch(1);
             },
             "(ᗜˬᗜ) "
             "很遗憾，我没写这个\n这游戏要什么保存\n志乃：「你该不会是在想反正之"
             "后可"
             "以读档吧。这种想法志乃我可不喜欢」\n————『想要传达给你的爱恋』");
-        m_globalEvent->RequestWindowSwitch(sw);
+        applicationContext->RequestWindowSwitch(sw);
     });
 
     btn_load = std::make_shared<PrimaryButton>("读取", [this]() {
-        if (!m_globalEvent)
+        if (!applicationContext)
             return;
         auto sw = std::make_shared<SettingWindow>(
             [this]() {
-                if (m_globalEvent)
-                    m_globalEvent->RequestWindowSwitch(1);
+                if (applicationContext)
+                    applicationContext->RequestWindowSwitch(1);
             },
             "(ᗜˬᗜ) 很遗憾，我没写这个\n这么短的剧情你就将就着看吧");
-        m_globalEvent->RequestWindowSwitch(sw);
+        applicationContext->RequestWindowSwitch(sw);
     });
 
     btn_qsave = std::make_shared<PrimaryButton>("快速保存", [this]() {
-        if (!m_globalEvent)
+        if (!applicationContext)
             return;
         auto sw = std::make_shared<SettingWindow>(
             [this]() {
-                if (m_globalEvent)
-                    m_globalEvent->RequestWindowSwitch(1);
+                if (applicationContext)
+                    applicationContext->RequestWindowSwitch(1);
             },
             "(ᗜˬᗜ) 很遗憾，我没写这个\n这么短的剧情你就将就着看吧");
-        m_globalEvent->RequestWindowSwitch(sw);
+        applicationContext->RequestWindowSwitch(sw);
     });
 
     btn_qload = std::make_shared<PrimaryButton>("快速读取场景", [this]() {
-        if (m_globalEvent)
-            m_globalEvent->RequestWindowSwitch(lsw);
+        if (applicationContext)
+            applicationContext->RequestWindowSwitch(lsw);
     });
 
     btn_autoplay = std::make_shared<PrimaryButton>("自动播放", [this]() {
@@ -181,15 +181,15 @@ void GameWindow::InitializeUI() {
     });
 
     btn_setting = std::make_shared<PrimaryButton>("设定", [this]() {
-        if (!m_globalEvent)
+        if (!applicationContext)
             return;
         auto sw = std::make_shared<SettingWindow>(
             [this]() {
-                if (m_globalEvent)
-                    m_globalEvent->RequestWindowSwitch(1);
+                if (applicationContext)
+                    applicationContext->RequestWindowSwitch(1);
             },
             "(ᗜˬᗜ) 很遗憾，我没写这个\n这游戏要什么设置，又没有奇奇怪怪的设置");
-        m_globalEvent->RequestWindowSwitch(sw);
+        applicationContext->RequestWindowSwitch(sw);
     });
 
     auto setupBtn = [](auto &b, int x, int y) {
@@ -346,36 +346,36 @@ void GameWindow::ProcessNextItem() {
 }
 
 void GameWindow::ExecuteCommand(const Command &cmd) {
-    if (!m_globalEvent)
+    if (!applicationContext)
         return;
 
     if (cmd.type == "sound") {
         if (cmd.soundtype == "bgm") {
             if (cmd.action == "play") {
-                m_globalEvent->bgm.Load(cmd.param);
-                m_globalEvent->bgm.Play(true);
+                applicationContext->bgm.Load(cmd.param);
+                applicationContext->bgm.Play(true);
             } else if (cmd.action == "pause") {
-                m_globalEvent->bgm.Pause();
+                applicationContext->bgm.Pause();
             } else if (cmd.action == "volumn") {
-                m_globalEvent->bgm.SetVolume(std::stof(cmd.param));
+                applicationContext->bgm.SetVolume(std::stof(cmd.param));
             }
         } else if (cmd.soundtype == "voice") {
             if (cmd.action == "play") {
-                m_globalEvent->voice.Load(cmd.param);
-                m_globalEvent->voice.Play(false);
+                applicationContext->voice.Load(cmd.param);
+                applicationContext->voice.Play(false);
             } else if (cmd.action == "pause") {
-                m_globalEvent->voice.Pause();
+                applicationContext->voice.Pause();
             } else if (cmd.action == "volumn") {
-                m_globalEvent->voice.SetVolume(std::stof(cmd.param));
+                applicationContext->voice.SetVolume(std::stof(cmd.param));
             }
         } else if (cmd.soundtype == "sfx") {
             if (cmd.action == "play") {
-                m_globalEvent->sfx.Load(cmd.param);
-                m_globalEvent->sfx.Play(false);
+                applicationContext->sfx.Load(cmd.param);
+                applicationContext->sfx.Play(false);
             } else if (cmd.action == "pause") {
-                m_globalEvent->sfx.Pause();
+                applicationContext->sfx.Pause();
             } else if (cmd.action == "volumn") {
-                m_globalEvent->sfx.SetVolume(std::stof(cmd.param));
+                applicationContext->sfx.SetVolume(std::stof(cmd.param));
             }
         }
         return;

@@ -3,6 +3,7 @@
 void Controls::OnMouseDown(int, int) {
     if (!enabled)
         return;
+    pressed = true;
     if (onMouseDownHook)
         onMouseDownHook();
 }
@@ -10,6 +11,7 @@ void Controls::OnMouseDown(int, int) {
 void Controls::OnMouseUp(int, int) {
     if (!enabled)
         return;
+    pressed = false;
     if (onMouseUpPreHook)
         onMouseUpPreHook();
     if (onClick)
@@ -19,15 +21,51 @@ void Controls::OnMouseUp(int, int) {
 }
 
 void Controls::OnMouseReset() {
+    pressed = false;
     if (onMouseResetHook)
         onMouseResetHook();
+}
+
+void Controls::OnMouseEnter(int x, int y) {
+    if (!enabled)
+        return;
+    hovered = true;
+    if (onMouseEnterHook)
+        onMouseEnterHook();
+}
+
+void Controls::OnMouseLeave(int x, int y) {
+    hovered = false;
+    pressed = false;
+    if (onMouseLeaveHook)
+        onMouseLeaveHook();
+}
+
+void Controls::OnMouseWheel(float deltaX, float deltaY) {
+    if (!enabled || !hovered)
+        return;
+    if (onMouseWheelHook)
+        onMouseWheelHook(deltaX, deltaY);
+}
+
+void Controls::OnKeyDown(int key, int mods) {
+    if (!enabled)
+        return;
+    if (onKeyDownHook)
+        onKeyDownHook(key, mods);
+}
+
+void Controls::OnKeyUp(int key, int mods) {
+    if (!enabled)
+        return;
+    if (onKeyUpHook)
+        onKeyUpHook(key, mods);
 }
 
 bool Controls::Contains(int x, int y) const {
     return x >= bounds.x && x < bounds.x + bounds.w && y >= bounds.y &&
            y < bounds.y + bounds.h;
 }
-
 
 int Controls::GetX() const { return bounds.x; }
 int Controls::GetY() const { return bounds.y; }
@@ -82,4 +120,19 @@ void Controls::SetOnMouseDownHook(std::function<void()> hook) {
 }
 void Controls::SetOnMouseResetHook(std::function<void()> hook) {
     onMouseResetHook = std::move(hook);
+}
+void Controls::SetOnMouseEnterHook(std::function<void()> hook) {
+    onMouseEnterHook = std::move(hook);
+}
+void Controls::SetOnMouseLeaveHook(std::function<void()> hook) {
+    onMouseLeaveHook = std::move(hook);
+}
+void Controls::SetOnMouseWheelHook(std::function<void(float, float)> hook) {
+    onMouseWheelHook = std::move(hook);
+}
+void Controls::SetOnKeyDownHook(std::function<void(int, int)> hook) {
+    onKeyDownHook = std::move(hook);
+}
+void Controls::SetOnKeyUpHook(std::function<void(int, int)> hook) {
+    onKeyUpHook = std::move(hook);
 }

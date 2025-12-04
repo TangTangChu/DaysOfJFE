@@ -1,14 +1,29 @@
 #include "windows/WindowManager.h"
+#include "app/ApplicationContext.h"
 #include "gfx/Canvas.h"
+#include "ui/Controls.h"
+#include "windows/WindowPanel.h"
 #include <algorithm>
 
-void WindowManager::SetGlobalEvent(IGlobalEvent *g) { globalEvent = g; }
+
+void WindowManager::SetGlobalEvent(ApplicationContext *g) {
+    applicationContext = g;
+    for (auto &window : windows) {
+        if (window) {
+            window->SetGlobalEvent(g);
+        }
+    }
+    if (currentWindow) {
+        currentWindow->SetGlobalEvent(g);
+    }
+}
 
 void WindowManager::AddWindow(std::shared_ptr<WindowPanel> panel) {
     if (!panel)
         return;
-    panel->SetGlobalEvent(globalEvent);
+    panel->SetGlobalEvent(applicationContext);
     windows.push_back(panel);
+
     if (!currentWindow) {
         currentWindow = panel;
     }
@@ -19,7 +34,7 @@ void WindowManager::SwitchWindow(int index) {
         return;
     currentWindow = windows[(size_t)index];
     if (currentWindow) {
-        currentWindow->SetGlobalEvent(globalEvent);
+        currentWindow->SetGlobalEvent(applicationContext);
     }
 }
 
@@ -75,8 +90,7 @@ void WindowManager::Redraw(IRenderer &r) {
 
     if (currentWindow->HasCustomBackground()) {
         currentWindow->DrawCustomBackground(c, r);
-    }
-    else if (auto *bgp = currentWindow->GetBackground()) {
+    } else if (auto *bgp = currentWindow->GetBackground()) {
         const auto &bg = *bgp;
 
         float scale = std::min((float)r.width() / (float)bg.width,
@@ -111,6 +125,7 @@ void WindowManager::ShowDialog(std::wstring, std::function<void()>,
                                std::function<void()>) {}
 
 void WindowManager::CloseDialog() {}
+
 void WindowManager::SwitchWindow(std::shared_ptr<WindowPanel> window) {
     if (!window)
         return;
@@ -118,7 +133,7 @@ void WindowManager::SwitchWindow(std::shared_ptr<WindowPanel> window) {
     // 如果不在 windows 里
     auto it = std::find(windows.begin(), windows.end(), window);
     if (it == windows.end()) {
-        window->SetGlobalEvent(globalEvent);
+        window->SetGlobalEvent(applicationContext);
         windows.push_back(window);
         currentWindow = window;
         return;
@@ -126,7 +141,7 @@ void WindowManager::SwitchWindow(std::shared_ptr<WindowPanel> window) {
 
     currentWindow = *it;
     if (currentWindow)
-        currentWindow->SetGlobalEvent(globalEvent);
+        currentWindow->SetGlobalEvent(applicationContext);
 }
 
 std::shared_ptr<WindowPanel> WindowManager::GetWindow(int index) const {

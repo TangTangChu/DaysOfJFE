@@ -1,16 +1,18 @@
 #pragma once
-#include "app/IGlobalEvent.h"
 #include "gfx/Canvas.h"
 #include "gfx/IRenderer.h"
 #include "platform/PlatformEvent.h"
-#include "ui/Controls.h"
 #include <functional>
 #include <memory>
 #include <vector>
 
+// 前向声明
+class ApplicationContext;
+class Controls;
+
 class WindowPanel {
   protected:
-    IGlobalEvent *m_globalEvent = nullptr;
+    ApplicationContext *applicationContext = nullptr;
 
     std::vector<std::shared_ptr<Controls>> backgroundControls;
     std::vector<std::shared_ptr<Controls>> midgroundControls;
@@ -36,7 +38,7 @@ class WindowPanel {
     virtual ~WindowPanel() = default;
     virtual bool HasCustomBackground() const { return false; }
     virtual void DrawCustomBackground(Canvas &c, IRenderer &r) {}
-    void SetGlobalEvent(IGlobalEvent *globalEvent);
+    void SetGlobalEvent(ApplicationContext *applicationContext);
 
     void AddBackgroundControl(std::shared_ptr<Controls> ctrl);
     void AddMidgroundControl(std::shared_ptr<Controls> ctrl);
@@ -67,4 +69,5 @@ class WindowPanel {
   protected:
     virtual void HandleMouseDown(int x, int y);
     virtual void HandleMouseUp(int x, int y);
+    virtual void HandleMouseWheel(int x, int y, float deltaX, float deltaY);
 };

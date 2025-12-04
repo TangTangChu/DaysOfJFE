@@ -1,3 +1,4 @@
+#include "app/ApplicationContext.h"
 #include "gfx/FontManager.h"
 #include "gfx/SkiaRenderer.h"
 #include "platform/GlfwPlatform.h"
@@ -45,7 +46,11 @@ int main() {
                              fontPath + "SourceHanSerifSC-Heavy.otf");
     fontManager.SetDefaultFont("SarasaUISC");
     renderer.setDefaultFont("SarasaUISC", 16.0f);
+
     WindowManager wm;
+
+    ApplicationContext applicationContext(&wm);
+    wm.SetGlobalEvent(&applicationContext);
 
     auto hw = std::make_shared<HomeWindow>();
     auto gw = std::make_shared<GameWindow>();
@@ -60,7 +65,7 @@ int main() {
     wm.AddWindow(sw);
     wm.SwitchWindow(0);
 
-    GlfwPlatform platform(win, &wm);
+    GlfwPlatform platform(win, &applicationContext.eventManager);
 
     while (!glfwWindowShouldClose(win)) {
         glfwPollEvents();

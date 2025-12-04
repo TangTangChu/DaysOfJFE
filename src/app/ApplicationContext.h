@@ -2,13 +2,14 @@
 #include <memory>
 
 #include "audio/MusicPlayer.h"
+#include "app/EventManager.h"
 
 class WindowPanel;
 class WindowManager;
 
-class IGlobalEvent {
+class ApplicationContext {
   public:
-    explicit IGlobalEvent(WindowManager *manager);
+    explicit ApplicationContext(WindowManager *manager);
 
     void RequestWindowSwitch(int index);
     void RequestWindowSwitch(std::shared_ptr<WindowPanel> window);
@@ -17,6 +18,7 @@ class IGlobalEvent {
     MusicPlayer bgm;
     MusicPlayer voice;
     MusicPlayer sfx;
+    EventManager eventManager;
 
   private:
     WindowManager *m_manager = nullptr;

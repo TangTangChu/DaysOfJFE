@@ -1,13 +1,14 @@
 #pragma once
-#include "app/IGlobalEvent.h"
 #include "gfx/IRenderer.h"
 #include "platform/PlatformEvent.h"
-#include "ui/Controls.h"
-#include "windows/WindowPanel.h"
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
+
+class ApplicationContext;
+class Controls;
+class WindowPanel;
 
 class WindowManager {
   public:
@@ -16,13 +17,13 @@ class WindowManager {
   private:
     std::vector<std::shared_ptr<WindowPanel>> windows;
     std::shared_ptr<WindowPanel> currentWindow;
-    IGlobalEvent *globalEvent = nullptr;
+    ApplicationContext *applicationContext = nullptr;
 
   public:
     WindowManager() = default;
     ~WindowManager() = default;
 
-    void SetGlobalEvent(IGlobalEvent *g);
+    void SetGlobalEvent(ApplicationContext *g);
 
     void AddWindow(std::shared_ptr<WindowPanel> panel);
     void SwitchWindow(int index);

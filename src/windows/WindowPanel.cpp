@@ -1,4 +1,6 @@
 #include "windows/WindowPanel.h"
+#include "app/ApplicationContext.h"
+#include "ui/Controls.h"
 #include <algorithm>
 
 void WindowPanel::markDirty() const { controlsDirty = true; }
@@ -26,8 +28,8 @@ WindowPanel::getAllControlsCached() const {
     return allControlsCache;
 }
 
-void WindowPanel::SetGlobalEvent(IGlobalEvent *globalEvent) {
-    m_globalEvent = globalEvent;
+void WindowPanel::SetGlobalEvent(ApplicationContext *applicationContext) {
+    applicationContext = applicationContext;
 }
 
 void WindowPanel::AddBackgroundControl(std::shared_ptr<Controls> ctrl) {
@@ -191,6 +193,11 @@ void WindowPanel::HandleEvent(const PlatformEvent &e) {
             OnMouseMoveHook(mm->x, mm->y);
         return;
     }
+
+    if (auto *mw = std::get_if<MouseWheelEvent>(&e)) {
+        HandleMouseWheel(mw->x, mw->y, mw->deltaX, mw->deltaY);
+        return;
+    }
 }
 
 void WindowPanel::SetOnMouseMoveHook(std::function<void(int, int)> hook) {
@@ -240,4 +247,9 @@ void WindowPanel::HandleMouseUp(int x, int y) {
     }
 }
 
-
+void WindowPanel::HandleMouseWheel(int x, int y, float deltaX, float deltaY) {
+    Controls *top = FindTopControlAt(x, y);
+    if (top) {
+        top->OnMouseWheel(deltaX, deltaY);
+    }
+}

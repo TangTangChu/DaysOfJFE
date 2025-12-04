@@ -1,4 +1,5 @@
 #include "windows/HomeWindow.h"
+#include "app/ApplicationContext.h"
 #include "audio/MusicPlayer.h"
 #include "gfx/Assets.h"
 #include "windows/LoadingWindow.h"
@@ -6,13 +7,14 @@
 
 HomeWindow::HomeWindow() {
     auto startBtn = std::make_shared<PrimaryButton>("开始游戏", [this]() {
-        if (!m_globalEvent)
+        if (!applicationContext)
             return;
 
         auto lw = std::make_shared<LoadingWindow>();
-        lw->SetFinalHook([this]() { m_globalEvent->RequestWindowSwitch(1); });
+        lw->SetFinalHook(
+            [this]() { applicationContext->RequestWindowSwitch(1); });
 
-        m_globalEvent->RequestWindowSwitch(lw);
+        applicationContext->RequestWindowSwitch(lw);
         lw->StartAnimation();
     });
 
@@ -27,13 +29,15 @@ HomeWindow::HomeWindow() {
     contBtn->SetFontSize(18);
 
     auto settingBtn = std::make_shared<PrimaryButton>("设定", [this]() {
-        if (!m_globalEvent)
+        if (!applicationContext)
             return;
 
-        auto backToHome = [this]() { m_globalEvent->RequestWindowSwitch(0); };
+        auto backToHome = [this]() {
+            applicationContext->RequestWindowSwitch(0);
+        };
         auto sw = std::make_shared<SettingWindow>(
             backToHome, "(ᗜˬᗜ) 很遗憾，我没写这个\n这游戏要什么设置");
-        m_globalEvent->RequestWindowSwitch(sw);
+        applicationContext->RequestWindowSwitch(sw);
     });
 
     settingBtn->SetPosition(60, 540);
