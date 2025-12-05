@@ -27,13 +27,13 @@ class Button : public Controls {
 class PrimaryButton : public Button {
   private:
     Color btnColor;
-    Color hoverBgColor{255, 255, 0, 127};
+    Color hoverBgColor{96, 165, 250, 255};
     Color finaBrush;
 
   public:
     PrimaryButton(const std::string &text, std::function<void()> onClick,
                   Color textColor = {255, 255, 255, 255},
-                  Color backgroundColor = {255, 0, 191, 255})
+                  Color backgroundColor = {59, 130, 246, 255})
         : Button(text, std::move(onClick), textColor),
           btnColor(backgroundColor), finaBrush(backgroundColor) {
         SetOnMouseDownHook([this]() { finaBrush = hoverBgColor; });
@@ -56,7 +56,7 @@ class PrimaryButton : public Button {
 class TextButton : public Button {
   public:
     TextButton(const std::string &text, std::function<void()> onClick,
-               Color textColor = {255, 0, 153, 153})
+               Color textColor = {59, 130, 246, 255})
         : Button(text, std::move(onClick), textColor) {}
 
     void Draw(IRenderer &r) override;

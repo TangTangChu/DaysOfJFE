@@ -2,20 +2,20 @@
 #include "app/ApplicationContext.h"
 #include "audio/MusicPlayer.h"
 #include "gfx/Assets.h"
+#include "windows/GameWindow.h"
 #include "windows/LoadingWindow.h"
 #include "windows/SettingWindow.h"
 
 HomeWindow::HomeWindow() {
     auto startBtn = std::make_shared<PrimaryButton>("开始游戏", [this]() {
-        if (!applicationContext)
-            return;
+        auto gw = applicationContext->RequestGetWindow(1);
 
-        auto lw = std::make_shared<LoadingWindow>();
-        lw->SetFinalHook(
-            [this]() { applicationContext->RequestWindowSwitch(1); });
-
-        applicationContext->RequestWindowSwitch(lw);
-        lw->StartAnimation();
+        if (auto gameWindow = std::dynamic_pointer_cast<GameWindow>(gw)) {
+            if (gameWindow->LoadScript("assets/scripts/script2512.yaml")) {
+                gameWindow->LoadScene(1);
+            }
+        }
+        applicationContext->RequestWindowSwitch(1);
     });
 
     startBtn->SetPosition(60, 460);

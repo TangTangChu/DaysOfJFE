@@ -28,8 +28,8 @@ WindowPanel::getAllControlsCached() const {
     return allControlsCache;
 }
 
-void WindowPanel::SetGlobalEvent(ApplicationContext *applicationContext) {
-    applicationContext = applicationContext;
+void WindowPanel::SetGlobalEvent(ApplicationContext *eapplicationContext) {
+    applicationContext = eapplicationContext;
 }
 
 void WindowPanel::AddBackgroundControl(std::shared_ptr<Controls> ctrl) {
