@@ -6,6 +6,7 @@
 #include "include/ports/SkFontMgr_mac_ct.h"
 #else
 #include "include/ports/SkFontMgr_fontconfig.h"
+#include "include/ports/SkFontScanner_FreeType.h"
 #endif
 
 #include "include/core/SkStream.h"
@@ -26,7 +27,7 @@ bool FontManager::Initialize(const std::string &defaultFontPath) {
 #elif defined(__APPLE__)
     m_fontMgr = SkFontMgr_New_CoreText(nullptr);
 #else
-    m_fontMgr = SkFontMgr_New_FontConfig(nullptr);
+    m_fontMgr = SkFontMgr_New_FontConfig(nullptr, SkFontScanner_Make_FreeType());
 #endif
 
     if (!m_fontMgr) {

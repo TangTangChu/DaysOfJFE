@@ -88,6 +88,8 @@ desktop.ini
 # ------------------------------------------------------------------------------
 # Third-party build artifacts
 # ------------------------------------------------------------------------------
+# vcpkg directory
+vcpkg_installed/
 # Skia GN/Ninja outputs
 third_party/skia/out/
 third_party/skia/.gclient
