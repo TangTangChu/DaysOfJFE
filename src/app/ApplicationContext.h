@@ -1,8 +1,8 @@
 #pragma once
 #include <memory>
 
-#include "audio/MusicPlayer.h"
 #include "app/EventManager.h"
+#include "audio/AudioService.h"
 
 class WindowPanel;
 class WindowManager;
@@ -15,9 +15,7 @@ class ApplicationContext {
     void RequestWindowSwitch(std::shared_ptr<WindowPanel> window);
     std::shared_ptr<WindowPanel> RequestGetWindow(int index);
 
-    MusicPlayer bgm;
-    MusicPlayer voice;
-    MusicPlayer sfx;
+    AudioService audio; // 统一音频服务
     EventManager eventManager;
 
   private:

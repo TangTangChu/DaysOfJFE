@@ -65,7 +65,9 @@ int main() {
     auto gw = std::make_shared<GameWindow>();
     auto lw = std::make_shared<LoadingWindow>();
     auto lsw = std::make_shared<LoadSceneWindow>();
-    auto sw = std::make_shared<SettingWindow>();
+    auto sw = std::make_shared<SettingWindow>(
+        [&applicationContext]() { applicationContext.RequestWindowSwitch(0); },
+        "设置功能\n");
 
     wm.AddWindow(hw);
     wm.AddWindow(gw);

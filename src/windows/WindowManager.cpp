@@ -5,7 +5,6 @@
 #include "windows/WindowPanel.h"
 #include <algorithm>
 
-
 void WindowManager::SetGlobalEvent(ApplicationContext *g) {
     applicationContext = g;
     for (auto &window : windows) {
@@ -84,7 +83,7 @@ void WindowManager::Redraw(IRenderer &r) {
     if (!currentWindow)
         return;
 
-    r.clear(Color{255, 255, 255, 255});
+    r.clear(Color{0, 0, 0, 255});
 
     Canvas c(r);
 

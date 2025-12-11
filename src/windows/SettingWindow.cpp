@@ -1,34 +1,40 @@
 #include "windows/SettingWindow.h"
-#include <GLFW/glfw3.h>
-#include "gfx/geom/Geom.h"
-SettingWindow::SettingWindow(std::function<void()> bh, const std::string &text)
-    : backHook(std::move(bh)) {
-    tbk1 = std::make_shared<TextBlock>(text, 30, Color{0, 191, 255, 255});
+#include "ui/Button.h"
+#include "ui/TextBlock.h"
 
-    tbk1->SetFontStyle(1);
-    tbk1->SetAlign(TextHAlign::Center, TextVAlign::Middle);
-    tbk1->SetBounds(gfx::Rect{0, 0, 1600, 900});
+SettingWindow::SettingWindow(std::function<void()> bh,
+                             const std::string &text) {
+    contentStack =
+        std::make_shared<StackPanel>(StackPanel::Orientation::Vertical);
+    contentStack->SetSpacing(20);
+    contentStack->SetAlignment(StackPanel::Alignment::Center);
 
-    btn1 = std::make_shared<PrimaryButton>("??", [this]() {
-        if (backHook)
-            backHook();
-    });
+    auto msg = std::make_shared<TextBlock>(text, 24);
+    msg->SetAlign(TextHAlign::Center, TextVAlign::Middle);
+    msg->SetSize(800, 400);
 
-    btn1->SetBounds(gfx::Rect{100, 800, 120, 40});
-    btn1->SetFontSize(16);
+    contentStack->AddChild(msg);
 
-    AddMidgroundControl(tbk1);
-    AddMidgroundControl(btn1);
+    auto backBtn = std::make_shared<PrimaryButton>("返回", bh);
+    backBtn->SetSize(200, 50);
+    backBtn->SetFontSize(24);
+    contentStack->AddChild(backBtn);
+    contentStack->SetBounds(gfx::Rect::XYWH(200, 100, 800, 500));
 
-    SetOnMouseRBUPHook([this]() {
-        if (backHook)
-            backHook();
-    });
+    AddForegroundControl(contentStack);
+}
 
-    SetOnKeyDownHook([this](int key, int) {
-        if (key == GLFW_KEY_ESCAPE) {
-            if (backHook)
-                backHook();
-        }
-    });
+void SettingWindow::OnWindowResize(int width, int height) {
+    if (contentStack) {
+        int w = 800;
+        int h = 500;
+        contentStack->SetBounds(
+            gfx::Rect::XYWH((width - w) / 2, (height - h) / 2, w, h));
+        contentStack->UpdateLayout();
+    }
+    WindowPanel::OnWindowResize(width, height);
+}
+
+void SettingWindow::DrawCustomBackground(Canvas &c, IRenderer &r) {
+    c.rect(gfx::Rect::XYWH(0, 0, (float)r.width(), (float)r.height()), bgColor);
 }

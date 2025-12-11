@@ -3,7 +3,6 @@
 #include "gfx/geom/Geom.h"
 #include <functional>
 
-
 class Controls {
   protected:
     gfx::Rect bounds;
@@ -40,10 +39,12 @@ class Controls {
     virtual void OnKeyDown(int key, int mods);
     virtual void OnKeyUp(int key, int mods);
 
+    virtual void OnWindowResize(int width, int height) {}
+
     bool Contains(int x, int y) const;
 
     void SetBounds(const gfx::Rect &r) { bounds = r; }
-    
+
     const gfx::Rect &GetBounds() const { return bounds; }
     int GetX() const;
     int GetY() const;
@@ -85,4 +86,3 @@ class Controls {
     void SetOnKeyDownHook(std::function<void(int, int)> hook);
     void SetOnKeyUpHook(std::function<void(int, int)> hook);
 };
-

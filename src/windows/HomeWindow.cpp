@@ -2,31 +2,39 @@
 #include "app/ApplicationContext.h"
 #include "audio/MusicPlayer.h"
 #include "gfx/Assets.h"
+#include "ui/Button.h"
+#include "ui/ImageContainer.h"
 #include "windows/GameWindow.h"
 #include "windows/LoadingWindow.h"
 #include "windows/SettingWindow.h"
 
+
 HomeWindow::HomeWindow() {
+    buttonStack =
+        std::make_shared<StackPanel>(StackPanel::Orientation::Vertical);
+    buttonStack->SetSpacing(10);
+    buttonStack->SetPosition(60, 460);
+
+    buttonStack->SetSize(200, 300); // Rough area
+
     auto startBtn = std::make_shared<PrimaryButton>("开始游戏", [this]() {
         auto gw = applicationContext->RequestGetWindow(1);
 
         if (auto gameWindow = std::dynamic_pointer_cast<GameWindow>(gw)) {
-            if (gameWindow->LoadScript("assets/scripts/script2512.yaml")) {
-                gameWindow->LoadScene(1);
-            }
+            gameWindow->StartNewGame();
         }
         applicationContext->RequestWindowSwitch(1);
     });
 
-    startBtn->SetPosition(60, 460);
     startBtn->SetSize(150, 30);
     startBtn->SetFontSize(18);
     startBtn->SetFontStyle(1);
+    buttonStack->AddChild(startBtn);
 
     auto contBtn = std::make_shared<PrimaryButton>("继续游戏", []() {});
-    contBtn->SetPosition(60, 500);
     contBtn->SetSize(150, 30);
     contBtn->SetFontSize(18);
+    buttonStack->AddChild(contBtn);
 
     auto settingBtn = std::make_shared<PrimaryButton>("设定", [this]() {
         if (!applicationContext)
@@ -40,14 +48,14 @@ HomeWindow::HomeWindow() {
         applicationContext->RequestWindowSwitch(sw);
     });
 
-    settingBtn->SetPosition(60, 540);
     settingBtn->SetSize(150, 30);
     settingBtn->SetFontSize(18);
+    buttonStack->AddChild(settingBtn);
 
     auto aboutBtn = std::make_shared<PrimaryButton>("关于", []() {});
-    aboutBtn->SetPosition(60, 580);
     aboutBtn->SetSize(150, 30);
     aboutBtn->SetFontSize(18);
+    buttonStack->AddChild(aboutBtn);
 
     auto ic = std::make_shared<ImageContainer>();
     ImageHandle logo = Assets::LoadImage("assets/image/misc/DaysOfJxufe.png");
@@ -56,13 +64,17 @@ HomeWindow::HomeWindow() {
     ic->SetSize(300, 150);
     ic->SetMode(3);
 
-    AddMidgroundControl(startBtn);
-    AddMidgroundControl(contBtn);
-    AddMidgroundControl(settingBtn);
-    AddMidgroundControl(aboutBtn);
+    AddMidgroundControl(buttonStack);
     AddMidgroundControl(ic);
 
     ImageHandle bg =
         Assets::LoadImage("assets/image/background/教学楼-外-2.jpg");
     SetBackground(bg);
+}
+
+void HomeWindow::OnWindowResize(int width, int height) {
+    if (buttonStack) {
+        buttonStack->SetY(static_cast<int>(height * 0.76f));
+    }
+    WindowPanel::OnWindowResize(width, height);
 }

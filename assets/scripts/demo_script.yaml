@@ -1,0 +1,97 @@
+meta:
+  id: "demo_chapter"
+  title: "演示章节"
+
+characters:
+  haruhi:
+    id: "haruhi"
+    base_pos: "center"
+    offset: [0, 0]
+    sprites:
+      normal: "assets/image/character/凉宮ハルヒ_110906004.png"
+  nagato:
+    id: "nagato"
+    base_pos: "left"
+    offset: [0, 0]
+    sprites:
+      reading: "assets/image/character/大ちゃん(等身練習)_129022253_p1.png"
+
+scenes:
+  - id: "scene1"
+    title: "社团教室的午后"
+    background: "assets/image/background/教学楼-外-1.jpg"
+    characters:
+      - name: "haruhi"
+        sprite: "normal"
+      - name: "nagato"
+        sprite: "reading"
+
+    sequence:
+      - type: "bg"
+        action: "change"
+        image: "assets/image/background/教学楼-外-1.jpg"
+
+      - type: "bg"
+        action: "title"
+        text: "第零章 · 演示开始"
+
+      - type: "narration"
+        text: "这里是哪里？看起来像是某所学校的教学楼外。"
+
+      - type: "character"
+        action: "show"
+        target: "haruhi"
+
+      - type: "dialogue"
+        speaker: "haruhi"
+        displayname: "凉宫春日"
+        text: "这就是新开发的 Galgame 引擎演示环境吗？看起来还不错嘛！"
+
+      - type: "dialogue"
+        speaker: "haruhi"
+        displayname: "凉宫春日"
+        text: "那个新的对话框和布局系统，能不能经受住本团长的考验呢？"
+
+      - type: "character"
+        action: "hide"
+        target: "haruhi"
+
+      - type: "character"
+        action: "show"
+        target: "nagato"
+        sprite: "reading"
+
+      - type: "dialogue"
+        speaker: "nagato"
+        displayname: "长门有希"
+        text: "……界面重构已完成。窗口自适应功能正常。"
+
+      - type: "dialogue"
+        speaker: "nagato"
+        displayname: "长门有希"
+        text: "StackPanel 与 DialogBox 模块运行稳定。等待指令。"
+
+      - type: "bg"
+        action: "change"
+        image: "assets/image/background/操场-外-1.jpg"
+
+      - type: "narration"
+        text: "不知不觉间，场景切换到了操场。"
+
+      - type: "choice"
+        id: "choice1"
+        text: "接下来要做什么？"
+        options:
+          - id: "opt1"
+            text: "继续测试功能"
+            scene: "scene_end"
+          - id: "opt2"
+            text: "结束演示"
+            scene: "scene_end"
+
+  - id: "scene_end"
+    title: "结束"
+    background: "assets/image/background/风景-1.jpg"
+    sequence:
+      - type: "narration"
+        text: "演示结束。感谢测试。"

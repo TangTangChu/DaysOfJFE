@@ -198,6 +198,11 @@ void WindowPanel::HandleEvent(const PlatformEvent &e) {
         HandleMouseWheel(mw->x, mw->y, mw->deltaX, mw->deltaY);
         return;
     }
+
+    if (auto *wr = std::get_if<WindowResizeEvent>(&e)) {
+        OnWindowResize(wr->width, wr->height);
+        return;
+    }
 }
 
 void WindowPanel::SetOnMouseMoveHook(std::function<void(int, int)> hook) {
@@ -251,5 +256,14 @@ void WindowPanel::HandleMouseWheel(int x, int y, float deltaX, float deltaY) {
     Controls *top = FindTopControlAt(x, y);
     if (top) {
         top->OnMouseWheel(deltaX, deltaY);
+    }
+}
+
+void WindowPanel::OnWindowResize(int width, int height) {
+    const auto &controls = getAllControlsCached();
+    for (auto &c : controls) {
+        if (c) {
+            c->OnWindowResize(width, height);
+        }
     }
 }

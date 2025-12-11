@@ -1,15 +1,19 @@
 ﻿#include "windows/GameWindow.h"
+
 #include "app/ApplicationContext.h"
 #include "gfx/Assets.h"
 #include "gfx/geom/Geom.h"
 #include "windows/LoadSceneWindow.h"
 #include "windows/SettingWindow.h"
+
 #include <GLFW/glfw3.h>
 #include <algorithm>
 #include <chrono>
 #include <format>
 #include <iostream>
 #include <thread>
+
+using namespace script;
 
 auto fadePair = [](std::shared_ptr<ImageContainer> out,
                    std::shared_ptr<ImageContainer> in, int totalMs) {
@@ -36,9 +40,9 @@ auto fadePair = [](std::shared_ptr<ImageContainer> out,
 };
 
 GameWindow::GameWindow()
-    : tbk(std::make_shared<TextBlock>("", 24)),
-      tbk2(std::make_shared<TextBlock>("", 28, Color{0, 0, 0, 255})),
-      ic1(std::make_shared<ImageContainer>()),
+    : dialogBox(std::make_shared<DialogBox>()),
+      buttonStack(
+          std::make_shared<StackPanel>(StackPanel::Orientation::Vertical)),
       Bg1(std::make_shared<ImageContainer>()),
       Bg2(std::make_shared<ImageContainer>()) {
     InitializeUI();
@@ -46,14 +50,18 @@ GameWindow::GameWindow()
 
 void GameWindow::InitializeUI() {
     nextDialog = [this]() {
-        if (!ic1->IsVisible()) {
+        if (!dialogBox->IsVisible()) {
             ReverseDialogVisility();
             return;
         }
-        if (!scriptQueue.empty()) {
+
+        if (!IsDialogueFinished()) {
             SkipDialogueAnimation();
-            scriptQueue.pop();
-            ProcessNextItem();
+            return;
+        }
+
+        if (runtime_) {
+            runtime_->Next();
         }
     };
 
@@ -71,51 +79,40 @@ void GameWindow::InitializeUI() {
     Bg2->SetAlpha(255);
     Bg1->SetBounds(gfx::Rect::XYWH(0, 0, ViewW, ViewH));
     Bg2->SetBounds(gfx::Rect::XYWH(0, 0, ViewW, ViewH));
-    Bg1->SetMode(3);
+    Bg1->SetMode(3); // Aspect Fill?
     Bg2->SetMode(3);
 
     cp1 = std::make_shared<ClickPaper>(nextDialog);
     cp1->SetBounds(gfx::Rect{0, 0, ViewW, ViewH});
 
-    ic1->SetBounds(gfx::Rect::XYWH(0, 615, 1335, 285));
-    ic1->SetMode(3);
-    ic1->SetImage(Assets::LoadImage("assets/image/misc/footer.png"));
-
-    tbk->SetPosition(45, 630);
-    tbk->SetSize(400, 50);
-    tbk->SetFontStyle(1);
-    tbk->SetAlign(TextHAlign::Center, TextVAlign::Middle);
-
-    tbk2->SetPosition(38, 690);
-    tbk2->SetSize(1300, 185);
-    tbk2->SetFontStyle(1);
-
+    dialogBox->SetBounds(gfx::Rect::XYWH(20, 600, 1300, 280)); // Initial pos
+    dialogBox->UpdateLayout();
     titletrs = std::make_shared<TitleTransition>();
     titletrs->SetVisible(false);
 
     lsw = std::make_shared<LoadSceneWindow>(
         [this]() {
-            LoadScene(1);
+            StartNewGame();
             if (applicationContext)
                 applicationContext->RequestWindowSwitch(1);
         },
         [this]() {
-            LoadScene(2);
+            StartNewGame();
             if (applicationContext)
                 applicationContext->RequestWindowSwitch(1);
         },
         [this]() {
-            LoadScene(3);
+            StartNewGame();
             if (applicationContext)
                 applicationContext->RequestWindowSwitch(1);
         },
         [this]() {
-            LoadScene(4);
+            StartNewGame();
             if (applicationContext)
                 applicationContext->RequestWindowSwitch(1);
         },
         [this]() {
-            LoadScene(5);
+            StartNewGame();
             if (applicationContext)
                 applicationContext->RequestWindowSwitch(1);
         },
@@ -124,51 +121,52 @@ void GameWindow::InitializeUI() {
                 applicationContext->RequestWindowSwitch(1);
         });
 
-    btn_save = std::make_shared<PrimaryButton>("保存", [this]() {
-        if (!applicationContext)
-            return;
-        auto sw = std::make_shared<SettingWindow>(
-            [this]() {
-                if (applicationContext)
-                    applicationContext->RequestWindowSwitch(1);
-            },
-            "(ᗜˬᗜ) "
-            "很遗憾，我没写这个\n这游戏要什么保存\n志乃：「你该不会是在想反正之"
-            "后可"
-            "以读档吧。这种想法志乃我可不喜欢」\n————『想要传达给你的爱恋』");
-        applicationContext->RequestWindowSwitch(sw);
+    buttonStack->SetSpacing(5);
+    buttonStack->SetPosition(1400, 670);
+    buttonStack->SetSize(200, 200); // Bounds for stack
+
+    auto createBtn = [&](const std::string &text, std::function<void()> cb) {
+        auto btn = std::make_shared<PrimaryButton>(text, cb);
+        btn->SetFontSize(16);
+        btn->SetFontStyle(1);
+        btn->SetSize(200, 30);
+        btn->SetCornerRadius(gfx::CornerRadius{35.f, 10.f, 10.f, 35.f});
+        return btn;
+    };
+
+    auto btn_save = createBtn("保存", [this]() {
+        if (applicationContext) {
+            auto sw = std::make_shared<SettingWindow>(
+                [this]() { applicationContext->RequestWindowSwitch(1); },
+                "(ᗜˬᗜ) 很遗憾，我没写这个\n这游戏要什么保存");
+            applicationContext->RequestWindowSwitch(sw);
+        }
     });
 
-    btn_load = std::make_shared<PrimaryButton>("读取", [this]() {
-        if (!applicationContext)
-            return;
-        auto sw = std::make_shared<SettingWindow>(
-            [this]() {
-                if (applicationContext)
-                    applicationContext->RequestWindowSwitch(1);
-            },
-            "(ᗜˬᗜ) 很遗憾，我没写这个\n这么短的剧情你就将就着看吧");
-        applicationContext->RequestWindowSwitch(sw);
+    auto btn_load = createBtn("读取", [this]() {
+        if (applicationContext) {
+            auto sw = std::make_shared<SettingWindow>(
+                [this]() { applicationContext->RequestWindowSwitch(1); },
+                "(ᗜˬᗜ) 很遗憾，我没写这个\n这么短的剧情你就将就着看吧");
+            applicationContext->RequestWindowSwitch(sw);
+        }
     });
 
-    btn_qsave = std::make_shared<PrimaryButton>("快速保存", [this]() {
-        if (!applicationContext)
-            return;
-        auto sw = std::make_shared<SettingWindow>(
-            [this]() {
-                if (applicationContext)
-                    applicationContext->RequestWindowSwitch(1);
-            },
-            "(ᗜˬᗜ) 很遗憾，我没写这个\n这么短的剧情你就将就着看吧");
-        applicationContext->RequestWindowSwitch(sw);
+    auto btn_qsave = createBtn("快速保存", [this]() {
+        if (applicationContext) {
+            auto sw = std::make_shared<SettingWindow>(
+                [this]() { applicationContext->RequestWindowSwitch(1); },
+                "(ᗜˬᗜ) 很遗憾，我没写这个");
+            applicationContext->RequestWindowSwitch(sw);
+        }
     });
 
-    btn_qload = std::make_shared<PrimaryButton>("快速读取场景", [this]() {
+    auto btn_qload = createBtn("快速读取场景", [this]() {
         if (applicationContext)
             applicationContext->RequestWindowSwitch(lsw);
     });
 
-    btn_autoplay = std::make_shared<PrimaryButton>("自动播放", [this]() {
+    btn_autoplay = createBtn("自动播放", [this]() {
         if (isautoplay) {
             timer.stop();
             isautoplay = false;
@@ -180,247 +178,353 @@ void GameWindow::InitializeUI() {
         }
     });
 
-    btn_setting = std::make_shared<PrimaryButton>("设定", [this]() {
-        if (!applicationContext)
-            return;
-        auto sw = std::make_shared<SettingWindow>(
-            [this]() {
-                if (applicationContext)
-                    applicationContext->RequestWindowSwitch(1);
-            },
-            "(ᗜˬᗜ) 很遗憾，我没写这个\n这游戏要什么设置，又没有奇奇怪怪的设置");
-        applicationContext->RequestWindowSwitch(sw);
+    auto btn_setting = createBtn("设定", [this]() {
+        if (applicationContext) {
+            auto sw = std::make_shared<SettingWindow>(
+                [this]() { applicationContext->RequestWindowSwitch(1); },
+                "(ᗜˬᗜ) 很遗憾，我没写这个");
+            applicationContext->RequestWindowSwitch(sw);
+        }
     });
 
-    auto setupBtn = [](auto &b, int x, int y) {
-        b->SetPosition(x, y);
-        b->SetFontSize(16);
-        b->SetFontStyle(1);
-        b->SetSize(200, 30);
-        b->SetCornerRadius(gfx::CornerRadius{35.f, 10.f, 10.f, 35.f});
-    };
+    buttonStack->AddChild(btn_save);
+    buttonStack->AddChild(btn_load);
+    buttonStack->AddChild(btn_qsave);
+    buttonStack->AddChild(btn_qload);
+    buttonStack->AddChild(btn_autoplay);
+    buttonStack->AddChild(btn_setting);
 
-    setupBtn(btn_save, 1400, 670);
-    setupBtn(btn_load, 1400, 705);
-    setupBtn(btn_qsave, 1400, 740);
-    setupBtn(btn_qload, 1400, 775);
-    setupBtn(btn_autoplay, 1400, 810);
-    setupBtn(btn_setting, 1400, 845);
-
+    // Add everything to window
     AddBackgroundControl(Bg1);
     AddBackgroundControl(Bg2);
 
-    AddForegroundControl(ic1);
-    AddForegroundControl(tbk);
-    AddForegroundControl(tbk2);
+    AddForegroundControl(dialogBox);
+    AddForegroundControl(buttonStack);
     AddForegroundControl(cp1);
+    RemoveForegroundControl(dialogBox);
+    RemoveForegroundControl(buttonStack);
+    RemoveForegroundControl(cp1);
 
-    AddForegroundControl(btn_save);
-    AddForegroundControl(btn_load);
-    AddForegroundControl(btn_qsave);
-    AddForegroundControl(btn_qload);
-    AddForegroundControl(btn_autoplay);
-    AddForegroundControl(btn_setting);
+    AddForegroundControl(dialogBox);
+    AddForegroundControl(cp1);
+    AddForegroundControl(buttonStack);
 
     AddForegroundControl(titletrs);
 
-    dialogControls = {ic1,       tbk,       tbk2,         btn_save,   btn_load,
-                      btn_qsave, btn_qload, btn_autoplay, btn_setting};
+    dialogControls = {dialogBox, buttonStack};
+}
+
+void GameWindow::OnWindowResize(int width, int height) {
+    windowWidth_ = width;
+    windowHeight_ = height;
+
+    // 计算保持 16:9 比例的内容视口区域
+    const float targetAspect = ViewW / ViewH; // 16:9
+    const float windowAspect = static_cast<float>(width) /
+                               static_cast<float>(height == 0 ? 1 : height);
+
+    float contentW = 0.f;
+    float contentH = 0.f;
+    float offsetX = 0.f;
+    float offsetY = 0.f;
+
+    if (windowAspect > targetAspect) {
+        // 窗口较宽，高度为限制
+        contentH = static_cast<float>(height);
+        contentW = contentH * targetAspect;
+        offsetX = (static_cast<float>(width) - contentW) * 0.5f;
+        offsetY = 0.f;
+    } else {
+        // 窗口较窄，宽度为限制
+        contentW = static_cast<float>(width);
+        contentH = contentW / targetAspect;
+        offsetX = 0.f;
+        offsetY = (static_cast<float>(height) - contentH) * 0.5f;
+    }
+
+    contentViewport_ = gfx::Rect::XYWH(offsetX, offsetY, contentW, contentH);
+
+    const float scale = contentW / ViewW;
+    // 背景与点击区域都限制在 16:9 内容区域内
+    if (Bg1)
+        Bg1->SetBounds(contentViewport_);
+    if (Bg2)
+        Bg2->SetBounds(contentViewport_);
+    if (cp1)
+        cp1->SetBounds(contentViewport_);
+
+    if (dialogBox) {
+        float hDesign = ViewH * 0.35f;
+        if (hDesign < 200.f)
+            hDesign = 200.f;
+        float wDesign = ViewW - 250.f;
+        if (wDesign < 600.f)
+            wDesign = 600.f; // Min width
+
+        const float yDesign = ViewH - hDesign - 20.f;
+        const float xDesign = 20.f;
+
+        const float x = contentViewport_.x + xDesign * scale;
+        const float y = contentViewport_.y + yDesign * scale;
+        const float w = wDesign * scale;
+        const float h = hDesign * scale;
+
+        dialogBox->SetBounds(gfx::Rect::XYWH(x, y, w, h));
+        dialogBox->UpdateLayout();
+    }
+
+    if (buttonStack) {
+        const float x = contentViewport_.x + contentViewport_.w - 220.f * scale;
+        const float y = contentViewport_.y + contentViewport_.h - 250.f * scale;
+        buttonStack->SetPosition(static_cast<int>(x), static_cast<int>(y));
+    }
+
+    LayoutChoicePanel();
+
+    WindowPanel::OnWindowResize(width, height);
 }
 
 void GameWindow::SetCharacterName(const std::string &name) {
-    tbk->SetText(name);
+    dialogBox->SetName(name);
 }
 
 void GameWindow::ShowDialogue(const std::string &dialogue) {
-    tbk2->SetText(dialogue);
-    tbk2->startAnimation(false);
+    dialogBox->SetText(dialogue);
 }
 
 void GameWindow::ShowDialogueImmediate(const std::string &dialogue) {
-    tbk2->SetText(dialogue);
-    tbk2->showFullText();
+    dialogBox->SetTextImmediate(dialogue);
 }
 
-void GameWindow::ClearDialogue() { tbk2->clearText(); }
+void GameWindow::ClearDialogue() { dialogBox->ClearText(); }
 
-bool GameWindow::IsDialogueFinished() const { return !tbk2->IsAnimating(); }
-
-void GameWindow::SkipDialogueAnimation() { tbk2->showFullText(); }
-
-bool GameWindow::LoadScript(const std::string &filename) {
-    return gameScript.loadFromFile(filename);
+bool GameWindow::IsDialogueFinished() const {
+    return !dialogBox->IsAnimating();
 }
 
-void GameWindow::LoadScene(int sceneId) {
-    scriptQueue = std::queue<ScriptVariant>();
+void GameWindow::SkipDialogueAnimation() { dialogBox->SkipAnimation(); }
+
+void GameWindow::StartNewGame() {
+    try {
+        auto loadedChapter = ScriptYamlLoader::LoadChapterFromFile(
+            "assets/scripts/demo_script.yaml");
+        if (loadedChapter.id.empty()) {
+            std::cerr
+                << "Failed to load script: assets/scripts/demo_script.yaml"
+                << std::endl;
+            chapters_.clear();
+            Chapter ch;
+            ch.id = "fallback";
+            Scene sc;
+            sc.id = "start";
+            Dialogue dlg;
+            dlg.text = "找不到剧本文件 "
+                       "assets/scripts/demo_script.yaml，已回退到内置模式。";
+            sc.sequence.push_back(dlg);
+            ch.scenes.emplace(sc.id, sc);
+            chapters_.push_back(ch);
+        } else {
+            chapters_.clear();
+            chapters_.push_back(std::move(loadedChapter));
+        }
+    } catch (const std::exception &e) {
+        std::cerr << "YAML Load Error: " << e.what() << std::endl;
+        return;
+    }
+
+    RuntimeCallbacks cbs;
+
+    cbs.onSceneEnter = [this](const Chapter &chapter, const Scene &scene) {
+        currentChapter_ = &chapter;
+        SetupSceneVisual(chapter, scene);
+    };
+
+    cbs.onDialogue = [this](const Dialogue &dlg) {
+        if (dlg.tag == DialogueTag::Dialogue) {
+            if (!dlg.displayName.empty())
+                SetCharacterName(dlg.displayName);
+            else
+                SetCharacterName(dlg.speakerId);
+
+            ShowDialogue(std::format("「{}」", dlg.text));
+        } else {
+            SetCharacterName("");
+            ShowDialogue(dlg.text);
+        }
+
+        if (!dlg.speakerId.empty()) {
+            UpdateCharacterHighlight(dlg.speakerId);
+            if (!dlg.sprite.empty()) {
+                UpdateCharacterSprite(dlg.speakerId, dlg.sprite);
+            }
+        }
+    };
+
+    cbs.onBg = [this](const BgCommand &cmd) { HandleBgCommand(cmd); };
+    cbs.onSound = [this](const SoundCommand &cmd) { HandleSoundCommand(cmd); };
+    cbs.onCharacter = [this](const CharacterCommand &cmd) {
+        HandleCharacterCommand(cmd);
+    };
+
+    cbs.onChoice = [this](const Choice &choice) {
+        currentChoiceId_ = choice.id;
+
+        if (!choicePanel_) {
+            choicePanel_ =
+                std::make_shared<StackPanel>(StackPanel::Orientation::Vertical);
+            choicePanel_->SetSpacing(10);
+            AddForegroundControl(choicePanel_);
+        }
+
+        choicePanel_->ClearChildren();
+
+        const float scale = contentViewport_.w / ViewW;
+        float btnWidth = 400.f * scale;
+        float btnHeight = 40.f * scale;
+        if (btnWidth < 200.f)
+            btnWidth = 200.f;
+        if (btnHeight < 30.f)
+            btnHeight = 30.f;
+
+        for (const auto &opt : choice.options) {
+            auto btn = std::make_shared<PrimaryButton>(
+                opt.text, [this, choiceId = choice.id, optionId = opt.id]() {
+                    if (!runtime_)
+                        return;
+                    runtime_->Choose(choiceId, optionId);
+                    if (choicePanel_) {
+                        choicePanel_->SetVisible(false);
+                        choicePanel_->ClearChildren();
+                    }
+                    runtime_->Next();
+                });
+
+            btn->SetSize(static_cast<int>(btnWidth),
+                         static_cast<int>(btnHeight));
+            btn->SetFontSize(static_cast<int>(16 * scale));
+            choicePanel_->AddChild(btn);
+        }
+
+        choicePanel_->SetVisible(true);
+        LayoutChoicePanel();
+    };
+
+    runtime_ = std::make_unique<ScriptRuntime>(chapters_, std::move(cbs));
+
+    currentChapter_ = &chapters_.front();
+    std::string startScene = "scene1";
+    if (!chapters_.empty() && !chapters_[0].scenes.empty()) {
+        startScene = chapters_[0].scenes.begin()->first;
+    }
+
+    runtime_->Start(currentChapter_->id, startScene);
+    runtime_->Next();
+}
+
+void GameWindow::SetupSceneVisual(const Chapter &chapter, const Scene &scene) {
     ClearCharacters();
 
-    const Chapter &chapter = gameScript.getChapter();
-
-    for (const auto &scene : chapter.scenes) {
-        if (scene.scene_id != sceneId)
-            continue;
-
+    if (!scene.background.empty()) {
         ImageHandle bgImg = Assets::LoadImage(scene.background.c_str());
         if (!bgImg) {
             std::cout << "背景加载失败: " << scene.background << std::endl;
         } else {
             SwitchBackground(bgImg);
         }
+    }
 
-        for (const auto &character : scene.characters) {
-            const CharacterDef *def =
-                gameScript.getCharacterDef(character.ref_name);
-            if (!def || !def->hasSprites())
-                continue;
+    for (const auto &character : scene.characters) {
+        auto it = chapter.characters.find(character.ref_name);
+        if (it == chapter.characters.end())
+            continue;
 
-            auto spIt = def->sprites.find(character.current_sprite);
-            if (spIt == def->sprites.end())
-                continue;
+        const CharacterDef &def = it->second;
 
-            ImageHandle charImg = Assets::LoadImage(spIt->second.c_str());
-            if (!charImg)
-                continue;
+        auto spIt = def.sprites.find(character.sprite);
+        if (spIt == def.sprites.end())
+            continue;
 
-            auto container = std::make_shared<ImageContainer>();
-            gfx::Rect charRect = CalculateCharacterPosition(*def, character);
-            container->SetBounds(charRect);
-            container->SetMode(3);
-            container->SetImage(charImg);
-            container->SetAlpha(0);
+        ImageHandle charImg = Assets::LoadImage(spIt->second.c_str());
+        if (!charImg)
+            continue;
 
-            characterContainers[character.ref_name] = container;
-            AddMidgroundControl(container);
-        }
+        auto container = std::make_shared<ImageContainer>();
+        gfx::Rect charRect = CalculateCharacterPosition(def, character);
+        container->SetBounds(charRect);
+        container->SetMode(3);
+        container->SetImage(charImg);
+        container->SetAlpha(0);
 
-        for (const auto &item : scene.scriptSequence) {
-            scriptQueue.push(item);
-        }
-
-        ProcessNextItem();
-        break;
+        characterContainers[character.ref_name] = container;
+        AddMidgroundControl(container);
     }
 }
 
-void GameWindow::ProcessNextItem() {
-    if (scriptQueue.empty())
-        return;
-
-    const auto &item = scriptQueue.front();
-
-    if (std::holds_alternative<Command>(item)) {
-        try {
-            ExecuteCommand(std::get<Command>(item));
-            scriptQueue.pop();
-        } catch (...) {
-            scriptQueue.pop();
-        }
-        ProcessNextItem();
-        return;
-    }
-
-    const Dialogue &dlg = std::get<Dialogue>(item);
-
-    if (dlg.tag == DialogueType) {
-        if (!dlg.displayname.empty())
-            SetCharacterName(dlg.displayname);
-        else
-            SetCharacterName(dlg.character);
-
-        ShowDialogue(std::format("「{}」", dlg.text));
-    } else {
-        SetCharacterName("");
-        ShowDialogue(dlg.text);
-    }
-
-    if (auto it = characterContainers.find(dlg.character);
-        it != characterContainers.end()) {
-        it->second->SetAlpha(255);
-    }
-
-    if (!dlg.sprite.empty()) {
-        UpdateCharacterSprite(dlg.character, dlg.sprite);
-    }
-    UpdateCharacterHighlight(dlg.character);
-}
-
-void GameWindow::ExecuteCommand(const Command &cmd) {
-    if (!applicationContext)
-        return;
-
-    if (cmd.type == "sound") {
-        if (cmd.soundtype == "bgm") {
-            if (cmd.action == "play") {
-                applicationContext->bgm.Load(cmd.param);
-                applicationContext->bgm.Play(true);
-            } else if (cmd.action == "pause") {
-                applicationContext->bgm.Pause();
-            } else if (cmd.action == "volumn") {
-                applicationContext->bgm.SetVolume(std::stof(cmd.param));
-            }
-        } else if (cmd.soundtype == "voice") {
-            if (cmd.action == "play") {
-                applicationContext->voice.Load(cmd.param);
-                applicationContext->voice.Play(false);
-            } else if (cmd.action == "pause") {
-                applicationContext->voice.Pause();
-            } else if (cmd.action == "volumn") {
-                applicationContext->voice.SetVolume(std::stof(cmd.param));
-            }
-        } else if (cmd.soundtype == "sfx") {
-            if (cmd.action == "play") {
-                applicationContext->sfx.Load(cmd.param);
-                applicationContext->sfx.Play(false);
-            } else if (cmd.action == "pause") {
-                applicationContext->sfx.Pause();
-            } else if (cmd.action == "volumn") {
-                applicationContext->sfx.SetVolume(std::stof(cmd.param));
-            }
-        }
-        return;
-    }
-
-    if (cmd.type == "bg") {
-        if (cmd.action == "change") {
-            ImageHandle img = Assets::LoadImage(cmd.param.c_str());
+void GameWindow::HandleBgCommand(const BgCommand &cmd) {
+    if (cmd.action == "change") {
+        if (!cmd.image.empty()) {
+            ImageHandle img = Assets::LoadImage(cmd.image.c_str());
             if (img)
                 SwitchBackground(img);
-        } else if (cmd.action == "title") {
-            titletrs->SetText(cmd.param);
-            titletrs->SetVisible(true);
-            std::thread([t = titletrs]() {
-                std::this_thread::sleep_for(std::chrono::milliseconds(4000));
-                t->SetVisible(false);
-            }).detach();
         }
-        return;
+    } else if (cmd.action == "title") {
+        titletrs->SetText(cmd.text);
+        titletrs->SetVisible(true);
+        std::thread([t = titletrs]() {
+            std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+            t->SetVisible(false);
+        }).detach();
     }
+}
 
-    if (cmd.type == "character") {
-        if (cmd.action == "show") {
-            if (auto it = characterContainers.find(cmd.param);
-                it != characterContainers.end()) {
-                it->second->SetAlpha(255);
-                UpdateCharacterHighlight(cmd.param);
-            }
-        } else if (cmd.action == "hide") {
-            if (auto it = characterContainers.find(cmd.param);
-                it != characterContainers.end()) {
-                it->second->SetAlpha(0);
-            }
-        }
+void GameWindow::HandleSoundCommand(const SoundCommand &cmd) {
+    if (!applicationContext)
         return;
+    auto &audio = applicationContext->audio;
+    if (cmd.channel == "bgm") {
+        if (cmd.action == "play")
+            audio.PlayBgm(cmd.file, true);
+        else if (cmd.action == "pause")
+            audio.PauseBgm();
+        else if (cmd.action == "stop")
+            audio.StopBgm();
+        else if (cmd.action == "volume")
+            audio.SetBgmVolume(cmd.volume);
+    } else if (cmd.channel == "voice") {
+        if (cmd.action == "play")
+            audio.PlayVoice(cmd.file);
+        else if (cmd.action == "pause")
+            audio.PauseVoice();
+        else if (cmd.action == "stop")
+            audio.StopVoice();
+        else if (cmd.action == "volume")
+            audio.SetVoiceVolume(cmd.volume);
+    } else if (cmd.channel == "sfx") {
+        if (cmd.action == "play")
+            audio.PlaySfx(cmd.file);
+        else if (cmd.action == "stop")
+            audio.StopSfx();
+        else if (cmd.action == "volume")
+            audio.SetSfxVolume(cmd.volume);
     }
+}
 
-    if (cmd.type == "chapter") {
-        if (cmd.action == "drop") {
-            try {
-                LoadScene(std::stoi(cmd.param));
-            } catch (...) {
-            }
+void GameWindow::HandleCharacterCommand(const CharacterCommand &cmd) {
+    if (cmd.action == "show") {
+        if (auto it = characterContainers.find(cmd.targetId);
+            it != characterContainers.end()) {
+            it->second->SetAlpha(255);
+            UpdateCharacterHighlight(cmd.targetId);
         }
-        return;
+    } else if (cmd.action == "hide") {
+        if (auto it = characterContainers.find(cmd.targetId);
+            it != characterContainers.end()) {
+            it->second->SetAlpha(0);
+        }
+    } else if (cmd.action == "sprite") {
+        if (!cmd.sprite.empty()) {
+            UpdateCharacterSprite(cmd.targetId, cmd.sprite);
+        }
     }
 }
 
@@ -441,13 +545,16 @@ void GameWindow::UpdateCharacterSprite(const std::string &charName,
     auto it = characterContainers.find(charName);
     if (it == characterContainers.end())
         return;
-
-    const CharacterDef *def = gameScript.getCharacterDef(charName);
-    if (!def)
+    if (!currentChapter_)
         return;
 
-    auto spIt = def->sprites.find(spriteName);
-    if (spIt == def->sprites.end())
+    auto defIt = currentChapter_->characters.find(charName);
+    if (defIt == currentChapter_->characters.end())
+        return;
+
+    const CharacterDef &def = defIt->second;
+    auto spIt = def.sprites.find(spriteName);
+    if (spIt == def.sprites.end())
         return;
 
     ImageHandle newImg = Assets::LoadImage(spIt->second.c_str());
@@ -462,32 +569,78 @@ void GameWindow::ClearCharacters() {
     characterContainers.clear();
 }
 
+void GameWindow::LayoutChoicePanel() {
+    if (!choicePanel_ || !choicePanel_->IsVisible())
+        return;
+
+    const float scale = contentViewport_.w / ViewW;
+    float initialWidth = contentViewport_.w * 0.5f;
+    if (initialWidth < 300.f * scale)
+        initialWidth = 300.f * scale;
+
+    float tempX =
+        contentViewport_.x + (contentViewport_.w - initialWidth) * 0.5f;
+    float tempY = contentViewport_.y + contentViewport_.h * 0.4f;
+
+    choicePanel_->SetBounds(static_cast<int>(tempX), static_cast<int>(tempY),
+                            static_cast<int>(initialWidth), 0);
+    choicePanel_->UpdateLayout();
+
+    int panelW = choicePanel_->GetWidth();
+    int panelH = choicePanel_->GetHeight();
+
+    float finalX = contentViewport_.x + (contentViewport_.w - panelW) * 0.5f;
+    float finalY = contentViewport_.y + (contentViewport_.h - panelH) * 0.5f;
+
+    if (dialogBox) {
+        const auto &dlg = dialogBox->GetBounds();
+        finalY = dlg.y - panelH - 20.f * scale;
+        if (finalY < contentViewport_.y + 20.f * scale)
+            finalY = contentViewport_.y + 20.f * scale;
+    }
+
+    choicePanel_->SetPosition(static_cast<int>(finalX),
+                              static_cast<int>(finalY));
+    choicePanel_->UpdateLayout();
+}
+
 gfx::Rect
 GameWindow::CalculateCharacterPosition(const CharacterDef &def,
                                        const CharacterInstance &instance) {
     const std::vector<int> &usedOffset =
         instance.offset.empty() ? def.offset : instance.offset;
 
-    float x = 0.f;
-    float y = 300.f;
+    float designX = 0.f;
+    float designY = 300.f;
 
     if (def.base_pos == "left") {
-        x = 100.f + usedOffset[0];
-        y += usedOffset[1];
+        designX = 100.f + usedOffset[0];
+        designY += usedOffset[1];
     } else if (def.base_pos == "right") {
-        x = 800.f + usedOffset[0];
-        y += usedOffset[1];
+        designX = 800.f + usedOffset[0];
+        designY += usedOffset[1];
     } else {
-        x = 450.f + usedOffset[0];
-        y += usedOffset[1];
+        // center
+        designX = 450.f + usedOffset[0];
+        designY += usedOffset[1];
     }
 
-    return gfx::Rect::XYWH(x, y, 300.f, 500.f);
+    const float designW = 300.f;
+    const float designH = 500.f;
+
+    const float scale = contentViewport_.w / ViewW;
+
+    const float x = contentViewport_.x + designX * scale;
+    const float y = contentViewport_.y + designY * scale;
+    const float w = designW * scale;
+    const float h = designH * scale;
+
+    return gfx::Rect::XYWH(x, y, w, h);
 }
 
 void GameWindow::ReverseDialogVisility() {
-    for (auto it = dialogControls.rbegin(); it != dialogControls.rend(); ++it) {
-        (*it)->SetVisible(!(*it)->IsVisible());
+    for (auto &c : dialogControls) {
+        c->SetVisible(!c->IsVisible());
     }
 }
 

@@ -2,8 +2,7 @@
 #include "windows/WindowManager.h"
 
 ApplicationContext::ApplicationContext(WindowManager *manager)
-    : bgm(MusicPlayer::BGM), voice(MusicPlayer::VOICE), sfx(MusicPlayer::SFX),
-      m_manager(manager) {
+    : m_manager(manager) {
     eventManager.SetWindowManager(manager);
 }
 

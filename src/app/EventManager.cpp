@@ -1,7 +1,7 @@
 #include "app/EventManager.h"
+#include "ui/Controls.h"
 #include "windows/WindowManager.h"
 #include "windows/WindowPanel.h"
-#include "ui/Controls.h"
 #include <algorithm>
 
 int EventManager::RegisterEventHandler(size_t eventTypeIndex,
@@ -49,11 +49,10 @@ int EventManager::AddEventFilter(EventFilter filter) {
 }
 
 bool EventManager::RemoveEventFilter(int filterId) {
-    auto it = std::remove_if(m_eventFilters.begin(), m_eventFilters.end(),
-                             [filterId](const FilterEntry &entry) {
-                                 return entry.id == filterId;
-                             });
-    
+    auto it = std::remove_if(
+        m_eventFilters.begin(), m_eventFilters.end(),
+        [filterId](const FilterEntry &entry) { return entry.id == filterId; });
+
     bool removed = it != m_eventFilters.end();
     m_eventFilters.erase(it, m_eventFilters.end());
     return removed;
@@ -62,7 +61,7 @@ bool EventManager::RemoveEventFilter(int filterId) {
 void EventManager::ProcessEvent(const PlatformEvent &event) {
     for (const auto &entry : m_eventFilters) {
         if (entry.filter && !entry.filter(event)) {
-            return; 
+            return;
         }
     }
 
@@ -151,7 +150,11 @@ void EventManager::ProcessTextInputEvent(const TextInputEvent &event) {
 }
 
 void EventManager::ProcessWindowResizeEvent(const WindowResizeEvent &event) {
-    // 窗口大小改变事件处理
+    // 将窗口大小变化事件分发给 WindowManager / 当前 WindowPanel，
+    // 由各个窗口自行在 OnWindowResize 中做布局更新。
+    if (m_windowManager) {
+        m_windowManager->Dispatch(event);
+    }
 }
 
 void EventManager::ProcessFocusEvent(const FocusEvent &event) {
@@ -179,12 +182,12 @@ void EventManager::UpdateMouseHover(int x, int y) {
         if (m_mouseState.hoveredControl) {
             m_mouseState.hoveredControl->OnMouseLeave(x, y);
         }
-        
+
         // 触发进入事件给新的悬停控件
         if (newHovered) {
             newHovered->OnMouseEnter(x, y);
         }
-        
+
         m_mouseState.hoveredControl = newHovered;
     }
 }

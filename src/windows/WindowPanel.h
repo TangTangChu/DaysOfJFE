@@ -70,4 +70,5 @@ class WindowPanel {
     virtual void HandleMouseDown(int x, int y);
     virtual void HandleMouseUp(int x, int y);
     virtual void HandleMouseWheel(int x, int y, float deltaX, float deltaY);
+    virtual void OnWindowResize(int width, int height);
 };
