@@ -23,8 +23,10 @@ class SkiaRenderer final : public IRenderer {
   public:
     SkiaRenderer() = default;
     ~SkiaRenderer() override;
-    void initGL(int fbw, int fbh, bool flipY = false);
-    void resizeIfNeeded(int fbw, int fbh);
+    void initGL(int fbw, int fbh, int winW, int winH, float scaleX = 1.0f,
+                float scaleY = 1.0f, bool flipY = false);
+    void resizeIfNeeded(int fbw, int fbh, int winW, int winH, float scaleX,
+                        float scaleY);
     void beginFrame();
     void endFrame();
     int width() const override { return m_width; }
@@ -65,8 +67,12 @@ class SkiaRenderer final : public IRenderer {
                           int weight = 400, bool italic = false) override;
 
   private:
-    int m_width = 0;
-    int m_height = 0;
+    int m_width = 0;          // logical width in window coordinates
+    int m_height = 0;         // logical height in window coordinates
+    int m_surfaceWidth = 0;   // framebuffer width in pixels
+    int m_surfaceHeight = 0;  // framebuffer height in pixels
+    float m_scaleX = 1.0f;
+    float m_scaleY = 1.0f;
     bool m_flipY = false;
 
     sk_sp<GrDirectContext> m_context;
