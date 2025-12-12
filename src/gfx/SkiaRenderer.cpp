@@ -32,9 +32,14 @@ SkiaRenderer::~SkiaRenderer() {
     m_context.reset();
 }
 
-void SkiaRenderer::initGL(int fbw, int fbh, bool flipY) {
-    m_width = fbw;
-    m_height = fbh;
+void SkiaRenderer::initGL(int fbw, int fbh, int winW, int winH, float scaleX,
+                          float scaleY, bool flipY) {
+    m_surfaceWidth = fbw;
+    m_surfaceHeight = fbh;
+    m_width = winW;
+    m_height = winH;
+    m_scaleX = scaleX;
+    m_scaleY = scaleY;
     m_flipY = flipY;
 
     auto glIf = GrGLMakeNativeInterface();
@@ -42,12 +47,20 @@ void SkiaRenderer::initGL(int fbw, int fbh, bool flipY) {
     recreateSurface();
 }
 
-void SkiaRenderer::resizeIfNeeded(int fbw, int fbh) {
-    if (fbw == m_width && fbh == m_height)
-        return;
-    m_width = fbw;
-    m_height = fbh;
-    recreateSurface();
+void SkiaRenderer::resizeIfNeeded(int fbw, int fbh, int winW, int winH,
+                                  float scaleX, float scaleY) {
+    bool surfaceChanged = (fbw != m_surfaceWidth || fbh != m_surfaceHeight);
+
+    m_surfaceWidth = fbw;
+    m_surfaceHeight = fbh;
+    m_width = winW;
+    m_height = winH;
+    m_scaleX = scaleX;
+    m_scaleY = scaleY;
+
+    if (!m_surface || surfaceChanged) {
+        recreateSurface();
+    }
 }
 
 void SkiaRenderer::beginFrame() {
@@ -57,19 +70,21 @@ void SkiaRenderer::beginFrame() {
     if (!m_canvas)
         return;
 
-    // if (m_flipY) {
-    //     m_canvas->save();
-    //     m_canvas->translate(0, (SkScalar)m_height);
-    //     m_canvas->scale(1, -1);
-    // }
+    m_canvas->save();
+    if (m_scaleX != 1.0f || m_scaleY != 1.0f) {
+        m_canvas->scale(m_scaleX, m_scaleY);
+    }
+    if (m_flipY) {
+        m_canvas->translate(0, (SkScalar)m_height);
+        m_canvas->scale(1, -1);
+    }
 }
 
 void SkiaRenderer::endFrame() {
     if (!m_canvas)
         return;
 
-    if (m_flipY)
-        m_canvas->restore();
+    m_canvas->restore();
 
     if (m_context && m_surface) {
         m_context->flush(m_surface.get());
@@ -96,7 +111,7 @@ void SkiaRenderer::recreateSurface() {
     fbInfo.fFormat = GL_RGBA8;
 
     GrBackendRenderTarget backendRT = GrBackendRenderTargets::MakeGL(
-        m_width, m_height, samples, stencil, fbInfo);
+        m_surfaceWidth, m_surfaceHeight, samples, stencil, fbInfo);
 
     SkSurfaceProps props(0, kUnknown_SkPixelGeometry);
 
@@ -105,8 +120,9 @@ void SkiaRenderer::recreateSurface() {
         kRGBA_8888_SkColorType, nullptr, &props);
 
     if (!m_surface) {
-        SkImageInfo info = SkImageInfo::Make(
-            m_width, m_height, kRGBA_8888_SkColorType, kPremul_SkAlphaType);
+        SkImageInfo info =
+            SkImageInfo::Make(m_surfaceWidth, m_surfaceHeight,
+                              kRGBA_8888_SkColorType, kPremul_SkAlphaType);
         m_surface = SkSurfaces::RenderTarget(m_context.get(),
                                              skgpu::Budgeted::kNo, info);
     }

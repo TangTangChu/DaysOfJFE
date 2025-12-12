@@ -27,6 +27,7 @@ int main() {
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_TRUE);
 
     GLFWwindow *win =
         glfwCreateWindow(1600, 900, "DaysOfJFE", nullptr, nullptr);
@@ -41,11 +42,14 @@ int main() {
         glfwTerminate();
         return -1;
     }
-    int fbw, fbh;
+    int fbw, fbh, winW, winH;
+    float scaleX = 1.0f, scaleY = 1.0f;
     glfwGetFramebufferSize(win, &fbw, &fbh);
+    glfwGetWindowSize(win, &winW, &winH);
+    glfwGetWindowContentScale(win, &scaleX, &scaleY);
 
     SkiaRenderer renderer;
-    renderer.initGL(fbw, fbh);
+    renderer.initGL(fbw, fbh, winW, winH, scaleX, scaleY);
     auto &fontManager = FontManager::Instance();
     fontManager.Initialize();
     std::string fontPath = "./assets/fonts/";
@@ -81,10 +85,13 @@ int main() {
     while (!glfwWindowShouldClose(win)) {
         glfwPollEvents();
 
-        int w, h;
+        int w, h, wW, wH;
+        float sX = 1.0f, sY = 1.0f;
         glfwGetFramebufferSize(win, &w, &h);
-        renderer.resizeIfNeeded(w, h);
-
+        glfwGetWindowSize(win, &wW, &wH);
+        glfwGetWindowContentScale(win, &sX, &sY);
+        renderer.resizeIfNeeded(w, h, wW, wH, sX, sY);
+        
         renderer.beginFrame();
         wm.Redraw(renderer);
         renderer.endFrame();
